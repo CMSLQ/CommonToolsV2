@@ -1,6 +1,16 @@
-// To be run on the output of analysisClass_PDFweighting.C
-//usage:
-// >root -l PDFvar.C
+/*
+Ellie Twedt, June 2010
+Description and instructions:
+This is mean to run on the output of analysisClass_PDFweighting.C .
+Change the name of the input file in this macro accordingly.
+
+Usage: 
+>root -l
+>.L PDFvar.C
+>RunPDF()
+
+This produces an output of the bin with the largest variation from the central value (bin "1", 0th vector element).
+*/
 
 void getEff(TFile *file, char* histo)
 {
@@ -52,35 +62,47 @@ void getNbkgd(TFile *file,char* histo)
 void RunPDF()
 {
   cout << "LQ100 eff: +";
-  TFile file100("June30_PDFweights/analysisClass_PDFweighting___LQ_ue_100_7TeV_eejj_RAW__ferencek-LQ_ue_100_7TeV_eejj_RECO-d0c450599c7f4954244d4e7cbeababc4__USER.root");
+  TFile file100("July14_PDFweights/analysisClass_PDFweighting___LQ_ue_100_7TeV_eejj_RAW__ferencek-LQ_ue_100_7TeV_eejj_RECO-d0c450599c7f4954244d4e7cbeababc4__USER.root");
   getEff(&file100,"PDFWeight_eff");
 
-  cout << "LQ150 eff: +";
-  TFile file150("June30_PDFweights/analysisClass_PDFweighting___LQ_ue_150_7TeV_eejj_RAW__ferencek-LQ_ue_150_7TeV_eejj_RECO-d0c450599c7f4954244d4e7cbeababc4__USER.root");
-  getEff(&file150,"PDFWeight_eff");
-
   cout << "LQ200 eff: +" ;
-  TFile file200("June30_PDFweights/analysisClass_PDFweighting___LQ_ue_200_7TeV_eejj_RAW__ferencek-LQ_ue_200_7TeV_eejj_RECO-d0c450599c7f4954244d4e7cbeababc4__USER.root");
+  TFile file200("July14_PDFweights/analysisClass_PDFweighting___LQ_ue_200_7TeV_eejj_RAW__ferencek-LQ_ue_200_7TeV_eejj_RECO-d0c450599c7f4954244d4e7cbeababc4__USER.root");
   getEff(&file200,"PDFWeight_eff");
 
+  cout << "LQ300 eff: +";
+  TFile file300("July14_PDFweights/analysisClass_PDFweighting___LQToUE_M-300_7TeV-pythia6__Spring10-START3X_V26-v1__GEN-SIM-RECO.root");
+  getEff(&file300,"PDFWeight_eff");
+
   cout << "All Bkgd N_events: +" ;
-  TFile fileAllBkgd("June30_PDFweights//analysisClass_PDFweighting_plots.root");
+  TFile fileAllBkgd("July14_PDFweights//analysisClass_PDFweighting_plots.root");
   getNbkgd(&fileAllBkgd,"histo1D__ALLBKG__PDFWeight_Npass");
 
+  cout << "All Bkgd eff: +" ;
+  TFile fileAllBkgd("July14_PDFweights//analysisClass_PDFweighting_plots.root");
+  getNbkgd(&fileAllBkgd,"histo1D__ALLBKG__PDFWeight_eff");
+
   cout << "TTBar N_events: +" ;
-  TFile fileTTBar("June30_PDFweights//analysisClass_PDFweighting_plots.root");
+  TFile fileTTBar("July14_PDFweights//analysisClass_PDFweighting_plots.root");
   getNbkgd(&fileTTBar,"histo1D__TTbar__PDFWeight_Npass");
 
+  cout << "TTBar eff: +" ;  
+  TFile fileTTBar("July14_PDFweights//analysisClass_PDFweighting_plots.root");
+  getNbkgd(&fileTTBar,"histo1D__TTbar__PDFWeight_eff");
+
   cout << "Z N_events: +" ;
-  TFile fileZ("June30_PDFweights//analysisClass_PDFweighting_plots.root");
+  TFile fileZ("July14_PDFweights//analysisClass_PDFweighting_plots.root");
   getNbkgd(&fileZ,"histo1D__ZJetAlpgen__PDFWeight_Npass");
 
-  cout << "VV N_events: +" ;
-  TFile fileVV("June30_PDFweights//analysisClass_PDFweighting_plots.root");
-  getNbkgd(&fileVV,"histo1D__VV__PDFWeight_Npass");
+  cout << "Z eff: +" ;
+  TFile fileZ("July14_PDFweights//analysisClass_PDFweighting_plots.root");
+  getNbkgd(&fileZ,"histo1D__ZJetAlpgen__PDFWeight_eff");
 
   cout << "W N_events: +" ;
-  TFile fileW("June30_PDFweights//analysisClass_PDFweighting_plots.root");
+  TFile fileW("July14_PDFweights//analysisClass_PDFweighting_plots.root");
   getNbkgd(&fileW,"histo1D__WJetAlpgen__PDFWeight_Npass");
+
+  cout << "W eff: +" ;
+  TFile fileW("July14_PDFweights//analysisClass_PDFweighting_plots.root");
+  getNbkgd(&fileW,"histo1D__WJetAlpgen__PDFWeight_eff");
 
 }
