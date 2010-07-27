@@ -186,8 +186,8 @@ void makePlots()
  // **********************************************
  // *            Input parameters                *
  // **********************************************
- // switch to include/exclude sytematics uncertainties 
- bool systematics = true;
+ // switch to include/exclude sytematics uncertainties
+ bool systematics = true; // does nothing at the moment
 
  // total integrated luminosity (in pb-1)
  Double_t L_int = 0.25385;
@@ -208,9 +208,9 @@ void makePlots()
  Double_t N_obs[3] = {0, 0, 0};
 
  // array of LQ masses for calculation of upXS
- Double_t m_Data[3] = {100,200,300};
+ Double_t mData[3] = {100,200,300};
 
- // arrays of leptoquark masses for th. cross section
+ // arrays of LQ masses for theoretical cross section
  Double_t mTh[6] = {100, 150, 200, 250, 300, 350};
  // array of theoretical cross-sections for different leptoquark masses
  Double_t xsTh[6] = {386, 53.3, 11.9, 3.47, 1.21, 0.477};
@@ -218,8 +218,11 @@ void makePlots()
  // filename for the final plot (NB: changing the name extension changes the file format)
  string fileName = "xs95CL_vs_m.eps";
   
- // axes labels for the final plot  
+ // axes labels for the final plot
  string title = ";m [GeV/c^{2}];#beta^{2}#times#sigma [pb]";
+
+ // integrated luminosity
+ string lint = "#intLdt=254 nb^{-1}";
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {80,299,299,80,80};
@@ -274,6 +277,7 @@ void makePlots()
 
  TPolyLine *pl = new TPolyLine(5,x_shaded,y_shaded,"F");
 //  pl->SetFillStyle(3001);
+ pl->SetLineColor(0);
  pl->SetFillColor(kGray);
  pl->Draw();
 
@@ -298,7 +302,7 @@ void makePlots()
  xsTh_vs_m->SetMarkerColor(kRed);
  xsTh_vs_m->Draw("C");
 
- TGraph *xsData_vs_m_expected = new TGraph(size, m_Data, xsUp_expected);
+ TGraph *xsData_vs_m_expected = new TGraph(size, mData, xsUp_expected);
  xsData_vs_m_expected->SetMarkerStyle(23);
  xsData_vs_m_expected->SetMarkerColor(kBlue);
  xsData_vs_m_expected->SetLineColor(kBlue);
@@ -307,7 +311,7 @@ void makePlots()
  xsData_vs_m_expected->SetMarkerSize(1.5);
  xsData_vs_m_expected->Draw("CP");
 
- TGraph *xsData_vs_m_observed = new TGraph(size, m_Data, xsUp_observed);
+ TGraph *xsData_vs_m_observed = new TGraph(size, mData, xsUp_observed);
  xsData_vs_m_observed->SetMarkerStyle(22);
  xsData_vs_m_observed->SetMarkerColor(kBlack);
  xsData_vs_m_observed->SetLineColor(kBlack);
@@ -335,7 +339,7 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.DrawLatex(0.2,0.3,"CMS Preliminary 2010");
- l1.DrawLatex(0.2,0.2,"#intLdt=254 nb^{-1}");
+ l1.DrawLatex(0.2,0.2,lint.c_str());
 
 //  TLatex l2;
 //  l2.SetTextAlign(12);
