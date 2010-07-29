@@ -1,5 +1,5 @@
-#include "CLA.C"
-// #include "CL95cms.C"
+// #include "CLA.C"
+#include "CL95cms.C"
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TCanvas.h"
@@ -202,7 +202,7 @@ void makePlots()
  // array of N_background for L_int
  Double_t N_bkg[3] = {0.187, 0.122, 0.070};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[3] = {0.88, 0.88, 0.88};
+ Double_t Sigma_N_bkg[3] = {0.55, 0.55, 0.55};
 
  // array of N_observed for L_int
  Double_t N_obs[3] = {0, 0, 0};
@@ -245,7 +245,7 @@ void makePlots()
  // Array of 95% CL upper limits on the cross section
 //  Double_t xsUp[3] = {0.23722, 0.166074, 0.10131};
 
- Double_t xsUp_expected[3] = {122.013, 35.7559, 26.7226};
+ Double_t xsUp_expected[3] = {122.178, 35.769, 26.7457};
 //  Double_t xsUp_expected[3];
 //  for(Int_t i = 0; i < size; i++){
 // 

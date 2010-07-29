@@ -1,4 +1,3 @@
-#include "CLA.C"
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TCanvas.h"
@@ -189,7 +188,7 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[3] = {100,200,300};
  // arrays of upper limits on the cross section
- Double_t xsUp_expected[3] = {122.013, 35.7559, 26.7226};
+ Double_t xsUp_expected[3] = {122.178, 35.769, 26.7457};
  Double_t xsUp_observed[3] = {111.389, 33.6609, 25.8484};
 
  // arrays of LQ masses for theoretical cross section
@@ -443,8 +442,8 @@ void makePlots()
  legend->SetMargin(0.15);
  legend->SetHeader("LQ #rightarrow eq");
  legend->AddEntry(gr_excl,"Tevatron exclusion (1 fb^{-1})","f");
- legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. exclusion","l");
- legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. exclusion","lf");
+ legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. limit","l");
+ legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. limit","lf");
  legend->Draw();
 
  TLatex l1;
