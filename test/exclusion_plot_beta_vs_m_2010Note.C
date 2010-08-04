@@ -269,11 +269,11 @@ void makePlots()
 
  TSpline3 gs_xsUp_expected_vs_m("gs_xsTh_vs_m", xsUp_expected_vs_m_log);
  TSpline3 gs_xsUp_observed_vs_m("gs_xsTh_vs_m", xsUp_observed_vs_m_log);
- 
+
  /*******************************************
  ****         Debugging section          ****
  *******************************************/
- 
+
 //  Double_t mTh_int[11];
 //  Double_t xsTh_int[11];
 //  Double_t xsTh_upper_int[11];
@@ -388,7 +388,7 @@ void makePlots()
 //  delete xsTh_lower_vs_m_int;
 //  delete xsUp_expected_vs_m_int;
 //  delete xsUp_observed_vs_m_int;
- 
+
  /*******************************************
  ****       End of debugging section     ****
  *******************************************/
@@ -428,7 +428,7 @@ void makePlots()
 
  TGraph *beta_observed_vs_m = new TGraph(nPts, m, beta_observed);
  beta_observed_vs_m->SetLineWidth(2);
- beta_observed_vs_m->SetLineColor(kRed);
+ beta_observed_vs_m->SetLineColor(kBlack);
  beta_observed_vs_m->SetFillColor(kYellow);
  beta_observed_vs_m->Draw("C");
 
@@ -456,6 +456,7 @@ void makePlots()
 
  c->SetGridx();
  c->SetGridy();
+ c->SetLogy(0);
  c->SaveAs(fileName.c_str());
 
  delete legend;
