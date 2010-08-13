@@ -188,8 +188,8 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[3] = {100,200,300};
  // arrays of upper limits on the cross section
- Double_t xsUp_expected[3] = {122.178, 35.769, 26.7457};
- Double_t xsUp_observed[3] = {111.389, 33.6609, 25.8484};
+ Double_t xsUp_expected[3] = {47.8216, 12.9605, 8.97593};
+ Double_t xsUp_observed[3] = {54.2908, 11.3831, 8.52966};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[6] = {100, 150, 200, 250, 300, 350};
@@ -206,12 +206,12 @@ void makePlots()
  string title = ";m [GeV/c^{2}];#beta";
 
   // integrated luminosity
- string lint = "#intLdt=254 nb^{-1}";
+ string lint = "#intLdt=828 nb^{-1}";
 
  // number of points used for beta vs m line
  Int_t nPts = 10;
  // range of LQ masses in which beta vs m line is derived
- Double_t mass_range[2] = {100, 160};
+ Double_t mass_range[2] = {100, 230};
 
  // region excluded by Tevatron limits (1 fb-1)
  Double_t x_excl[13] = {100,214.39,235.13,254.08,268.12,275.92,283.95,289.08,293.09,295.99,297.10,298.89,100};
@@ -239,7 +239,7 @@ void makePlots()
  Double_t xsTh_log[size_th];
  Double_t xsTh_upper_log[size_th];
  Double_t xsTh_lower_log[size_th];
- 
+
  for(Int_t i=0; i<size_th; i++) {
    xsTh_log[i] = log(xsTh[i]);
    xsTh_upper_log[i] = log(xsTh_upper[i]);
@@ -274,120 +274,120 @@ void makePlots()
  ****         Debugging section          ****
  *******************************************/
 
-//  Double_t mTh_int[11];
-//  Double_t xsTh_int[11];
-//  Double_t xsTh_upper_int[11];
-//  Double_t xsTh_lower_int[11];
-// 
-//  Double_t step_th = (mTh[size_th-1]-mTh[0])/10;
-// 
-//  for(Int_t i=0; i<11; i++) {
-//    mTh_int[i] = mTh[0]+step_th*i;
-//    xsTh_int[i] = exp(gs_xsTh_vs_m.Eval(mTh_int[i]));
-//    xsTh_upper_int[i] = exp(gs_xsTh_upper_vs_m.Eval(mTh_int[i]));
-//    xsTh_lower_int[i] = exp(gs_xsTh_lower_vs_m.Eval(mTh_int[i]));
-//  }
-// 
-//  TGraph *xsTh_vs_m = new TGraph(size_th, mTh, xsTh);
-//  xsTh_vs_m->SetLineWidth(2);
-//  xsTh_vs_m->SetLineColor(kRed);
-//  xsTh_vs_m->Draw("AC");
-// 
-//  TGraph *xsTh_vs_m_int = new TGraph(11, mTh_int, xsTh_int);
-//  xsTh_vs_m_int->SetMarkerSize(1.);
-//  xsTh_vs_m_int->SetMarkerStyle(24);
-//  xsTh_vs_m_int->SetMarkerColor(kBlue);
-//  xsTh_vs_m_int->Draw("P");
-// 
-//  c->SetGridx();
-//  c->SetGridy();
-//  c->SetLogy();
-//  c->SaveAs("xsTh_vs_m.png");
-// 
-//  TGraph *xsTh_upper_vs_m = new TGraph(size_th, mTh, xsTh_upper);
-//  xsTh_upper_vs_m->SetLineWidth(2);
-//  xsTh_upper_vs_m->SetLineColor(kRed);
-//  xsTh_upper_vs_m->Draw("AC");
-// 
-//  TGraph *xsTh_upper_vs_m_int = new TGraph(11, mTh_int, xsTh_upper_int);
-//  xsTh_upper_vs_m_int->SetMarkerSize(1.);
-//  xsTh_upper_vs_m_int->SetMarkerStyle(24);
-//  xsTh_upper_vs_m_int->SetMarkerColor(kBlue);
-//  xsTh_upper_vs_m_int->Draw("P");
-// 
-//  c->SetGridx();
-//  c->SetGridy();
-//  c->SetLogy();
-//  c->SaveAs("xsTh_upper_vs_m.png");
-// 
-//  TGraph *xsTh_lower_vs_m = new TGraph(size_th, mTh, xsTh_lower);
-//  xsTh_lower_vs_m->SetLineWidth(2);
-//  xsTh_lower_vs_m->SetLineColor(kRed);
-//  xsTh_lower_vs_m->Draw("AC");
-// 
-//  TGraph *xsTh_lower_vs_m_int = new TGraph(11, mTh_int, xsTh_lower_int);
-//  xsTh_lower_vs_m_int->SetMarkerSize(1.);
-//  xsTh_lower_vs_m_int->SetMarkerStyle(24);
-//  xsTh_lower_vs_m_int->SetMarkerColor(kBlue);
-//  xsTh_lower_vs_m_int->Draw("P");
-// 
-//  c->SetGridx();
-//  c->SetGridy();
-//  c->SetLogy();
-//  c->SaveAs("xsTh_lower_vs_m.png");
-// 
-//  Double_t mData_int[11];
-//  Double_t xsUp_expected_int[11];
-//  Double_t xsUp_observed_int[11];
-// 
-//  Double_t step_Data = (mData[size_Data-1]-mData[0])/10;
-// 
-//  for(Int_t i=0; i<11; i++) {
-//    mData_int[i] = mData[0]+step_Data*i;
-//    xsUp_expected_int[i] = exp(gs_xsUp_expected_vs_m.Eval(mData_int[i]));
-//    xsUp_observed_int[i] = exp(gs_xsUp_observed_vs_m.Eval(mData_int[i]));
-//  }
-// 
-//  TGraph *xsUp_expected_vs_m = new TGraph(size_Data, mData, xsUp_expected);
-//  xsUp_expected_vs_m->SetLineWidth(2);
-//  xsUp_expected_vs_m->SetLineColor(kRed);
-//  xsUp_expected_vs_m->Draw("AC");
-// 
-//  TGraph *xsUp_expected_vs_m_int = new TGraph(11, mData_int, xsUp_expected_int);
-//  xsUp_expected_vs_m_int->SetMarkerSize(1.);
-//  xsUp_expected_vs_m_int->SetMarkerStyle(24);
-//  xsUp_expected_vs_m_int->SetMarkerColor(kBlue);
-//  xsUp_expected_vs_m_int->Draw("P");
-// 
-//  c->SetGridx();
-//  c->SetGridy();
-//  c->SetLogy();
-//  c->SaveAs("xsUp_expected_vs_m.png");
-// 
-//  TGraph *xsUp_observed_vs_m = new TGraph(size_Data, mData, xsUp_observed);
-//  xsUp_observed_vs_m->SetLineWidth(2);
-//  xsUp_observed_vs_m->SetLineColor(kRed);
-//  xsUp_observed_vs_m->Draw("AC");
-// 
-//  TGraph *xsUp_observed_vs_m_int = new TGraph(11, mData_int, xsUp_observed_int);
-//  xsUp_observed_vs_m_int->SetMarkerSize(1.);
-//  xsUp_observed_vs_m_int->SetMarkerStyle(24);
-//  xsUp_observed_vs_m_int->SetMarkerColor(kBlue);
-//  xsUp_observed_vs_m_int->Draw("P");
-// 
-//  c->SetGridx();
-//  c->SetGridy();
-//  c->SetLogy();
-//  c->SaveAs("xsUp_observed_vs_m.png");
-// 
-//  delete xsTh_vs_m;
-//  delete xsTh_vs_m_int;
-//  delete xsTh_upper_vs_m;
-//  delete xsTh_upper_vs_m_int;
-//  delete xsTh_lower_vs_m;
-//  delete xsTh_lower_vs_m_int;
-//  delete xsUp_expected_vs_m_int;
-//  delete xsUp_observed_vs_m_int;
+ Double_t mTh_int[11];
+ Double_t xsTh_int[11];
+ Double_t xsTh_upper_int[11];
+ Double_t xsTh_lower_int[11];
+
+ Double_t step_th = (mTh[size_th-1]-mTh[0])/10;
+
+ for(Int_t i=0; i<11; i++) {
+   mTh_int[i] = mTh[0]+step_th*i;
+   xsTh_int[i] = exp(gs_xsTh_vs_m.Eval(mTh_int[i]));
+   xsTh_upper_int[i] = exp(gs_xsTh_upper_vs_m.Eval(mTh_int[i]));
+   xsTh_lower_int[i] = exp(gs_xsTh_lower_vs_m.Eval(mTh_int[i]));
+ }
+
+ TGraph *xsTh_vs_m = new TGraph(size_th, mTh, xsTh);
+ xsTh_vs_m->SetLineWidth(2);
+ xsTh_vs_m->SetLineColor(kRed);
+ xsTh_vs_m->Draw("AC");
+
+ TGraph *xsTh_vs_m_int = new TGraph(11, mTh_int, xsTh_int);
+ xsTh_vs_m_int->SetMarkerSize(1.);
+ xsTh_vs_m_int->SetMarkerStyle(24);
+ xsTh_vs_m_int->SetMarkerColor(kBlue);
+ xsTh_vs_m_int->Draw("P");
+
+ c->SetGridx();
+ c->SetGridy();
+ c->SetLogy();
+ c->SaveAs("xsTh_vs_m.png");
+
+ TGraph *xsTh_upper_vs_m = new TGraph(size_th, mTh, xsTh_upper);
+ xsTh_upper_vs_m->SetLineWidth(2);
+ xsTh_upper_vs_m->SetLineColor(kRed);
+ xsTh_upper_vs_m->Draw("AC");
+
+ TGraph *xsTh_upper_vs_m_int = new TGraph(11, mTh_int, xsTh_upper_int);
+ xsTh_upper_vs_m_int->SetMarkerSize(1.);
+ xsTh_upper_vs_m_int->SetMarkerStyle(24);
+ xsTh_upper_vs_m_int->SetMarkerColor(kBlue);
+ xsTh_upper_vs_m_int->Draw("P");
+
+ c->SetGridx();
+ c->SetGridy();
+ c->SetLogy();
+ c->SaveAs("xsTh_upper_vs_m.png");
+
+ TGraph *xsTh_lower_vs_m = new TGraph(size_th, mTh, xsTh_lower);
+ xsTh_lower_vs_m->SetLineWidth(2);
+ xsTh_lower_vs_m->SetLineColor(kRed);
+ xsTh_lower_vs_m->Draw("AC");
+
+ TGraph *xsTh_lower_vs_m_int = new TGraph(11, mTh_int, xsTh_lower_int);
+ xsTh_lower_vs_m_int->SetMarkerSize(1.);
+ xsTh_lower_vs_m_int->SetMarkerStyle(24);
+ xsTh_lower_vs_m_int->SetMarkerColor(kBlue);
+ xsTh_lower_vs_m_int->Draw("P");
+
+ c->SetGridx();
+ c->SetGridy();
+ c->SetLogy();
+ c->SaveAs("xsTh_lower_vs_m.png");
+
+ Double_t mData_int[11];
+ Double_t xsUp_expected_int[11];
+ Double_t xsUp_observed_int[11];
+
+ Double_t step_Data = (mData[size_Data-1]-mData[0])/10;
+
+ for(Int_t i=0; i<11; i++) {
+   mData_int[i] = mData[0]+step_Data*i;
+   xsUp_expected_int[i] = exp(gs_xsUp_expected_vs_m.Eval(mData_int[i]));
+   xsUp_observed_int[i] = exp(gs_xsUp_observed_vs_m.Eval(mData_int[i]));
+ }
+
+ TGraph *xsUp_expected_vs_m = new TGraph(size_Data, mData, xsUp_expected);
+ xsUp_expected_vs_m->SetLineWidth(2);
+ xsUp_expected_vs_m->SetLineColor(kRed);
+ xsUp_expected_vs_m->Draw("AC");
+
+ TGraph *xsUp_expected_vs_m_int = new TGraph(11, mData_int, xsUp_expected_int);
+ xsUp_expected_vs_m_int->SetMarkerSize(1.);
+ xsUp_expected_vs_m_int->SetMarkerStyle(24);
+ xsUp_expected_vs_m_int->SetMarkerColor(kBlue);
+ xsUp_expected_vs_m_int->Draw("P");
+
+ c->SetGridx();
+ c->SetGridy();
+ c->SetLogy();
+ c->SaveAs("xsUp_expected_vs_m.png");
+
+ TGraph *xsUp_observed_vs_m = new TGraph(size_Data, mData, xsUp_observed);
+ xsUp_observed_vs_m->SetLineWidth(2);
+ xsUp_observed_vs_m->SetLineColor(kRed);
+ xsUp_observed_vs_m->Draw("AC");
+
+ TGraph *xsUp_observed_vs_m_int = new TGraph(11, mData_int, xsUp_observed_int);
+ xsUp_observed_vs_m_int->SetMarkerSize(1.);
+ xsUp_observed_vs_m_int->SetMarkerStyle(24);
+ xsUp_observed_vs_m_int->SetMarkerColor(kBlue);
+ xsUp_observed_vs_m_int->Draw("P");
+
+ c->SetGridx();
+ c->SetGridy();
+ c->SetLogy();
+ c->SaveAs("xsUp_observed_vs_m.png");
+
+ delete xsTh_vs_m;
+ delete xsTh_vs_m_int;
+ delete xsTh_upper_vs_m;
+ delete xsTh_upper_vs_m_int;
+ delete xsTh_lower_vs_m;
+ delete xsTh_lower_vs_m_int;
+ delete xsUp_expected_vs_m_int;
+ delete xsUp_observed_vs_m_int;
 
  /*******************************************
  ****       End of debugging section     ****
@@ -434,7 +434,7 @@ void makePlots()
 
  gPad->RedrawAxis();
 
- TLegend *legend = new TLegend(.44,.71,.87,.88);
+ TLegend *legend = new TLegend(.44,.55,.87,.72);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);

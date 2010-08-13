@@ -26,7 +26,7 @@ void myStyle()
  gStyle->SetPadTickY(1);
  gStyle->SetFrameBorderMode(0);
  gStyle->SetPalette(1);
-   
+
    //gStyle->SetOptStat(kFALSE);
  gStyle->SetOptStat(111110);
  gStyle->SetOptFit(1);
@@ -81,7 +81,7 @@ void setTDRStyle() {
 //  tdrStyle->SetEndErrorSize(0);
 //   tdrStyle->SetErrorX(0.);
 //  tdrStyle->SetErrorMarker(20);
-  
+
   tdrStyle->SetMarkerStyle(20);
 
   //For the fit/function:
@@ -190,22 +190,22 @@ void makePlots()
  bool systematics = true; // does nothing at the moment
 
  // total integrated luminosity (in pb-1)
- Double_t L_int = 0.25385;
+ Double_t L_int = 0.828;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
  Double_t Sigma_L_int = 0.11;
 
  // array of signal efficiencies
- Double_t S_eff[3] = {0.13, 0.43, 0.56};
+ Double_t S_eff[3] = {0.12, 0.39, 0.52};
  // array of relative uncertainties on the signal efficiencies
  Double_t Sigma_S_eff[3] = {0.21, 0.21, 0.21};
 
  // array of N_background for L_int
- Double_t N_bkg[3] = {0.187, 0.122, 0.070};
+ Double_t N_bkg[3] = {0.63, 0.27, 0.100};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[3] = {0.55, 0.55, 0.55};
+ Double_t Sigma_N_bkg[3] = {0.46, 0.46, 0.46};
 
  // array of N_observed for L_int
- Double_t N_obs[3] = {0, 0, 0};
+ Double_t N_obs[3] = {1, 0, 0};
 
  // array of LQ masses for calculation of upXS
  Double_t mData[3] = {100,200,300};
@@ -214,15 +214,15 @@ void makePlots()
  Double_t mTh[6] = {100, 150, 200, 250, 300, 350};
  // array of theoretical cross-sections for different leptoquark masses
  Double_t xsTh[6] = {386, 53.3, 11.9, 3.47, 1.21, 0.477};
-  
+
  // filename for the final plot (NB: changing the name extension changes the file format)
  string fileName = "xs95CL_vs_m.eps";
-  
+
  // axes labels for the final plot
  string title = ";m [GeV/c^{2}];#beta^{2}#times#sigma [pb]";
 
  // integrated luminosity
- string lint = "#intLdt=254 nb^{-1}";
+ string lint = "#intLdt=828 nb^{-1}";
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {80,299,299,80,80};
@@ -245,17 +245,17 @@ void makePlots()
  // Array of 95% CL upper limits on the cross section
 //  Double_t xsUp[3] = {0.23722, 0.166074, 0.10131};
 
- Double_t xsUp_expected[3] = {122.178, 35.769, 26.7457};
+ Double_t xsUp_expected[3] = {47.8216, 12.9605, 8.97593};
 //  Double_t xsUp_expected[3];
 //  for(Int_t i = 0; i < size; i++){
-// 
+//
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
 //  }
 
- Double_t xsUp_observed[3] = {111.389, 33.6609, 25.8484};
+ Double_t xsUp_observed[3] = {54.2908, 11.3831, 8.52966};
 //  Double_t xsUp_observed[3];
 //  for(Int_t i = 0; i < size; i++){
-// 
+//
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
 //  }
 
@@ -264,15 +264,15 @@ void makePlots()
  setTDRStyle();
  gStyle->SetPadLeftMargin(0.14);
  gROOT->ForceStyle();
- 
+
  TCanvas *c = new TCanvas("c","",800,800);
  c->cd();
- 
+
  TH2F *bg = new TH2F("bg",title.c_str(), 100, 80., 320., 100, 0.01, 100000.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.15,"Y");
- 
+
  bg->Draw();
 
  TPolyLine *pl = new TPolyLine(5,x_shaded,y_shaded,"F");
@@ -319,7 +319,7 @@ void makePlots()
  xsData_vs_m_observed->SetLineStyle(1);
  xsData_vs_m_observed->SetMarkerSize(1.5);
  xsData_vs_m_observed->Draw("CP");
- 
+
  TLegend *legend = new TLegend(.37,.65,.91,.92);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
