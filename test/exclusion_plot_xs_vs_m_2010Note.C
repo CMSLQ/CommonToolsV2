@@ -200,9 +200,9 @@ void makePlots()
  Double_t Sigma_S_eff[3] = {0.21, 0.21, 0.21};
 
  // array of N_background for L_int
- Double_t N_bkg[3] = {0.63, 0.27, 0.100};
+ Double_t N_bkg[3] = {0.74, 0.29, 0.106};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[3] = {0.46, 0.46, 0.46};
+ Double_t Sigma_N_bkg[3] = {0.53, 0.53, 0.53};
 
  // array of N_observed for L_int
  Double_t N_obs[3] = {1, 0, 0};
@@ -245,19 +245,19 @@ void makePlots()
  // Array of 95% CL upper limits on the cross section
 //  Double_t xsUp[3] = {0.23722, 0.166074, 0.10131};
 
- Double_t xsUp_expected[3] = {47.8216, 12.9605, 8.97593};
 //  Double_t xsUp_expected[3];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
 //  }
+ Double_t xsUp_expected[3] = {49.4057, 13.0627, 8.99882};
 
- Double_t xsUp_observed[3] = {54.2908, 11.3831, 8.52966};
 //  Double_t xsUp_observed[3];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
 //  }
+ Double_t xsUp_observed[3] = {53.6957, 11.3831, 8.53271};
 
  // set ROOT style
 //  myStyle();
