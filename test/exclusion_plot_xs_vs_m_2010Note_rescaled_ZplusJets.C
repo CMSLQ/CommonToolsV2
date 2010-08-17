@@ -200,7 +200,8 @@ void makePlots()
  Double_t Sigma_S_eff[3] = {0.21, 0.21, 0.21};
 
  // array of N_background for L_int
- Double_t N_bkg[3] = {0.85, 0.33, 0.123};
+//  Double_t N_bkg[3] = {0.85, 0.33, 0.123}; // Z+jets rescaled by a factor of 1.33 (with 25% statistical uncertainty)
+ Double_t N_bkg[3] = {0.95, 0.37, 0.140}; // Z+jets rescaled by a factor of 1.67 (1.33 + 1 sigma)
  // array of relative uncertainties on N_background (0.1 = 10%)
  Double_t Sigma_N_bkg[3] = {0.52, 0.52, 0.52};
 
@@ -250,14 +251,16 @@ void makePlots()
 //
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
 //  }
- Double_t xsUp_expected[3] = {50.9125, 13.2699, 9.08099};
+ Double_t xsUp_expected[3] = {50.9125, 13.2699, 9.08099}; // Z+jets rescaled by a factor of 1.33 (with 25% statistical uncertainty)
+//  Double_t xsUp_expected[3] = {52.2412, 13.4797, 9.15597}; // Z+jets rescaled by a factor of 1.67 (1.33 + 1 sigma)
 
 //  Double_t xsUp_observed[3];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
 //  }
- Double_t xsUp_observed[3] = {53.1464, 11.3831, 8.53271};
+ Double_t xsUp_observed[3] = {53.1464, 11.3831, 8.53271}; // Z+jets rescaled by a factor of 1.33 (with 25% statistical uncertainty)
+//  Double_t xsUp_observed[3] = {52.7344, 11.3831, 8.53271}; // Z+jets rescaled by a factor of 1.67 (1.33 + 1 sigma)
 
  // set ROOT style
 //  myStyle();
