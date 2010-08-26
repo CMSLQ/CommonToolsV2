@@ -188,8 +188,8 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[3] = {100,200,300};
  // arrays of upper limits on the cross section
- Double_t xsUp_expected[3] = {49.4057, 13.0627, 8.99882};
- Double_t xsUp_observed[3] = {53.6957, 11.3831, 8.53271};
+ Double_t xsUp_expected[3] = {41.5651, 10.4829, 7.01151};
+ Double_t xsUp_observed[3] = {51.59, 8.56934, 6.427};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[6] = {100, 150, 200, 250, 300, 350};
@@ -206,7 +206,7 @@ void makePlots()
  string title = ";m [GeV/c^{2}];#beta";
 
   // integrated luminosity
- string lint = "#intLdt=828 nb^{-1}";
+ string lint = "#intLdt=1.1 pb^{-1}";
 
  // number of points used for beta vs m line
  Int_t nPts = 10;
@@ -434,7 +434,7 @@ void makePlots()
 
  gPad->RedrawAxis();
 
- TLegend *legend = new TLegend(.44,.55,.87,.72);
+ TLegend *legend = new TLegend(.40,.43,.83,.60);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);

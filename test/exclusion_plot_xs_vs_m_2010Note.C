@@ -190,7 +190,7 @@ void makePlots()
  bool systematics = true; // does nothing at the moment
 
  // total integrated luminosity (in pb-1)
- Double_t L_int = 0.828;
+ Double_t L_int = 1.1;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
  Double_t Sigma_L_int = 0.11;
 
@@ -200,12 +200,12 @@ void makePlots()
  Double_t Sigma_S_eff[3] = {0.21, 0.21, 0.21};
 
  // array of N_background for L_int
- Double_t N_bkg[3] = {0.74, 0.29, 0.106};
+ Double_t N_bkg[3] = {1.18, 0.46, 0.175};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[3] = {0.53, 0.53, 0.53};
+ Double_t Sigma_N_bkg[3] = {0.52, 0.52, 0.52};
 
  // array of N_observed for L_int
- Double_t N_obs[3] = {1, 0, 0};
+ Double_t N_obs[3] = {2, 0, 0};
 
  // array of LQ masses for calculation of upXS
  Double_t mData[3] = {100,200,300};
@@ -222,7 +222,7 @@ void makePlots()
  string title = ";m [GeV/c^{2}];#beta^{2}#times#sigma [pb]";
 
  // integrated luminosity
- string lint = "#intLdt=828 nb^{-1}";
+ string lint = "#intLdt=1.1 pb^{-1}";
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {80,299,299,80,80};
@@ -250,14 +250,14 @@ void makePlots()
 //
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
 //  }
- Double_t xsUp_expected[3] = {49.4057, 13.0627, 8.99882};
+ Double_t xsUp_expected[3] = {41.5651, 10.4829, 7.01151};
 
 //  Double_t xsUp_observed[3];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
 //  }
- Double_t xsUp_observed[3] = {53.6957, 11.3831, 8.53271};
+ Double_t xsUp_observed[3] = {51.59, 8.56934, 6.427};
 
  // set ROOT style
 //  myStyle();
