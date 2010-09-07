@@ -1,0 +1,182 @@
+#!/usr/bin/env python
+# Anzar Afaq 06/17/2008
+# Oleksiy Atramentov 06/21/2008
+
+help = """
+How to use: 
+
+edmPickEvent event_list
+
+it will create pick_events.cfg
+
+run it:
+cmsRun pick_events_cfg.py
+
+event_list is a text file (no empty lines!):
+
+run1 event1 lumi_section1 dataset1
+run2 event2 lumi_section2 dataset2
+...
+
+For example:
+46968     4   2 /Cosmics/CRUZET2-v1/RAW
+47011    23 105 /Cosmics/CRUZET2-v1/RAW
+47011 12312 140 /Cosmics/CRUZET2-v1/RAW
+ 
+run, event, and lumi_section are integers that you can get from edm::Event(Auxiliary)
+
+dataset: it just a name of the physics dataset, if you don't know exact name
+         you can provide a mask, e.g.: *QCD*RAW (but it doesn't work at the moment)
+
+Note: at the beginning you need to set proper enviroment (only bash at the moment):
+source /uscmst1/prod/sw/cms/DBS/Clients/Python/setup.sh
+
+For updated information see Wiki:
+https://twiki.cern.ch/twiki/bin/view/CMS/PickEvents 
+"""
+import sys, optparse,re, sets
+import xml.sax, xml.sax.handler
+from DBSAPI.dbsException import *
+from DBSAPI.dbsApiException import *
+from DBSAPI.dbsOptions import DbsOptionParser
+from DBSAPI.dbsApi import DbsApi
+from DBSAPI.dbsOptions import DbsOptionParser
+from xml.sax import SAXParseException
+#
+#
+def unique(keys):
+    unique = []
+    for i in keys:
+        if i not in unique:unique.append(i)
+    return unique
+
+def get_file_names(event):
+    run     = event[0]
+    lumi    = event[2]
+    dataset = event[3] 
+    # Query DBS
+    try:
+        optManager  = DbsOptionParser()
+        (opts,args) = optManager.getOpt()
+        api = DbsApi(opts.__dict__)
+        query="find file where dataset=%s and run=%i and lumi=%i"%(dataset, run, lumi)
+        
+        xmldata = api.executeQuery(query)
+
+    except DbsApiException, ex:
+        print "Caught API Exception %s: %s "  % (ex.getClassName(), ex.getErrorMessage() )
+        if ex.getErrorCode() not in (None, ""):
+            print "DBS Exception Error Code: ", ex.getErrorCode()
+
+    # Parse the resulting xml output.
+    files = []
+    try:
+        class Handler (xml.sax.handler.ContentHandler):
+            def __init__(self):
+                self.inFile = 0
+            def startElement(self, name, attrs):
+                if name == 'file':
+                    self.inFile = 1
+            def endElement(self, name):
+                if name == 'file':
+                    self.inFile = 0
+            def characters(self, data):
+                if self.inFile:
+                    files.append(str(data))
+                    
+        xml.sax.parseString (xmldata, Handler ())
+    except SAXParseException, ex:
+        msg = "Unable to parse XML response from DBS Server"
+        msg += "\n  Server has not responded as desired, try setting level=DBSDEBUG"
+        raise DbsBadXMLData(args=msg, code="5999")
+
+    return files
+#files contain the resultant files in DBS
+
+
+
+#read events
+if len(sys.argv)<2:
+  print help
+  sys.exit(0)
+
+file = open(sys.argv[1])
+
+list = file.readlines()
+events = []
+for i in list:
+   line = i.strip().split()
+   run     = int(line[0])
+   evt     = int(line[1])
+   lumi    = int(line[2])
+   dataset = line[3] 
+   print "run = %i, event = %i, lumi = %i, dataset = %s"%(run, evt, lumi, dataset)
+   events.append([run,evt,lumi,dataset])
+
+
+if __name__ != "__main__":
+  sys.exit(1)
+
+files = []
+for i in range(len(list)):
+  
+  tmp = get_file_names(events[i])
+  print events[i], tmp
+  for tmptmp in tmp:
+      files.append(tmptmp)
+  
+# Purge duplicate files
+files = unique(files)
+
+print files
+
+source = ""
+for ifile in range(len(files)-1):
+   print files[ifile]
+   source = source + "'%s',\n"%files[ifile]
+
+source = source + "'%s'\n"%files[len(files)-1]
+
+# Construct Events to process {run1,event1},{run2,event2}..
+eventsToProcess = ""
+
+for ievent in range ( len(events) - 1 ):
+    eventsToProcess = eventsToProcess + "'%i:%i' , "%(events[ievent][0],events[ievent][1])
+
+eventsToProcess = eventsToProcess + "'%i:%i'"%(events[len(events)-1][0],events[len(events)-1][1])
+
+print source
+# Define head and tail of the cfg file
+cfg_body = """import FWCore.ParameterSet.Config as cms
+
+process = cms.Process("PICK_EVENTS")
+
+process.source = cms.Source("PoolSource",
+    fileNames = cms.untracked.vstring( %s ), 
+    eventsToProcess = cms.untracked.VEventRange( %s )
+)
+
+process.Out = cms.OutputModule("PoolOutputModule",
+    outputCommands = cms.untracked.vstring('keep *'),
+    fileName = cms.untracked.string('picked_events.root')
+)
+
+
+process.e = cms.EndPath(process.Out)
+
+
+process.maxEvents = cms.untracked.PSet(
+    input = cms.untracked.int32(-1)
+)"""%(source,eventsToProcess)
+
+cfg = open("pick_events_cfg.py","w")
+
+cfg.write(cfg_body)
+
+#for i in files:
+#    print i
+
+
+#   for ievent in events: 
+#       get_file_names(ievent)
+
