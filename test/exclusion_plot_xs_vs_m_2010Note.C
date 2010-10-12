@@ -190,30 +190,30 @@ void makePlots()
  bool systematics = true; // does nothing at the moment
 
  // total integrated luminosity (in pb-1)
- Double_t L_int = 1.1;
+ Double_t L_int = 6.7;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
  Double_t Sigma_L_int = 0.11;
 
  // array of signal efficiencies
- Double_t S_eff[3] = {0.12, 0.39, 0.52};
+ Double_t S_eff[4] = {0.39, 0.48, 0.53, 0.59};
  // array of relative uncertainties on the signal efficiencies
- Double_t Sigma_S_eff[3] = {0.21, 0.21, 0.21};
+ Double_t Sigma_S_eff[4] = {0.21, 0.21, 0.21, 0.21};
 
  // array of N_background for L_int
- Double_t N_bkg[3] = {1.05, 0.43, 0.163};
+ Double_t N_bkg[4] = {2.06, 1.29, 0.78, 0.36};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[3] = {0.465, 0.465, 0.465};
+ Double_t Sigma_N_bkg[4] = {0.52, 0.52, 0.52, 0.51};
 
  // array of N_observed for L_int
- Double_t N_obs[3] = {2, 0, 0};
+ Double_t N_obs[4] = {1, 1, 0, 0};
 
  // array of LQ masses for calculation of upXS
- Double_t mData[3] = {100,200,300};
+ Double_t mData[4] = {200, 250, 300, 400};
 
  // arrays of LQ masses for theoretical cross section
- Double_t mTh[6] = {100, 150, 200, 250, 300, 350};
+ Double_t mTh[8] = {100, 150, 200, 250, 300, 350, 400, 450};
  // array of theoretical cross-sections for different leptoquark masses
- Double_t xsTh[6] = {386, 53.3, 11.9, 3.47, 1.21, 0.477};
+ Double_t xsTh[8] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949};
 
  // filename for the final plot (NB: changing the name extension changes the file format)
  string fileName = "xs95CL_vs_m.eps";
@@ -222,19 +222,15 @@ void makePlots()
  string title = ";m [GeV/c^{2}];#beta^{2}#times#sigma [pb]";
 
  // integrated luminosity
- string lint = "#intLdt=1.1 pb^{-1}";
+ string lint = "#intLdt=6.7 pb^{-1}";
 
  // region excluded by Tevatron limits
- Double_t x_shaded[5] = {80,299,299,80,80};
- Double_t y_shaded[5] = {0.01,0.01,100000,100000,0.01};
+ Double_t x_shaded[5] = {180,299,299,180,180};
+ Double_t y_shaded[5] = {0.01,0.01,10000,10000,0.01};
 
  // PDF uncertainty band
- Double_t x_pdf[12] = {100, 150, 200, 250, 300, 350, 350, 300, 250, 200, 150, 100};
- Double_t y_pdf[12] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.57, 0.38, 0.98, 2.9, 10.0, 45.2, 330.3};
-
- // **********************************************
- // *  Don't change anything below this point!   *
- // **********************************************
+ Double_t x_pdf[16] = {100, 150, 200, 250, 300, 350, 400, 450, 450, 400, 350, 300, 250, 200, 150, 100};
+ Double_t y_pdf[16] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.572, 0.249, 0.1167, 0.0719, 0.160, 0.379, 0.98, 2.9, 10.0, 45.2, 330.3};
 
   // turn on/off batch mode
  gROOT->SetBatch(kTRUE);
@@ -245,19 +241,19 @@ void makePlots()
  // Array of 95% CL upper limits on the cross section
 //  Double_t xsUp[3] = {0.23722, 0.166074, 0.10131};
 
-//  Double_t xsUp_expected[3];
+//  Double_t xsUp_expected[4];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
 //  }
- Double_t xsUp_expected[3] = {40.2801, 10.3684, 6.97497};
+ Double_t xsUp_expected[4] = {2.50037, 1.74913, 1.39725, 1.09662};
 
-//  Double_t xsUp_observed[3];
+//  Double_t xsUp_observed[4];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
 //  }
- Double_t xsUp_observed[3] = {52.2766, 8.56934, 6.427};
+ Double_t xsUp_observed[4] = {1.89819, 1.59119, 1.03394, 0.928955};
 
  // set ROOT style
 //  myStyle();
@@ -268,7 +264,7 @@ void makePlots()
  TCanvas *c = new TCanvas("c","",800,800);
  c->cd();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 80., 320., 100, 0.01, 100000.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 180., 420., 100, 0.01, 10000.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.15,"Y");
@@ -281,7 +277,7 @@ void makePlots()
  pl->SetFillColor(kGray);
  pl->Draw();
 
- TGraph *grshade = new TGraph(12,x_pdf,y_pdf);
+ TGraph *grshade = new TGraph(16,x_pdf,y_pdf);
  grshade->SetFillColor(kYellow);
  grshade->Draw("f");
 
@@ -293,7 +289,7 @@ void makePlots()
  gStyle->SetPadLeftMargin(0.14);
  gROOT->ForceStyle();
 
- TGraph *xsTh_vs_m = new TGraph(6, mTh, xsTh);
+ TGraph *xsTh_vs_m = new TGraph(8, mTh, xsTh);
  xsTh_vs_m->SetLineWidth(2);
  xsTh_vs_m->SetLineColor(kRed);
  xsTh_vs_m->SetFillColor(kYellow);

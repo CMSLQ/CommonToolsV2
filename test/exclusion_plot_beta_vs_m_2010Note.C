@@ -186,18 +186,18 @@ void makePlots()
  // **********************************************
 
  // array of LQ masses for calculation of upXS
- Double_t mData[3] = {100,200,300};
+ Double_t mData[4] = {200, 250, 300, 400};
  // arrays of upper limits on the cross section
- Double_t xsUp_expected[3] = {40.2801, 10.3684, 6.97497};
- Double_t xsUp_observed[3] = {52.2766, 8.56934, 6.427};
+ Double_t xsUp_expected[4] = {2.50037, 1.74913, 1.39725, 1.09662};
+ Double_t xsUp_observed[4] = {1.89819, 1.59119, 1.03394, 0.928955};
 
  // arrays of LQ masses for theoretical cross section
- Double_t mTh[6] = {100, 150, 200, 250, 300, 350};
+ Double_t mTh[8] = {100, 150, 200, 250, 300, 350, 400, 450};
  // arrays of theoretical cross-sections for different leptoquark masses
- Double_t xsTh[6] = {386, 53.3, 11.9, 3.47, 1.21, 0.477};
+ Double_t xsTh[8] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949};
  // arays of upper and lower bounds with PDF and scale uncertainties included
- Double_t xsTh_upper[6] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.57}; // upper bounds with PDF and scale uncertainties included
- Double_t xsTh_lower[6] = {330.3, 45.2, 10.0, 2.9, 0.98, 0.38}; // lower bounds with PDF and scale uncertainties included
+ Double_t xsTh_upper[8] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.572, 0.249, 0.1167}; // upper bounds with PDF and scale uncertainties included
+ Double_t xsTh_lower[8] = {330.3, 45.2, 10.0, 2.9, 0.98, 0.379, 0.160, 0.0719}; // lower bounds with PDF and scale uncertainties included
 
  // filename for the final plot (NB: changing the name extension changes the file format)
  string fileName = "beta_vs_m_excl.eps";
@@ -206,15 +206,15 @@ void makePlots()
  string title = ";m [GeV/c^{2}];#beta";
 
   // integrated luminosity
- string lint = "#intLdt=1.1 pb^{-1}";
+ string lint = "#intLdt=6.7 pb^{-1}";
 
  // number of points used for beta vs m line
  Int_t nPts = 10;
  // range of LQ masses in which beta vs m line is derived
- Double_t mass_range[2] = {100, 230};
+ Double_t mass_range[2] = {200, 330};
 
  // region excluded by Tevatron limits (1 fb-1)
- Double_t x_excl[13] = {100,214.39,235.13,254.08,268.12,275.92,283.95,289.08,293.09,295.99,297.10,298.89,100};
+ Double_t x_excl[13] = {200,214.39,235.13,254.08,268.12,275.92,283.95,289.08,293.09,295.99,297.10,298.89,200};
  Double_t y_excl[13] = {0,0,0.10,0.20,0.30,0.40,0.50,0.60,0.70,0.80,0.90,1,1};
 
  // turn on/off batch mode
@@ -225,7 +225,7 @@ void makePlots()
 //  gStyle->SetPadLeftMargin(0.14);
  gROOT->ForceStyle();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 20, 100., 300., 100, 0., 1.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 20, 200., 350., 100, 0., 1.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.05,"Y");
@@ -291,7 +291,7 @@ void makePlots()
  TGraph *xsTh_vs_m = new TGraph(size_th, mTh, xsTh);
  xsTh_vs_m->SetLineWidth(2);
  xsTh_vs_m->SetLineColor(kRed);
- xsTh_vs_m->Draw("AC");
+ xsTh_vs_m->Draw("ACP");
 
  TGraph *xsTh_vs_m_int = new TGraph(11, mTh_int, xsTh_int);
  xsTh_vs_m_int->SetMarkerSize(1.);
@@ -307,7 +307,7 @@ void makePlots()
  TGraph *xsTh_upper_vs_m = new TGraph(size_th, mTh, xsTh_upper);
  xsTh_upper_vs_m->SetLineWidth(2);
  xsTh_upper_vs_m->SetLineColor(kRed);
- xsTh_upper_vs_m->Draw("AC");
+ xsTh_upper_vs_m->Draw("ACP");
 
  TGraph *xsTh_upper_vs_m_int = new TGraph(11, mTh_int, xsTh_upper_int);
  xsTh_upper_vs_m_int->SetMarkerSize(1.);
@@ -323,7 +323,7 @@ void makePlots()
  TGraph *xsTh_lower_vs_m = new TGraph(size_th, mTh, xsTh_lower);
  xsTh_lower_vs_m->SetLineWidth(2);
  xsTh_lower_vs_m->SetLineColor(kRed);
- xsTh_lower_vs_m->Draw("AC");
+ xsTh_lower_vs_m->Draw("ACP");
 
  TGraph *xsTh_lower_vs_m_int = new TGraph(11, mTh_int, xsTh_lower_int);
  xsTh_lower_vs_m_int->SetMarkerSize(1.);
@@ -351,7 +351,7 @@ void makePlots()
  TGraph *xsUp_expected_vs_m = new TGraph(size_Data, mData, xsUp_expected);
  xsUp_expected_vs_m->SetLineWidth(2);
  xsUp_expected_vs_m->SetLineColor(kRed);
- xsUp_expected_vs_m->Draw("AC");
+ xsUp_expected_vs_m->Draw("ACP");
 
  TGraph *xsUp_expected_vs_m_int = new TGraph(11, mData_int, xsUp_expected_int);
  xsUp_expected_vs_m_int->SetMarkerSize(1.);
@@ -367,7 +367,7 @@ void makePlots()
  TGraph *xsUp_observed_vs_m = new TGraph(size_Data, mData, xsUp_observed);
  xsUp_observed_vs_m->SetLineWidth(2);
  xsUp_observed_vs_m->SetLineColor(kRed);
- xsUp_observed_vs_m->Draw("AC");
+ xsUp_observed_vs_m->Draw("ACP");
 
  TGraph *xsUp_observed_vs_m_int = new TGraph(11, mData_int, xsUp_observed_int);
  xsUp_observed_vs_m_int->SetMarkerSize(1.);
@@ -434,7 +434,7 @@ void makePlots()
 
  gPad->RedrawAxis();
 
- TLegend *legend = new TLegend(.40,.43,.83,.60);
+ TLegend *legend = new TLegend(.45,.40,.88,.57);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);
