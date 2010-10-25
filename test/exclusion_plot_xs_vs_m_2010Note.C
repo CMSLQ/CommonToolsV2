@@ -190,25 +190,25 @@ void makePlots()
  bool systematics = true; // does nothing at the moment
 
  // total integrated luminosity (in pb-1)
- Double_t L_int = 6.7;
+ Double_t L_int = 10.9;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
  Double_t Sigma_L_int = 0.11;
 
  // array of signal efficiencies
- Double_t S_eff[4] = {0.39, 0.48, 0.53, 0.59};
+ Double_t S_eff[5] = {0.408, 0.473, 0.491, 0.510, 0.554};
  // array of relative uncertainties on the signal efficiencies
- Double_t Sigma_S_eff[4] = {0.21, 0.21, 0.21, 0.21};
+ Double_t Sigma_S_eff[5] = {0.07, 0.07, 0.07, 0.07, 0.07};
 
  // array of N_background for L_int
- Double_t N_bkg[4] = {2.06, 1.29, 0.78, 0.36};
+ Double_t N_bkg[5] = {0.93, 0.61, 0.51, 0.43, 0.29};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[4] = {0.52, 0.52, 0.52, 0.51};
+ Double_t Sigma_N_bkg[5] = {0.41, 0.41, 0.41, 0.41, 0.41};
 
  // array of N_observed for L_int
- Double_t N_obs[4] = {1, 1, 0, 0};
+ Double_t N_obs[5] = {1, 0, 0, 0, 0};
 
  // array of LQ masses for calculation of upXS
- Double_t mData[4] = {200, 250, 300, 400};
+ Double_t mData[5] = {250, 300, 320, 340, 400};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[8] = {100, 150, 200, 250, 300, 350, 400, 450};
@@ -222,10 +222,10 @@ void makePlots()
  string title = ";m [GeV/c^{2}];#beta^{2}#times#sigma [pb]";
 
  // integrated luminosity
- string lint = "#intLdt=6.7 pb^{-1}";
+ string lint = "#intLdt=10.9 pb^{-1}";
 
  // region excluded by Tevatron limits
- Double_t x_shaded[5] = {180,299,299,180,180};
+ Double_t x_shaded[5] = {200,299,299,200,200};
  Double_t y_shaded[5] = {0.01,0.01,10000,10000,0.01};
 
  // PDF uncertainty band
@@ -246,14 +246,14 @@ void makePlots()
 //
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
 //  }
- Double_t xsUp_expected[4] = {2.50037, 1.74913, 1.39725, 1.09662};
+ Double_t xsUp_expected[5] = {0.982545, 0.778086, 0.726786, 0.681691, 0.596035};
 
 //  Double_t xsUp_observed[4];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
 //  }
- Double_t xsUp_observed[4] = {1.89819, 1.59119, 1.03394, 0.928955};
+ Double_t xsUp_observed[5] = {0.991211, 0.60791, 0.585938, 0.563965, 0.519287};
 
  // set ROOT style
 //  myStyle();
@@ -264,7 +264,7 @@ void makePlots()
  TCanvas *c = new TCanvas("c","",800,800);
  c->cd();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 180., 420., 100, 0.01, 10000.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 450., 100, 0.01, 10000.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.15,"Y");
