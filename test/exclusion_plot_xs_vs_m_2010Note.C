@@ -323,7 +323,7 @@ void makePlots()
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
  legend->SetHeader("LQ #rightarrow eq");
- legend->AddEntry(pl,"Tevatron exclusion (1 fb^{-1}, #beta=1)","f");
+ legend->AddEntry(pl,"D0 exclusion (1 fb^{-1}, #beta=1)","f");
  legend->AddEntry(xsTh_vs_m,"#beta^{2}#times #sigma_{theory} with PDF and scale unc., #beta=1","lf");
  legend->AddEntry(xsData_vs_m_expected, "Expected 95% C.L. upper limit","lp");
  legend->AddEntry(xsData_vs_m_observed, "Observed 95% C.L. upper limit","lp");

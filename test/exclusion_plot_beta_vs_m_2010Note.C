@@ -441,7 +441,7 @@ void makePlots()
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
  legend->SetHeader("LQ #rightarrow eq");
- legend->AddEntry(gr_excl,"Tevatron exclusion (1 fb^{-1})","f");
+ legend->AddEntry(gr_excl,"D0 exclusion (1 fb^{-1})","f");
  legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. limit","l");
  legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. limit","lf");
  legend->Draw();
