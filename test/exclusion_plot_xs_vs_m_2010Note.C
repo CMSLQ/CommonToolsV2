@@ -219,7 +219,7 @@ void makePlots()
  string fileName = "xs95CL_vs_m.eps";
 
  // axes labels for the final plot
- string title = ";m [GeV/c^{2}];#beta^{2}#times#sigma [pb]";
+ string title = ";m [GeV];#beta^{2}#times#sigma [pb]";
 
  // integrated luminosity
  string lint = "#intLdt=10.9 pb^{-1}";

@@ -203,7 +203,7 @@ void makePlots()
  string fileName = "beta_vs_m_excl.eps";
 
  // axes labels for the final plot
- string title = ";m [GeV/c^{2}];#beta";
+ string title = ";m [GeV];#beta";
 
   // integrated luminosity
  string lint = "#intLdt=10.9 pb^{-1}";
