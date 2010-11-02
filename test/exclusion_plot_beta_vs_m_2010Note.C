@@ -186,10 +186,10 @@ void makePlots()
  // **********************************************
 
  // array of LQ masses for calculation of upXS
- Double_t mData[5] = {250, 300, 320, 340, 400};
+ Double_t mData[7] = {250, 280, 300, 320, 340, 370, 400};
  // arrays of upper limits on the cross section
- Double_t xsUp_expected[5] = {0.982545, 0.778086, 0.726786, 0.681691, 0.596035};
- Double_t xsUp_observed[5] = {0.991211, 0.60791, 0.585938, 0.563965, 0.519287};
+ Double_t xsUp_expected[7] = {0.978991, 0.843866, 0.777863, 0.725734, 0.682747, 0.631729, 0.596109};
+ Double_t xsUp_observed[7] = {0.977783, 0.637695, 0.60791, 0.587402, 0.563232, 0.539795, 0.519287};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[8] = {100, 150, 200, 250, 300, 350, 400, 450};
@@ -229,7 +229,7 @@ void makePlots()
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.05,"Y");
- bg->GetXaxis()->SetNdivisions(505);
+//  bg->GetXaxis()->SetNdivisions(505);
 
  TCanvas *c = new TCanvas("c","",800,800);
  c->cd();
@@ -441,7 +441,7 @@ void makePlots()
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
  legend->SetHeader("LQ #rightarrow eq");
- legend->AddEntry(gr_excl,"D0 exclusion (1 fb^{-1})","f");
+ legend->AddEntry(gr_excl,"D#oslash exclusion (1 fb^{-1})","f");
  legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. limit","l");
  legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. limit","lf");
  legend->Draw();
@@ -451,7 +451,7 @@ void makePlots()
  l1.SetTextSize(0.04);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.18,0.3,"CMS Preliminary 2010");
+ l1.DrawLatex(0.18,0.3,"CMS 2010");
  l1.DrawLatex(0.18,0.2,lint.c_str());
 
  c->SetGridx();

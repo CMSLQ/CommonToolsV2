@@ -1,5 +1,5 @@
-// #include "CLA.C"
-#include "CL95cms.C"
+#include "CLA.C"
+// #include "CL95cms.C"
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TCanvas.h"
@@ -195,20 +195,20 @@ void makePlots()
  Double_t Sigma_L_int = 0.11;
 
  // array of signal efficiencies
- Double_t S_eff[5] = {0.408, 0.473, 0.491, 0.510, 0.554};
- // array of relative uncertainties on the signal efficiencies
- Double_t Sigma_S_eff[5] = {0.07, 0.07, 0.07, 0.07, 0.07};
+ Double_t S_eff[7] = {0.412, 0.451, 0.473, 0.490, 0.511, 0.533, 0.554};
+ // array of relative uncertainties on the signal efficiencies (0.1 = 10%)
+ Double_t Sigma_S_eff[7] = {0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07};
 
  // array of N_background for L_int
- Double_t N_bkg[5] = {0.93, 0.61, 0.51, 0.43, 0.29};
+ Double_t N_bkg[7] = {0.96, 0.73, 0.61, 0.50, 0.44, 0.34, 0.29};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[5] = {0.41, 0.41, 0.41, 0.41, 0.41};
+ Double_t Sigma_N_bkg[7] = {0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38};
 
  // array of N_observed for L_int
- Double_t N_obs[5] = {1, 0, 0, 0, 0};
+ Double_t N_obs[7] = {1, 0, 0, 0, 0, 0, 0};
 
  // array of LQ masses for calculation of upXS
- Double_t mData[5] = {250, 300, 320, 340, 400};
+ Double_t mData[7] = {250, 280, 300, 320, 340, 370, 400};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[8] = {100, 150, 200, 250, 300, 350, 400, 450};
@@ -225,7 +225,7 @@ void makePlots()
  string lint = "#intLdt=10.9 pb^{-1}";
 
  // region excluded by Tevatron limits
- Double_t x_shaded[5] = {200,299,299,200,200};
+ Double_t x_shaded[5] = {240,299,299,240,240};
  Double_t y_shaded[5] = {0.01,0.01,10000,10000,0.01};
 
  // PDF uncertainty band
@@ -237,23 +237,23 @@ void makePlots()
 
  Int_t size = sizeof(S_eff)/sizeof(*S_eff);
 
- // Upper Limits can be entered manually here when the call to CLA.C is commented below
- // Array of 95% CL upper limits on the cross section
-//  Double_t xsUp[3] = {0.23722, 0.166074, 0.10131};
+ // Upper Limits can be entered manually when the call to CLA.C is commented below
 
-//  Double_t xsUp_expected[4];
+//  Double_t xsUp_expected[7];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
 //  }
- Double_t xsUp_expected[5] = {0.982545, 0.778086, 0.726786, 0.681691, 0.596035};
+ // Array of the expected 95% CL upper limits on the cross section
+ Double_t xsUp_expected[7] = {0.978991, 0.843866, 0.777863, 0.725734, 0.682747, 0.631729, 0.596109};
 
-//  Double_t xsUp_observed[4];
+//  Double_t xsUp_observed[7];
 //  for(Int_t i = 0; i < size; i++){
 //
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
 //  }
- Double_t xsUp_observed[5] = {0.991211, 0.60791, 0.585938, 0.563965, 0.519287};
+ // Array of the observed 95% CL upper limits on the cross section
+ Double_t xsUp_observed[7] = {0.977783, 0.637695, 0.60791, 0.587402, 0.563232, 0.539795, 0.519287};
 
  // set ROOT style
 //  myStyle();
@@ -264,7 +264,7 @@ void makePlots()
  TCanvas *c = new TCanvas("c","",800,800);
  c->cd();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 450., 100, 0.01, 10000.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 240., 410., 100, 0.01, 10000.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.15,"Y");
@@ -323,7 +323,7 @@ void makePlots()
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
  legend->SetHeader("LQ #rightarrow eq");
- legend->AddEntry(pl,"D0 exclusion (1 fb^{-1}, #beta=1)","f");
+ legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}, #beta=1)","f");
  legend->AddEntry(xsTh_vs_m,"#beta^{2}#times #sigma_{theory} with PDF and scale unc., #beta=1","lf");
  legend->AddEntry(xsData_vs_m_expected, "Expected 95% C.L. upper limit","lp");
  legend->AddEntry(xsData_vs_m_observed, "Observed 95% C.L. upper limit","lp");
@@ -334,7 +334,7 @@ void makePlots()
  l1.SetTextSize(0.04);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.2,0.3,"CMS Preliminary 2010");
+ l1.DrawLatex(0.2,0.3,"CMS 2010");
  l1.DrawLatex(0.2,0.2,lint.c_str());
 
 //  TLatex l2;
