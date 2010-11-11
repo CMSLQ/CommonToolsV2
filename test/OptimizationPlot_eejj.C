@@ -29,11 +29,11 @@ void OptimizationPlot_eejj(int nbins = 100)
   //////////////////////////////
   // User inputs here
   ////////////////////////////// 
-  TString file1_str   = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st500to680/output_cutTable_eejjSample_opt/analysisClass_eejjSample_plots.root";
-  TString optfile_str = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st500to680/output_cutTable_eejjSample_opt/optimizationCuts.txt";
-  TString signalHisto_str  = "histo1D__LQeejj_M340__Optimizer";
+  TString file1_str   = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st340to520/output_cutTable_eejjSample_opt/analysisClass_eejjSample_plots.root";
+  TString optfile_str = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st340to520/output_cutTable_eejjSample_opt/optimizationCuts.txt";
+  TString signalHisto_str  = "histo1D__LQeejj_M300__Optimizer";
   TString allbkgHisto_str  = "histo1D__ALLBKG__Optimizer";
-  TString evtpassHisto_str = "histo1D__LQeejj_M340__EventsPassingCuts";
+  TString evtpassHisto_str = "histo1D__LQeejj_M300__EventsPassingCuts";
 
   TFile file1(file1_str);
   file1.cd();
@@ -133,7 +133,7 @@ void OptimizationPlot_eejj(int nbins = 100)
   std::cout << "maxSignif: " << maxSignif << "\t" << "Bin_FromSignif - 1 (as bin zero is overflow): " << bin_fromSignif - 1 << std::endl;
   //std::cout << "Significance: " << Signif.GetBinContent(bin_fromSignif) << std::endl;
   std::cout << "ILum = " << ILum << "\t Ns = " << Signal.GetBinContent(bin_fromSignif) << "\t Nb = " << Backgnd.GetBinContent(bin_fromSignif) << std::endl;
-  std::stringstream ss1; ss1<<"grep 'Bin = "<<(bin_fromUpperLimit - 1)<<"\t' "<<optfile_str <<std::endl; //std::cout<<ss1.str()<<std::endl;
+  std::stringstream ss1; ss1<<"grep 'Bin = "<<(bin_fromSignif - 1)<<"\t' "<<optfile_str <<std::endl; //std::cout<<ss1.str()<<std::endl;
   system(ss1.str().c_str());
   c2->SaveAs("Signif.png");
 
