@@ -188,8 +188,8 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[7] = {250, 280, 300, 320, 340, 370, 400};
  // arrays of upper limits on the cross section
- Double_t xsUp_expected[7] = {0.977782, 0.843323, 0.777505, 0.725548, 0.682084, 0.6314, 0.596312};
- Double_t xsUp_observed[7] = {0.975342, 0.637695, 0.60791, 0.587402, 0.563232, 0.539795, 0.519287};
+ Double_t xsUp_expected[7] = {0.437937, 0.357071, 0.3175, 0.291473, 0.268071, 0.244289, 0.22372};
+ Double_t xsUp_observed[7] = {0.377441, 0.297852, 0.28418, 0.274902, 0.269043, 0.258057, 0.249023};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[8] = {100, 150, 200, 250, 300, 350, 400, 450};
@@ -206,12 +206,12 @@ void makePlots()
  string title = ";m [GeV];#beta";
 
   // integrated luminosity
- string lint = "#intLdt=10.9 pb^{-1}";
+ string lint = "#intLdt=34.7 pb^{-1}";
 
  // number of points used for beta vs m line
  Int_t nPts = 10;
  // range of LQ masses in which beta vs m line is derived
- Double_t mass_range[2] = {250, 360};
+ Double_t mass_range[2] = {250, 400};
 
  // region excluded by Tevatron limits (1 fb-1)
  Double_t x_excl[13] = {200,214.39,235.13,254.08,268.12,275.92,283.95,289.08,293.09,295.99,297.10,298.89,200};
@@ -225,7 +225,7 @@ void makePlots()
 //  gStyle->SetPadLeftMargin(0.14);
  gROOT->ForceStyle();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 250., 400., 100, 0., 1.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 250., 410., 100, 0., 1.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.05,"Y");
@@ -434,7 +434,7 @@ void makePlots()
 
  gPad->RedrawAxis();
 
- TLegend *legend = new TLegend(.45,.40,.88,.57);
+ TLegend *legend = new TLegend(.48,.37,.91,.54);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);

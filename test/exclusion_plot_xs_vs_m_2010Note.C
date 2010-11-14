@@ -1,5 +1,5 @@
-#include "CLA.C"
-// #include "CL95cms.C"
+// #include "CLA.C"
+#include "CL95cms.C"
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TCanvas.h"
@@ -190,22 +190,22 @@ void makePlots()
  bool systematics = true; // does nothing at the moment
 
  // total integrated luminosity (in pb-1)
- Double_t L_int = 10.9;
+ Double_t L_int = 34.7;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
  Double_t Sigma_L_int = 0.11;
 
  // array of signal efficiencies
- Double_t S_eff[7] = {0.412, 0.451, 0.473, 0.490, 0.511, 0.533, 0.554};
+ Double_t S_eff[7] = {0.380, 0.403, 0.430, 0.451, 0.469, 0.496, 0.522};
  // array of relative uncertainties on the signal efficiencies (0.1 = 10%)
  Double_t Sigma_S_eff[7] = {0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07};
 
  // array of N_background for L_int
- Double_t N_bkg[7] = {0.96, 0.73, 0.61, 0.50, 0.44, 0.34, 0.29};
+ Double_t N_bkg[7] = {2.6, 1.62, 1.33, 1.14, 0.94, 0.79, 0.65};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[7] = {0.33, 0.33, 0.33, 0.33, 0.33, 0.33, 0.33};
+ Double_t Sigma_N_bkg[7] = {0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28};
 
  // array of N_observed for L_int
- Double_t N_obs[7] = {1, 0, 0, 0, 0, 0, 0};
+ Double_t N_obs[7] = {2, 1, 1, 1, 1, 1, 1};
 
  // array of LQ masses for calculation of upXS
  Double_t mData[7] = {250, 280, 300, 320, 340, 370, 400};
@@ -222,7 +222,7 @@ void makePlots()
  string title = ";m [GeV];#beta^{2}#times#sigma [pb]";
 
  // integrated luminosity
- string lint = "#intLdt=10.9 pb^{-1}";
+ string lint = "#intLdt=34.7 pb^{-1}";
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {240,299,299,240,240};
@@ -245,7 +245,7 @@ void makePlots()
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
 //  }
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[7] = {0.977782, 0.843323, 0.777505, 0.725548, 0.682084, 0.6314, 0.596312};
+ Double_t xsUp_expected[7] = {0.437937, 0.357071, 0.3175, 0.291473, 0.268071, 0.244289, 0.22372};
 
 //  Double_t xsUp_observed[7];
 //  for(Int_t i = 0; i < size; i++){
@@ -253,7 +253,7 @@ void makePlots()
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
 //  }
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[7] = {0.975342, 0.637695, 0.60791, 0.587402, 0.563232, 0.539795, 0.519287};
+ Double_t xsUp_observed[7] = {0.377441, 0.297852, 0.28418, 0.274902, 0.269043, 0.258057, 0.249023};
 
  // set ROOT style
 //  myStyle();
