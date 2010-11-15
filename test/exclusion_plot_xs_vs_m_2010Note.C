@@ -1,5 +1,4 @@
-// #include "CLA.C"
-#include "CL95cms.C"
+#include "cl95cms.C"
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TCanvas.h"
@@ -237,23 +236,36 @@ void makePlots()
 
  Int_t size = sizeof(S_eff)/sizeof(*S_eff);
 
- // Upper Limits can be entered manually when the call to CLA.C is commented below
-
-//  Double_t xsUp_expected[7];
-//  for(Int_t i = 0; i < size; i++){
-//
-//    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i]);
-//  }
- // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[7] = {0.437937, 0.357071, 0.3175, 0.291473, 0.268071, 0.244289, 0.22372};
+ // Upper limits can be entered manually when the calls to CL95(...) and CLA(...) are commented below.
+ // However, CL95(...) and CLA(...) have to be run at least once to get the upper limits
 
 //  Double_t xsUp_observed[7];
 //  for(Int_t i = 0; i < size; i++){
 //
-//    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i]);
+//    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i], kFALSE, 1);
 //  }
+//  cout<<"Double_t xsUp_observed[7] = {";
+//  for(Int_t i = 0; i < size; i++) {
+//    cout<<xsUp_observed[i];
+//    if(i<(size-1)) cout<<", ";
+//  }
+//  cout<<"};"<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[7] = {0.377441, 0.297852, 0.28418, 0.274902, 0.269043, 0.258057, 0.249023};
+ Double_t xsUp_observed[7] = {0.364746, 0.290527, 0.277832, 0.268799, 0.263184, 0.252686, 0.244141};
+
+//  Double_t xsUp_expected[7];
+//  for(Int_t i = 0; i < size; i++){
+//
+//    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], kFALSE, 1);
+//  }
+//  cout<<"Double_t xsUp_expected[7] = {";
+//  for(Int_t i = 0; i < size; i++) {
+//    cout<<xsUp_expected[i];
+//    if(i<(size-1)) cout<<", ";
+//  }
+//  cout<<"};"<<endl;
+ // Array of the expected 95% CL upper limits on the cross section
+ Double_t xsUp_expected[7] = {0.424484, 0.34855, 0.310529, 0.285282, 0.262771, 0.239716, 0.219592};
 
  // set ROOT style
 //  myStyle();

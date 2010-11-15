@@ -188,8 +188,8 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[7] = {250, 280, 300, 320, 340, 370, 400};
  // arrays of upper limits on the cross section
- Double_t xsUp_expected[7] = {0.437937, 0.357071, 0.3175, 0.291473, 0.268071, 0.244289, 0.22372};
- Double_t xsUp_observed[7] = {0.377441, 0.297852, 0.28418, 0.274902, 0.269043, 0.258057, 0.249023};
+ Double_t xsUp_observed[7] = {0.364746, 0.290527, 0.277832, 0.268799, 0.263184, 0.252686, 0.244141};
+ Double_t xsUp_expected[7] = {0.424484, 0.34855, 0.310529, 0.285282, 0.262771, 0.239716, 0.219592};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[8] = {100, 150, 200, 250, 300, 350, 400, 450};
