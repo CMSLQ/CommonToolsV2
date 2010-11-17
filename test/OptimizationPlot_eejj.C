@@ -29,11 +29,11 @@ void OptimizationPlot_eejj(int nbins = 100)
   //////////////////////////////
   // User inputs here
   ////////////////////////////// 
-  TString file1_str   = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st340to520/output_cutTable_eejjSample_opt/analysisClass_eejjSample_plots.root";
-  TString optfile_str = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st340to520/output_cutTable_eejjSample_opt/optimizationCuts.txt";
-  TString signalHisto_str  = "histo1D__LQeejj_M300__Optimizer";
+  TString file1_str   = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st500to680/output_cutTable_eejjSample_opt/analysisClass_eejjSample_plots.root";
+  TString optfile_str = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st500to680/output_cutTable_eejjSample_opt/optimizationCuts.txt";
+  TString signalHisto_str  = "histo1D__LQeejj_M400__Optimizer";
   TString allbkgHisto_str  = "histo1D__ALLBKG__Optimizer";
-  TString evtpassHisto_str = "histo1D__LQeejj_M300__EventsPassingCuts";
+  TString evtpassHisto_str = "histo1D__LQeejj_M400__EventsPassingCuts";
 
   TFile file1(file1_str);
   file1.cd();
@@ -83,14 +83,15 @@ void OptimizationPlot_eejj(int nbins = 100)
   for (int i=1; i<=nbins; i++){ // Bin = 0 is the underflow
     //if ( (i-1)%100 != 0 ) continue;
     //if ( (i-1) != 1200 ) continue;
-    //if ( (i-1) < 2200 || (i-1) >= 2300 ) continue;
+    //if ( (i-1) < 60 || (i-1) >= 70 ) continue;
     //cout<<"i = "<<i<<endl;
     Ns = Signal.GetBinContent(i);
     Nb = Backgnd.GetBinContent(i);
     double signif = 0;
 
     // use significance method
-    if ( (sqrt(Ns+Nb)+Nb*Nb_err_rel)>0 ) signif = Ns / (sqrt(Ns+Nb)+Nb*Nb_err_rel);
+    double delta_Nb = Nb*Nb_err_rel;
+    if ( sqrt(Ns+Nb+delta_Nb*delta_Nb) >0 ) signif = Ns / sqrt(Ns+Nb+delta_Nb*delta_Nb);
     Signif.SetBinContent(i,signif);
     if (signif>maxSignif) {
       maxSignif = signif;
@@ -140,9 +141,10 @@ void OptimizationPlot_eejj(int nbins = 100)
   // print output from upper limit method
   TCanvas * c3 = new TCanvas;
   UpperLimit.Draw();
+  double delta_Nb = Backgnd.GetBinContent(bin_fromUpperLimit)*Nb_err_rel;
   std::cout << "----------- Optimization by Upper Limit:" <<std::endl;
   std::cout << "UpperLimit: " << minUpperLimit << "\t" << "Bin_FromUpperLimit - 1 (as bin zero is overflow): " << bin_fromUpperLimit - 1 << std::endl;
-  std::cout << "ILum = " << ILum << "\t Ns = " << Signal.GetBinContent(bin_fromUpperLimit) << "\t Nb = " << Backgnd.GetBinContent(bin_fromUpperLimit) << "\t Ns/[sqrt(Ns+Nb)+Nb+s_Nb] = " << Signal.GetBinContent(bin_fromUpperLimit)/(sqrt(Signal.GetBinContent(bin_fromUpperLimit)+Backgnd.GetBinContent(bin_fromUpperLimit))+Backgnd.GetBinContent(bin_fromUpperLimit)*Nb_err_rel)  << std::endl;
+  std::cout << "ILum = " << ILum << "\t Ns = " << Signal.GetBinContent(bin_fromUpperLimit) << "\t Nb = " << Backgnd.GetBinContent(bin_fromUpperLimit) << "\t Ns/[sqrt(Ns+Nb+DeltaNb^2)] = " << Signal.GetBinContent(bin_fromUpperLimit)/sqrt(Signal.GetBinContent(bin_fromUpperLimit)+Backgnd.GetBinContent(bin_fromUpperLimit)+delta_Nb*delta_Nb)  << std::endl;
   std::cout << "effAtMinUpLim = " << effAtMinUpLim << "\t" << "NbErrAtMinUpLim = "<< NbErrAtMinUpLim <<std::endl;
   std::stringstream ss2; ss2<<"grep 'Bin = "<<(bin_fromUpperLimit - 1)<<"\t' "<<optfile_str <<std::endl; //std::cout<<ss2.str()<<std::endl;
   system(ss2.str().c_str());
@@ -153,7 +155,7 @@ void OptimizationPlot_eejj(int nbins = 100)
 
   //std::cout << "Press Enter to continue"<<std::endl;  gets(ss); 
 
-  TFile outfile("OptimizationPlot.root","recreate");
+  TFile outfile("OptimizationPlot_eejj.root","recreate");
   Signif.Write();
   UpperLimit.Write();
   outfile.Close();
