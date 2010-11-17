@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SAMPLES='LQeejj_M250 LQeejj_M280 LQeejj_M300 LQeejj_M320 LQeejj_M340 LQeejj_M370 LQeejj_M400'
+SAMPLES='LQeejj_M250 LQeejj_M280 LQeejj_M300 LQeejj_M320 LQeejj_M340 LQeejj_M370 LQeejj_M400 LQeejj_M450 LQeejj_M500'
 
 usage ()
 {
@@ -33,7 +33,7 @@ if [ $1 == '-c' ]; then
     # sleep 10 # wait to make sure all jobs have started
     for SAMPLE in $SAMPLES
       do
-      rm OptimizationPlot_eejj_${SAMPLE}.C OptimizationJob_eejj_${SAMPLE}.sh
+      rm OptimizationPlot_eejj_${SAMPLE}.C OptimizationJob_eejj_${SAMPLE}.sh OptimizationPlot_eejj_${SAMPLE}_C.so
     done
 fi
 
