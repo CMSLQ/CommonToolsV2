@@ -336,7 +336,7 @@ void makePlots()
  legend->SetMargin(0.15);
  legend->SetHeader("LQ #rightarrow eq");
  legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}, #beta=1)","f");
- legend->AddEntry(xsTh_vs_m,"#beta^{2}#times #sigma_{theory} with PDF and scale unc., #beta=1","lf");
+ legend->AddEntry(xsTh_vs_m,"#beta^{2}#times #sigma_{theory} with theory uncertainty, #beta=1","lf");
  legend->AddEntry(xsData_vs_m_expected, "Expected 95% C.L. upper limit","lp");
  legend->AddEntry(xsData_vs_m_observed, "Observed 95% C.L. upper limit","lp");
  legend->Draw();
