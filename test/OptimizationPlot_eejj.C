@@ -3,8 +3,7 @@
 // where the argument is the number of bins in the optimization histograms
 // See also UserCode/Leptoquarks/CommonToolsV2/test/README
 
-
-#include "CLA.C"
+#include "cl95cms.C"
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TCanvas.h"
@@ -51,7 +50,7 @@ void OptimizationPlot_eejj(int nbins = 100)
   double eff; // signal efficiency
   double eff_err_rel = 0.07; // Relative error on signal efficiency
   double Nb_err_rel = 0.35; // Relative error on background, dominated by JES
-  double ILum = 35; // pb-1
+  double ILum = 27; // pb-1
   double ILum_err_rel = 0.11; // Relative error on Integrated Luminosity
   double upperLimit;
   
@@ -103,7 +102,8 @@ void OptimizationPlot_eejj(int nbins = 100)
     cout<< "Calling CLA for bin i = " << i << endl;
     //cout << ILum <<" "<< ILum*ILum_err_rel <<" "<<  eff <<" "<<  eff*eff_err_rel <<" "<<  Nb <<" "<<  Nb*Nb_err_rel << endl;
     NbErr = Nb*Nb_err_rel;
-    upperLimit = CLA(ILum, ILum*ILum_err_rel, eff, eff*eff_err_rel, Nb, NbErr);
+    //upperLimit = CLA(ILum, ILum*ILum_err_rel, eff, eff*eff_err_rel, Nb, NbErr);
+    upperLimit = CLA(ILum, ILum*ILum_err_rel, eff, eff*eff_err_rel, Nb, NbErr, kFALSE, 0);
     UpperLimit.SetBinContent(i,upperLimit);
     if (upperLimit<minUpperLimit) {
       minUpperLimit = upperLimit;
