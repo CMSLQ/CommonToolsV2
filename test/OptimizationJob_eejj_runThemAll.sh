@@ -24,6 +24,7 @@ if [ $1 == '-r' ]; then
       cp OptimizationJob_eejj.sh OptimizationJob_eejj_${SAMPLE}.sh
       perl -pi -e 's|'OptimizationPlot_eejj.C'|'OptimizationPlot_eejj_${SAMPLE}.C'|g' OptimizationJob_eejj_${SAMPLE}.sh
       
+      rm `pwd`/OptimizationJob_eejj_${SAMPLE}.log
       bsub -q 8nh -o `pwd`/OptimizationJob_eejj_${SAMPLE}.log OptimizationJob_eejj_${SAMPLE}.sh
     done
 fi
