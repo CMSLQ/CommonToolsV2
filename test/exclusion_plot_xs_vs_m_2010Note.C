@@ -225,7 +225,7 @@ void makePlots()
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {240,299,299,240,240};
- Double_t y_shaded[5] = {0.01,0.01,10000,10000,0.01};
+ Double_t y_shaded[5] = {0.01,0.01,100,100,0.01};
 
  // PDF uncertainty band
  Double_t x_pdf[16] = {100, 150, 200, 250, 300, 350, 400, 450, 450, 400, 350, 300, 250, 200, 150, 100};
@@ -276,7 +276,7 @@ void makePlots()
  TCanvas *c = new TCanvas("c","",800,800);
  c->cd();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 240., 410., 100, 0.01, 10000.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 240., 410., 100, 0.01, 100.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.15,"Y");
