@@ -186,18 +186,18 @@ void makePlots()
  // **********************************************
 
  // array of LQ masses for calculation of upXS
- Double_t mData[7] = {250, 280, 300, 320, 340, 370, 400};
+ Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
  // arrays of upper limits on the cross section
- Double_t xsUp_observed[7] = {0.364746, 0.290527, 0.277832, 0.268799, 0.263184, 0.252686, 0.244141};
- Double_t xsUp_expected[7] = {0.424484, 0.34855, 0.310529, 0.285282, 0.262771, 0.239716, 0.219592};
+ Double_t xsUp_observed[10] = {0.444824, 0.310547, 0.309082, 0.293945, 0.284668, 0.279297, 0.268066, 0.258789, 0.174243, 0.166113};
+ Double_t xsUp_expected[10] = {0.692479, 0.442443, 0.360792, 0.326146, 0.298866, 0.274453, 0.250794, 0.230144, 0.208843, 0.192884};
 
  // arrays of LQ masses for theoretical cross section
- Double_t mTh[8] = {100, 150, 200, 250, 300, 350, 400, 450};
+ Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
  // arrays of theoretical cross-sections for different leptoquark masses
- Double_t xsTh[8] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949};
+ Double_t xsTh[10] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949, 0.0463, 0.0236};
  // arays of upper and lower bounds with PDF and scale uncertainties included
- Double_t xsTh_upper[8] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.572, 0.249, 0.1167}; // upper bounds with PDF and scale uncertainties included
- Double_t xsTh_lower[8] = {330.3, 45.2, 10.0, 2.9, 0.98, 0.379, 0.160, 0.0719}; // lower bounds with PDF and scale uncertainties included
+ Double_t xsTh_upper[10] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.572, 0.249, 0.1167, 0.0581, 0.0300}; // upper bounds with PDF and scale uncertainties included
+ Double_t xsTh_lower[10] = {330.3, 45.2, 10.0, 2.9, 0.98, 0.379, 0.160, 0.0719, 0.0340, 0.0169}; // lower bounds with PDF and scale uncertainties included
 
  // filename for the final plot (NB: changing the name extension changes the file format)
  string fileName = "beta_vs_m_excl.eps";
@@ -206,12 +206,12 @@ void makePlots()
  string title = ";m [GeV];#beta";
 
   // integrated luminosity
- string lint = "#intLdt=34.7 pb^{-1}";
+ string lint = "#intLdt=33.2 pb^{-1}";
 
  // number of points used for beta vs m line
- Int_t nPts = 10;
+ Int_t nPts = 20;
  // range of LQ masses in which beta vs m line is derived
- Double_t mass_range[2] = {250, 400};
+ Double_t mass_range[2] = {200, 400};
 
  // region excluded by Tevatron limits (1 fb-1)
  Double_t x_excl[13] = {200,214.39,235.13,254.08,268.12,275.92,283.95,289.08,293.09,295.99,297.10,298.89,200};
@@ -225,7 +225,7 @@ void makePlots()
 //  gStyle->SetPadLeftMargin(0.14);
  gROOT->ForceStyle();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 250., 410., 100, 0., 1.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0., 1.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.05,"Y");
@@ -274,14 +274,14 @@ void makePlots()
  ****         Debugging section          ****
  *******************************************/
 
- Double_t mTh_int[11];
- Double_t xsTh_int[11];
- Double_t xsTh_upper_int[11];
- Double_t xsTh_lower_int[11];
+ Double_t mTh_int[20];
+ Double_t xsTh_int[20];
+ Double_t xsTh_upper_int[20];
+ Double_t xsTh_lower_int[20];
 
- Double_t step_th = (mTh[size_th-1]-mTh[0])/10;
+ Double_t step_th = (mTh[size_th-1]-mTh[0])/19;
 
- for(Int_t i=0; i<11; i++) {
+ for(Int_t i=0; i<20; i++) {
    mTh_int[i] = mTh[0]+step_th*i;
    xsTh_int[i] = exp(gs_xsTh_vs_m.Eval(mTh_int[i]));
    xsTh_upper_int[i] = exp(gs_xsTh_upper_vs_m.Eval(mTh_int[i]));
@@ -293,7 +293,7 @@ void makePlots()
  xsTh_vs_m->SetLineColor(kRed);
  xsTh_vs_m->Draw("ACP");
 
- TGraph *xsTh_vs_m_int = new TGraph(11, mTh_int, xsTh_int);
+ TGraph *xsTh_vs_m_int = new TGraph(20, mTh_int, xsTh_int);
  xsTh_vs_m_int->SetMarkerSize(1.);
  xsTh_vs_m_int->SetMarkerStyle(24);
  xsTh_vs_m_int->SetMarkerColor(kBlue);
@@ -309,7 +309,7 @@ void makePlots()
  xsTh_upper_vs_m->SetLineColor(kRed);
  xsTh_upper_vs_m->Draw("ACP");
 
- TGraph *xsTh_upper_vs_m_int = new TGraph(11, mTh_int, xsTh_upper_int);
+ TGraph *xsTh_upper_vs_m_int = new TGraph(20, mTh_int, xsTh_upper_int);
  xsTh_upper_vs_m_int->SetMarkerSize(1.);
  xsTh_upper_vs_m_int->SetMarkerStyle(24);
  xsTh_upper_vs_m_int->SetMarkerColor(kBlue);
@@ -325,7 +325,7 @@ void makePlots()
  xsTh_lower_vs_m->SetLineColor(kRed);
  xsTh_lower_vs_m->Draw("ACP");
 
- TGraph *xsTh_lower_vs_m_int = new TGraph(11, mTh_int, xsTh_lower_int);
+ TGraph *xsTh_lower_vs_m_int = new TGraph(20, mTh_int, xsTh_lower_int);
  xsTh_lower_vs_m_int->SetMarkerSize(1.);
  xsTh_lower_vs_m_int->SetMarkerStyle(24);
  xsTh_lower_vs_m_int->SetMarkerColor(kBlue);
@@ -336,13 +336,13 @@ void makePlots()
  c->SetLogy();
  c->SaveAs("xsTh_lower_vs_m.png");
 
- Double_t mData_int[11];
- Double_t xsUp_expected_int[11];
- Double_t xsUp_observed_int[11];
+ Double_t mData_int[20];
+ Double_t xsUp_expected_int[20];
+ Double_t xsUp_observed_int[20];
 
- Double_t step_Data = (mData[size_Data-1]-mData[0])/10;
+ Double_t step_Data = (mData[size_Data-1]-mData[0])/19;
 
- for(Int_t i=0; i<11; i++) {
+ for(Int_t i=0; i<20; i++) {
    mData_int[i] = mData[0]+step_Data*i;
    xsUp_expected_int[i] = exp(gs_xsUp_expected_vs_m.Eval(mData_int[i]));
    xsUp_observed_int[i] = exp(gs_xsUp_observed_vs_m.Eval(mData_int[i]));
@@ -353,7 +353,7 @@ void makePlots()
  xsUp_expected_vs_m->SetLineColor(kRed);
  xsUp_expected_vs_m->Draw("ACP");
 
- TGraph *xsUp_expected_vs_m_int = new TGraph(11, mData_int, xsUp_expected_int);
+ TGraph *xsUp_expected_vs_m_int = new TGraph(20, mData_int, xsUp_expected_int);
  xsUp_expected_vs_m_int->SetMarkerSize(1.);
  xsUp_expected_vs_m_int->SetMarkerStyle(24);
  xsUp_expected_vs_m_int->SetMarkerColor(kBlue);
@@ -369,7 +369,7 @@ void makePlots()
  xsUp_observed_vs_m->SetLineColor(kRed);
  xsUp_observed_vs_m->Draw("ACP");
 
- TGraph *xsUp_observed_vs_m_int = new TGraph(11, mData_int, xsUp_observed_int);
+ TGraph *xsUp_observed_vs_m_int = new TGraph(20, mData_int, xsUp_observed_int);
  xsUp_observed_vs_m_int->SetMarkerSize(1.);
  xsUp_observed_vs_m_int->SetMarkerStyle(24);
  xsUp_observed_vs_m_int->SetMarkerColor(kBlue);
