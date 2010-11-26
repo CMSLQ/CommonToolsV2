@@ -448,11 +448,11 @@ void makePlots()
 
  TLatex l1;
  l1.SetTextAlign(12);
- l1.SetTextSize(0.04);
+ l1.SetTextSize(0.05);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.18,0.3,"CMS 2010");
- l1.DrawLatex(0.18,0.2,lint.c_str());
+ l1.DrawLatex(0.57,0.32,"CMS 2010");
+ l1.DrawLatex(0.56,0.22,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();
