@@ -3,8 +3,7 @@
 // where the argument is the number of bins in the optimization histograms
 // See also UserCode/Leptoquarks/CommonToolsV2/test/README
 
-
-#include "CLA.C"
+#include "cl95cms.C"
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TCanvas.h"
@@ -35,7 +34,7 @@ void OptimizationPlot_enujj(int nbins = 100)
   TH1D Backgnd;
   ((TH1D*)file1.Get("histo1D__ALLBKG__Optimizer"))->Copy(Backgnd); Backgnd.Sumw2();
 
-  double Ns_noCut( ((TH1D*)file1.Get("histo1D__LQenujj_M200__EventsPassingCuts"))->GetBinContent(1) ); // needed for CLA.C method only
+  double Ns_noCut( ((TH1D*)file1.Get("histo1D__LQenujj_M200__EventsPassingCuts"))->GetBinContent(1) ); // needed for CLA() method only
 
 
   TFile file2("./analysisClass_enujjSample_QCD_plots.root");
@@ -53,7 +52,7 @@ void OptimizationPlot_enujj(int nbins = 100)
   double ILum_err_rel = 0.10; // Relative error on Integrated Luminosity
   double upperLimit;
 
-  Backgnd_QCD.Scale((ILum/7.558));
+  Backgnd_QCD.Scale((ILum/7.4));
   Backgnd.Add(&Backgnd_QCD);
 
   TCanvas * c1 = new TCanvas;

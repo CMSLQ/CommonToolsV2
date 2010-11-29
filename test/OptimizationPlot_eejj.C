@@ -27,7 +27,7 @@ void OptimizationPlot_eejj(int nbins = 100)
 
   //////////////////////////////
   // User inputs here
-  ////////////////////////////// 
+  //////////////////////////////
   TString file1_str   = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st500to680/output_cutTable_eejjSample_opt/analysisClass_eejjSample_plots.root";
   TString optfile_str = "$LQDATA/opt_eejj/35pb-1_Mee95to140_st500to680/output_cutTable_eejjSample_opt/optimizationCuts.txt";
   TString signalHisto_str  = "histo1D__LQeejj_M400__Optimizer";
@@ -42,10 +42,10 @@ void OptimizationPlot_eejj(int nbins = 100)
   TH1D Backgnd;
   ((TH1D*)gDirectory->Get(allbkgHisto_str))->Copy(Backgnd); Backgnd.Sumw2();
 
-  double Ns_noCut( ((TH1D*)gDirectory->Get(evtpassHisto_str))->GetBinContent(1) ); // needed for CLA.C method only
+  double Ns_noCut( ((TH1D*)gDirectory->Get(evtpassHisto_str))->GetBinContent(1) ); // needed for CLA() method only
 
   ////////////////////////////////////////////////
-  // Parameters needed when using the CLA.C method 
+  // Parameters needed when using the CLA.C method
   ////////////////////////////////////////////////
   double eff; // signal efficiency
   double eff_err_rel = 0.07; // Relative error on signal efficiency
@@ -53,7 +53,7 @@ void OptimizationPlot_eejj(int nbins = 100)
   double ILum = 27; // pb-1
   double ILum_err_rel = 0.11; // Relative error on Integrated Luminosity
   double upperLimit;
-  
+
   TCanvas * c1 = new TCanvas;
   TPad * pad1 = new TPad("pad1","This is pad1",0.01,0.51,0.95,0.99);
   TPad * pad2 = new TPad("pad2","This is pad2",0.01,0.01,0.95,0.49);
@@ -94,7 +94,7 @@ void OptimizationPlot_eejj(int nbins = 100)
     Signif.SetBinContent(i,signif);
     if (signif>maxSignif) {
       maxSignif = signif;
-      bin_fromSignif = i;  
+      bin_fromSignif = i;
     }
 
     // use upper limit method
@@ -109,12 +109,12 @@ void OptimizationPlot_eejj(int nbins = 100)
       minUpperLimit = upperLimit;
       effAtMinUpLim = eff;
       NbErrAtMinUpLim=NbErr;
-      bin_fromUpperLimit = i;  
+      bin_fromUpperLimit = i;
     }
   }
 
-  //char *ss = new char[1]; 
-  //std::cout << "Press Enter to continue"<<std::endl;  gets(ss); 
+  //char *ss = new char[1];
+  //std::cout << "Press Enter to continue"<<std::endl;  gets(ss);
 
   // print file and histo names
   std::cout << "-------------------------------------------------------------------  " <<std::endl;
@@ -151,9 +151,9 @@ void OptimizationPlot_eejj(int nbins = 100)
   c3->SaveAs("UpperLimit.png");
 
 
-  //printCuts(cuts);  
+  //printCuts(cuts);
 
-  //std::cout << "Press Enter to continue"<<std::endl;  gets(ss); 
+  //std::cout << "Press Enter to continue"<<std::endl;  gets(ss);
 
   TFile outfile("OptimizationPlot_eejj.root","recreate");
   Signif.Write();

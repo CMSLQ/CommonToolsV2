@@ -3,8 +3,7 @@
 // where the argument is the number of bins in the optimization histograms
 // See also UserCode/Leptoquarks/CommonToolsV2/test/README
 
-
-#include "CLA.C"
+#include "cl95cms.C"
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TCanvas.h"
@@ -27,7 +26,7 @@ void OptimizationPlot(int nbins = 100)
 
   //////////////////////////////
   // User inputs here
-  ////////////////////////////// 
+  //////////////////////////////
   TFile file1("./analysisClass_enujjSample_plots.root");
   file1.cd();
 
@@ -36,10 +35,10 @@ void OptimizationPlot(int nbins = 100)
   TH1D Backgnd;
   ((TH1D*)gDirectory->Get("histo1D__ALLBKG__Optimizer"))->Copy(Backgnd); Backgnd.Sumw2();
 
-  double Ns_noCut( ((TH1D*)gDirectory->Get("histo1D__LQenujj_M200__EventsPassingCuts"))->GetBinContent(1) ); // needed for CLA.C method only
+  double Ns_noCut( ((TH1D*)gDirectory->Get("histo1D__LQenujj_M200__EventsPassingCuts"))->GetBinContent(1) ); // needed for CLA() method only
 
   ////////////////////////////////////////////////
-  // Parameters needed when using the CLA.C method 
+  // Parameters needed when using the CLA.C method
   ////////////////////////////////////////////////
   double eff; // signal efficiency
   double eff_err_rel = 0.2; // Relative error on signal efficiency
@@ -47,7 +46,7 @@ void OptimizationPlot(int nbins = 100)
   double ILum = 10; // pb-1
   double ILum_err_rel = 0.10; // Relative error on Integrated Luminosity
   double upperLimit;
-  
+
   TCanvas * c1 = new TCanvas;
   TPad * pad1 = new TPad("pad1","This is pad1",0.01,0.51,0.95,0.99);
   TPad * pad2 = new TPad("pad2","This is pad2",0.01,0.01,0.95,0.49);
@@ -87,7 +86,7 @@ void OptimizationPlot(int nbins = 100)
     Signif.SetBinContent(i,signif);
     if (signif>maxSignif) {
       maxSignif = signif;
-      bin_fromSignif = i;  
+      bin_fromSignif = i;
     }
 
     // use upper limit method
@@ -101,12 +100,12 @@ void OptimizationPlot(int nbins = 100)
       minUpperLimit = upperLimit;
       effAtMinUpLim = eff;
       NbErrAtMinUpLim=NbErr;
-      bin_fromUpperLimit = i;  
+      bin_fromUpperLimit = i;
     }
   }
 
-  //char *ss = new char[1]; 
-  //std::cout << "Press Enter to continue"<<std::endl;  gets(ss); 
+  //char *ss = new char[1];
+  //std::cout << "Press Enter to continue"<<std::endl;  gets(ss);
 
   //  print output from significance method
   TCanvas * c2 = new TCanvas;
@@ -124,9 +123,9 @@ void OptimizationPlot(int nbins = 100)
   std::cout << "effAtMinUpLim = " << effAtMinUpLim << "\t" << "NbErrAtMinUpLim = "<< NbErrAtMinUpLim <<std::endl;
   c3->SaveAs("UpperLimit.png");
 
-  //printCuts(cuts);  
+  //printCuts(cuts);
 
-  //std::cout << "Press Enter to continue"<<std::endl;  gets(ss); 
+  //std::cout << "Press Enter to continue"<<std::endl;  gets(ss);
 
   TFile outfile("OptimizationPlot.root","recreate");
   Signif.Write();
