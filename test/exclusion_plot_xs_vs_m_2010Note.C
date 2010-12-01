@@ -225,7 +225,7 @@ void makePlots()
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {200,299,299,200,200};
- Double_t y_shaded[5] = {0.05,0.05,40,40,0.05};
+ Double_t y_shaded[5] = {0.01,0.01,100,100,0.01};
 
  // PDF uncertainty band
  Double_t x_pdf[20] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100};
@@ -276,10 +276,10 @@ void makePlots()
  TCanvas *c = new TCanvas("c","",800,800);
  c->cd();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0.05, 40.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0.01, 100.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
- bg->SetTitleOffset(1.15,"Y");
+ bg->SetTitleOffset(1.13,"Y");
 //  bg->GetXaxis()->SetNdivisions(505);
 
  bg->Draw();
@@ -347,8 +347,8 @@ void makePlots()
  l1.SetTextSize(0.05);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.57,0.61,"CMS 2010");
- l1.DrawLatex(0.56,0.51,lint.c_str());
+ l1.DrawLatex(0.59,0.61,"CMS 2010");
+ l1.DrawLatex(0.59,0.51,lint.c_str());
 
 //  TLatex l2;
 //  l2.SetTextAlign(12);
