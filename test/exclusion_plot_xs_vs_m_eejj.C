@@ -185,7 +185,6 @@ void makePlots()
  // **********************************************
  // *            Input parameters                *
  // **********************************************
-
  // switch to include/exclude sytematics uncertainties
  bool systematics = true; // does nothing at the moment
 
@@ -195,19 +194,17 @@ void makePlots()
  Double_t Sigma_L_int = 0.11;
 
  // array of signal efficiencies
- Double_t S_eff[10] = {0.157, 0.254, 0.289, 0.314, 0.337, 0.361, 0.393, 0.423, 0.464, 0.498};
- // array of relative uncertainties on the signal efficiencies
- Double_t Sigma_S_eff[10] = {0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08};
- // branching ratio for enujj channel 2*beta(1-beta)
- Double_t Br = 0.5;
+ Double_t S_eff[10] = {0.297, 0.380, 0.403, 0.430, 0.451, 0.469, 0.496, 0.522, 0.539, 0.565};
+ // array of relative uncertainties on the signal efficiencies (0.1 = 10%)
+ Double_t Sigma_S_eff[10] = {0.105, 0.105, 0.105, 0.105, 0.105, 0.105, 0.105, 0.105, 0.105, 0.105};
 
  // array of N_background for L_int
- Double_t N_bkg[10] = {5.6, 3.7, 2.4, 1.9, 1.44, 1.26, 1.0, 0.8, 0.6, 0.5};
+ Double_t N_bkg[10] = {4.5, 2.5, 1.5, 1.3, 1.1, 0.89, 0.75, 0.62, 0.41, 0.32};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[10] = {0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32};
+ Double_t Sigma_N_bkg[10] = {0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25};
 
  // array of N_observed for L_int
- Int_t N_obs[10] = {6, 4, 4, 3, 3, 3, 2, 2, 1, 1};
+ Int_t N_obs[10] = {2, 1, 1, 1, 1, 1, 1, 1, 0, 0};
 
  // array of LQ masses for calculation of upXS
  Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
@@ -218,31 +215,26 @@ void makePlots()
  Double_t xsTh[10] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949, 0.0463, 0.0236};
 
  // filename for the final plot (NB: changing the name extension changes the file format)
- string fileName = "xs95CL_vs_m_enujj.eps";
+ string fileName = "xs95CL_vs_m.eps";
 
  // axes labels for the final plot
- string title = ";m [GeV];2#beta(1-#beta)#times#sigma [pb]";
+ string title = ";m [GeV];#beta^{2}#times#sigma [pb]";
 
  // integrated luminosity
  string lint = "#intLdt=33.2 pb^{-1}";
 
  // region excluded by Tevatron limits
- Double_t x_shaded[5] = {200,264,264,200,200};
- Double_t y_shaded[5] = {0.05,0.05,40,40,0.05};
+ Double_t x_shaded[5] = {200,299,299,200,200};
+ Double_t y_shaded[5] = {0.01,0.01,100,100,0.01};
 
  // PDF uncertainty band
  Double_t x_pdf[20] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100};
  Double_t y_pdf[20] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.572, 0.249, 0.1167, 0.0581, 0.0300, 0.0169, 0.0340, 0.0719, 0.160, 0.379, 0.98, 2.9, 10.0, 45.2, 330.3};
 
- // turn on/off batch mode
+  // turn on/off batch mode
  gROOT->SetBatch(kTRUE);
 
- Int_t size = sizeof(xsTh)/sizeof(*xsTh);
- for(Int_t i=0; i<size; i++) xsTh[i]=Br*xsTh[i];
- size = sizeof(y_pdf)/sizeof(*y_pdf);
- for(Int_t i=0; i<size; i++) y_pdf[i]=Br*y_pdf[i];
-
- size = sizeof(S_eff)/sizeof(*S_eff);
+ Int_t size = sizeof(S_eff)/sizeof(*S_eff);
 
  // Upper limits can be entered manually when the calls to CL95(...) and CLA(...) are commented below.
  // However, CL95(...) and CLA(...) have to be called at least once to get the upper limits
@@ -259,7 +251,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[10] = {1.47583, 0.771973, 0.759521, 0.609375, 0.597656, 0.570312, 0.431641, 0.411865, 0.289551, 0.273193};
+ Double_t xsUp_observed[10] = {0.444824, 0.310547, 0.309082, 0.293945, 0.284668, 0.279297, 0.268066, 0.258789, 0.174243, 0.166113};
 
 //  Double_t xsUp_expected[size];
 //  for(Int_t i = 0; i < size; i++){
@@ -273,7 +265,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[10] = {1.43795, 0.754524, 0.572235, 0.491, 0.424065, 0.382861, 0.33331, 0.295434, 0.255355, 0.230884};
+ Double_t xsUp_expected[10] = {0.692479, 0.442443, 0.360792, 0.326146, 0.298866, 0.274453, 0.250794, 0.230144, 0.208843, 0.192884};
 
  // set ROOT style
 //  myStyle();
@@ -284,10 +276,11 @@ void makePlots()
  TCanvas *c = new TCanvas("c","",800,800);
  c->cd();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0.05, 40.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0.01, 100.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.13,"Y");
+//  bg->GetXaxis()->SetNdivisions(505);
 
  bg->Draw();
 
@@ -336,26 +329,26 @@ void makePlots()
  xsData_vs_m_observed->SetMarkerSize(1.5);
  xsData_vs_m_observed->Draw("CP");
 
- TLegend *legend = new TLegend(.34,.65,.91,.92);
+ TLegend *legend = new TLegend(.36,.65,.91,.92);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow e#nuqq");
- legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}, #beta=0.5)","f");
- legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{theory} with theory uncertainty, #beta=0.5","lf");
+ legend->SetHeader("LQ #rightarrow eq");
+ legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}, #beta=1)","f");
+ legend->AddEntry(xsTh_vs_m,"#beta^{2}#times#sigma_{theory} with theory uncertainty, #beta=1","lf");
  legend->AddEntry(xsData_vs_m_expected, "Expected 95% C.L. upper limit","lp");
  legend->AddEntry(xsData_vs_m_observed, "Observed 95% C.L. upper limit","lp");
  legend->Draw();
 
  TLatex l1;
  l1.SetTextAlign(12);
- l1.SetTextSize(0.04);
+ l1.SetTextSize(0.05);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.65,0.6,"CMS 2010");
- l1.DrawLatex(0.65,0.5,lint.c_str());
+ l1.DrawLatex(0.59,0.61,"CMS 2010");
+ l1.DrawLatex(0.59,0.51,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();

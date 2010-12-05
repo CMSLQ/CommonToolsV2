@@ -179,57 +179,6 @@ void setTDRStyle() {
   tdrStyle->cd();
 }
 
-void fill_arrays(const Double_t fMass_min, const Double_t fMass_max, const Int_t fNPts, const TSpline3& fGS_xsUp_vs_m, const TSpline3& fGS_xsTh_vs_m, Double_t* x, Double_t* y)
-{
- Double_t mass_max = fMass_min;
-
- if( (exp(fGS_xsUp_vs_m.Eval(fMass_min))/exp(fGS_xsTh_vs_m.Eval(fMass_min)))<0.5 ) {
-   Int_t iteration = 0;
-   for(Int_t i=0; i<100; i++) {
-     Double_t delta_1 = (fMass_max-fMass_min)/(100-1);
-     Double_t mass = fMass_min+delta_1*i;
-     if( (exp(fGS_xsUp_vs_m.Eval(mass))/exp(fGS_xsTh_vs_m.Eval(mass)))>0.5 ) {
-       iteration = i;
-//        cout<<"iteration: "<<iteration<<endl;
-       Double_t delta_2 = ((fMass_min+delta_1*i)-(fMass_min+delta_1*(i-1)))/(100-1);
-       for(Int_t j=0; j<100; j++) {
-         mass = (fMass_min+delta_1*(i-1))+delta_2*j;
-         if( (exp(fGS_xsUp_vs_m.Eval(mass))/exp(fGS_xsTh_vs_m.Eval(mass)))>0.5 ) {
-           mass_max = (fMass_min+delta_1*(i-1))+delta_2*j;
-//            cout<<"mass_max: "<<mass_max<<endl;
-           break;
-         }
-       }
-       break;
-     }
-   }
-   if( iteration==0 ) {
-     mass_max = fMass_max;
-//      cout<<"iteration: "<<99<<endl;
-//      cout<<"mass_max: "<<mass_max<<endl;
-   }
- }
-
- Double_t step = (mass_max-fMass_min)/(fNPts-1);
-
- Double_t A = (mass_max-fMass_min)/(1-1/fNPts)+fMass_min;
- Double_t B = (mass_max-fMass_min)/(1-1/fNPts);
-
- for(Int_t i=0; i<fNPts; i++) {
-   x[i] = fMass_min+step*i;
-   x[2*fNPts-i-1] = x[i];
-   Double_t r = exp(fGS_xsUp_vs_m.Eval(x[i]))/exp(fGS_xsTh_vs_m.Eval(x[i]));
-   if(r<0.5) {
-     y[i] = 0.5*(1-sqrt(1-2*r));
-     y[2*fNPts-i-1] = 0.5*(1+sqrt(1-2*r));
-   } else {
-     y[i] = 0.5;
-     y[2*fNPts-i-1] = 0.5;
-   }
- }
-}
-
-
 void makePlots()
 {
  // **********************************************
@@ -241,8 +190,8 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
  // arrays of upper limits on the cross section
- Double_t xsUp_observed[10] = {1.47583, 0.771973, 0.759521, 0.609375, 0.597656, 0.570312, 0.431641, 0.411865, 0.289551, 0.273193};
- Double_t xsUp_expected[10] = {1.43795, 0.754524, 0.572235, 0.491, 0.424065, 0.382861, 0.33331, 0.295434, 0.255355, 0.230884};
+ Double_t xsUp_observed[10] = {0.444824, 0.310547, 0.309082, 0.293945, 0.284668, 0.279297, 0.268066, 0.258789, 0.174243, 0.166113};
+ Double_t xsUp_expected[10] = {0.692479, 0.442443, 0.360792, 0.326146, 0.298866, 0.274453, 0.250794, 0.230144, 0.208843, 0.192884};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
@@ -253,7 +202,7 @@ void makePlots()
  Double_t xsTh_lower[10] = {330.3, 45.2, 10.0, 2.9, 0.98, 0.379, 0.160, 0.0719, 0.0340, 0.0169}; // lower bounds with PDF and scale uncertainties included
 
  // filename for the final plot (NB: changing the name extension changes the file format)
- string fileName = "beta_vs_m_excl_enujj.eps";
+ string fileName = "beta_vs_m_excl.eps";
 
  // axes labels for the final plot
  string title = ";m [GeV];#beta";
@@ -264,7 +213,7 @@ void makePlots()
  // number of points used for beta vs m line
  Int_t nPts = 50;
  // range of LQ masses in which beta vs m line is derived
- Double_t mass_range[2] = {200, 340};
+ Double_t mass_range[2] = {200, 400};
 
  // region excluded by Tevatron limits (1 fb-1)
  Double_t x_excl[13] = {200,214.39,235.13,254.08,268.12,275.92,283.95,289.08,293.09,295.99,297.10,298.89,200};
@@ -278,7 +227,7 @@ void makePlots()
 //  gStyle->SetPadLeftMargin(0.14);
  gROOT->ForceStyle();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 20, 200., 340., 100, 0., 1.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0., 1.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.05,"Y");
@@ -453,68 +402,66 @@ void makePlots()
  gr_excl->SetFillColor(kGray);
  gr_excl->Draw("f");
 
- Double_t m_expected[2*nPts], beta_expected[2*nPts], m_observed[2*nPts], beta_observed[2*nPts], m_observed_upper[2*nPts], beta_observed_upper[2*nPts], m_observed_lower[2*nPts], beta_observed_lower[2*nPts];
+ Double_t step = (mass_range[1]-mass_range[0])/(nPts-1);
+ Double_t m[nPts], beta_expected[nPts], beta_observed[nPts], beta_observed_upper[nPts], beta_observed_lower[nPts];
 
- fill_arrays(mass_range[0], mass_range[1], nPts, gs_xsUp_expected_vs_m, gs_xsTh_vs_m, m_expected, beta_expected);
- fill_arrays(mass_range[0], mass_range[1], nPts, gs_xsUp_observed_vs_m, gs_xsTh_vs_m, m_observed, beta_observed);
- fill_arrays(mass_range[0], mass_range[1], nPts, gs_xsUp_observed_vs_m, gs_xsTh_upper_vs_m, m_observed_lower, beta_observed_lower);
- fill_arrays(mass_range[0], mass_range[1], nPts, gs_xsUp_observed_vs_m, gs_xsTh_lower_vs_m, m_observed_upper, beta_observed_upper);
+ for(Int_t i=0; i<nPts; i++) {
+   m[i] = mass_range[0]+step*i;
+   beta_expected[i] = sqrt(exp(gs_xsUp_expected_vs_m.Eval(m[i]))/exp(gs_xsTh_vs_m.Eval(m[i])));
+   beta_observed[i] = sqrt(exp(gs_xsUp_observed_vs_m.Eval(m[i]))/exp(gs_xsTh_vs_m.Eval(m[i])));
+   beta_observed_lower[i] = sqrt(exp(gs_xsUp_observed_vs_m.Eval(m[i]))/exp(gs_xsTh_upper_vs_m.Eval(m[i])));
+   beta_observed_upper[i] = sqrt(exp(gs_xsUp_observed_vs_m.Eval(m[i]))/exp(gs_xsTh_lower_vs_m.Eval(m[i])));
+ }
 
- cout<<endl<<Form("Double_t m_enujj_observed[%i] = {", 2*nPts);
- for(Int_t i = 0; i<2*nPts; i++) {
-   cout<<m_observed[i];
-   if(i<(2*nPts-1)) cout<<", ";
+ cout<<endl<<Form("Double_t m_eejj[%i] = {", nPts);
+ for(Int_t i = 0; i<nPts; i++) {
+   cout<<m[i];
+   if(i<(nPts-1)) cout<<", ";
  }
  cout<<"};"<<endl;
- cout<<Form("Double_t beta_enujj_observed[%i] = {", 2*nPts);
- for(Int_t i = 0; i<2*nPts; i++) {
+ cout<<Form("Double_t beta_eejj_observed[%i] = {", nPts);
+ for(Int_t i = 0; i<nPts; i++) {
    cout<<beta_observed[i];
-   if(i<(2*nPts-1)) cout<<", ";
+   if(i<(nPts-1)) cout<<", ";
  }
  cout<<"};"<<endl;
- cout<<Form("Double_t m_enujj_expected[%i] = {", 2*nPts);
- for(Int_t i = 0; i<2*nPts; i++) {
-   cout<<m_expected[i];
-   if(i<(2*nPts-1)) cout<<", ";
- }
- cout<<"};"<<endl;
- cout<<Form("Double_t beta_enujj_expected[%i] = {", 2*nPts);
- for(Int_t i = 0; i<2*nPts; i++) {
+ cout<<Form("Double_t beta_eejj_expected[%i] = {", nPts);
+ for(Int_t i = 0; i<nPts; i++) {
    cout<<beta_expected[i];
-   if(i<(2*nPts-1)) cout<<", ";
+   if(i<(nPts-1)) cout<<", ";
  }
  cout<<"};"<<endl<<endl;
 
- TGraph *beta_observed_vs_m_band = new TGraph(4*nPts);
- for(Int_t i=0;i<(2*nPts);i++) {
-   beta_observed_vs_m_band->SetPoint(i,m_observed_lower[i],beta_observed_lower[i]);
-   beta_observed_vs_m_band->SetPoint(2*nPts+i,m_observed_upper[2*nPts-i-1],beta_observed_upper[2*nPts-i-1]);
+ TGraph *beta_observed_vs_m_band = new TGraph(2*nPts);
+ for(Int_t i=0;i<nPts;i++) {
+   beta_observed_vs_m_band->SetPoint(i,m[i],beta_observed_lower[i]);
+   beta_observed_vs_m_band->SetPoint(nPts+i,m[nPts-i-1],beta_observed_upper[nPts-i-1]);
  }
  beta_observed_vs_m_band->SetLineColor(0);
  beta_observed_vs_m_band->SetFillColor(kYellow);
  beta_observed_vs_m_band->Draw("f");
 
- TGraph *beta_expected_vs_m = new TGraph(2*nPts, m_expected, beta_expected);
+ TGraph *beta_expected_vs_m = new TGraph(nPts, m, beta_expected);
  beta_expected_vs_m->SetLineWidth(2);
  beta_expected_vs_m->SetLineStyle(2);
  beta_expected_vs_m->SetLineColor(kBlue);
- beta_expected_vs_m->Draw();
+ beta_expected_vs_m->Draw("C");
 
- TGraph *beta_observed_vs_m = new TGraph(2*nPts, m_observed, beta_observed);
+ TGraph *beta_observed_vs_m = new TGraph(nPts, m, beta_observed);
  beta_observed_vs_m->SetLineWidth(2);
  beta_observed_vs_m->SetLineColor(kBlack);
  beta_observed_vs_m->SetFillColor(kYellow);
- beta_observed_vs_m->Draw();
+ beta_observed_vs_m->Draw("C");
 
  gPad->RedrawAxis();
 
- TLegend *legend = new TLegend(.18,.46,.56,.63);
+ TLegend *legend = new TLegend(.48,.37,.91,.54);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow e#nuqq");
+ legend->SetHeader("LQ #rightarrow eq");
  legend->AddEntry(gr_excl,"D#oslash exclusion (1 fb^{-1})","f");
  legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. limit","l");
  legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. limit","lf");
@@ -522,11 +469,11 @@ void makePlots()
 
  TLatex l1;
  l1.SetTextAlign(12);
- l1.SetTextSize(0.04);
+ l1.SetTextSize(0.05);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.68,0.3,"CMS 2010");
- l1.DrawLatex(0.68,0.2,lint.c_str());
+ l1.DrawLatex(0.57,0.32,"CMS 2010");
+ l1.DrawLatex(0.56,0.22,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();
