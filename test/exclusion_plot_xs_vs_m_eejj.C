@@ -218,7 +218,7 @@ void makePlots()
  string fileName = "xs95CL_vs_m.eps";
 
  // axes labels for the final plot
- string title = ";m [GeV];#beta^{2}#times#sigma [pb]";
+ string title = ";M_{LQ} [GeV];#beta^{2}#times#sigma [pb]";
 
  // integrated luminosity
  string lint = "#intLdt=33.2 pb^{-1}";
@@ -291,7 +291,7 @@ void makePlots()
  pl->Draw();
 
  TGraph *grshade = new TGraph(20,x_pdf,y_pdf);
- grshade->SetFillColor(kYellow);
+ grshade->SetFillColor(kGreen);
  grshade->Draw("f");
 
  gPad->RedrawAxis();
@@ -305,7 +305,7 @@ void makePlots()
  TGraph *xsTh_vs_m = new TGraph(10, mTh, xsTh);
  xsTh_vs_m->SetLineWidth(2);
  xsTh_vs_m->SetLineColor(kRed);
- xsTh_vs_m->SetFillColor(kYellow);
+ xsTh_vs_m->SetFillColor(kGreen);
  xsTh_vs_m->SetMarkerSize(1.);
  xsTh_vs_m->SetMarkerStyle(22);
  xsTh_vs_m->SetMarkerColor(kRed);
@@ -344,11 +344,12 @@ void makePlots()
 
  TLatex l1;
  l1.SetTextAlign(12);
- l1.SetTextSize(0.05);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.59,0.61,"CMS 2010");
- l1.DrawLatex(0.59,0.51,lint.c_str());
+ l1.SetTextSize(0.06);
+ l1.DrawLatex(0.55,0.30,"CMS");
+ l1.SetTextSize(0.05);
+ l1.DrawLatex(0.47,0.20,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();

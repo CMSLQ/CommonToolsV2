@@ -205,7 +205,7 @@ void makePlots()
  string fileName = "beta_vs_m_excl.eps";
 
  // axes labels for the final plot
- string title = ";m [GeV];#beta";
+ string title = ";M_{LQ} [GeV];#beta";
 
  // integrated luminosity
  string lint = "#intLdt=33.2 pb^{-1}";
@@ -438,7 +438,7 @@ void makePlots()
    beta_observed_vs_m_band->SetPoint(nPts+i,m[nPts-i-1],beta_observed_upper[nPts-i-1]);
  }
  beta_observed_vs_m_band->SetLineColor(0);
- beta_observed_vs_m_band->SetFillColor(kYellow);
+ beta_observed_vs_m_band->SetFillColor(kGreen);
  beta_observed_vs_m_band->Draw("f");
 
  TGraph *beta_expected_vs_m = new TGraph(nPts, m, beta_expected);
@@ -450,7 +450,7 @@ void makePlots()
  TGraph *beta_observed_vs_m = new TGraph(nPts, m, beta_observed);
  beta_observed_vs_m->SetLineWidth(2);
  beta_observed_vs_m->SetLineColor(kBlack);
- beta_observed_vs_m->SetFillColor(kYellow);
+ beta_observed_vs_m->SetFillColor(kGreen);
  beta_observed_vs_m->Draw("C");
 
  gPad->RedrawAxis();
@@ -472,7 +472,9 @@ void makePlots()
  l1.SetTextSize(0.05);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.57,0.32,"CMS 2010");
+ l1.SetTextSize(0.06);
+ l1.DrawLatex(0.64,0.32,"CMS");
+ l1.SetTextSize(0.05);
  l1.DrawLatex(0.56,0.22,lint.c_str());
 
  c->SetGridx();
