@@ -413,6 +413,9 @@ void makePlots()
    beta_observed_upper[i] = sqrt(exp(gs_xsUp_observed_vs_m.Eval(m[i]))/exp(gs_xsTh_lower_vs_m.Eval(m[i])));
  }
 
+ Double_t xoi = 384;
+ cout<< "Observed upper limit for LQ mass of " <<xoi<< " GeV is " << exp(gs_xsUp_observed_vs_m.Eval(xoi)) << " pb" << endl;
+
  cout<<endl<<Form("Double_t m_eejj[%i] = {", nPts);
  for(Int_t i = 0; i<nPts; i++) {
    cout<<m[i];
@@ -473,7 +476,7 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.06);
- l1.DrawLatex(0.64,0.32,"CMS");
+ l1.DrawLatex(0.56,0.32,"CMS");
  l1.SetTextSize(0.05);
  l1.DrawLatex(0.56,0.22,lint.c_str());
 

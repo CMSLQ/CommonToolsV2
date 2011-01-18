@@ -190,24 +190,24 @@ void makePlots()
  bool systematics = true; // does nothing at the moment
 
  // total integrated luminosity (in pb-1)
- Double_t L_int = 33.2;
+ Double_t L_int = 36;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
  Double_t Sigma_L_int = 0.11;
 
  // array of signal efficiencies
- Double_t S_eff[10] = {0.157, 0.254, 0.289, 0.314, 0.337, 0.361, 0.393, 0.423, 0.464, 0.498};
+ Double_t S_eff[10] = {0.161, 0.255, 0.291, 0.317, 0.339, 0.364, 0.396, 0.426, 0.467, 0.500};
  // array of relative uncertainties on the signal efficiencies
  Double_t Sigma_S_eff[10] = {0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08};
  // branching ratio for enujj channel 2*beta(1-beta)
  Double_t Br = 0.5;
 
  // array of N_background for L_int
- Double_t N_bkg[10] = {5.6, 3.7, 2.4, 1.9, 1.44, 1.26, 1.0, 0.8, 0.6, 0.5};
+ Double_t N_bkg[10] = {6.52, 4.45, 3.06, 2.46, 1.89, 1.63, 1.35, 1.10, 0.85, 0.76};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[10] = {0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32};
+ Double_t Sigma_N_bkg[10] = {0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31};
 
  // array of N_observed for L_int
- Int_t N_obs[10] = {6, 4, 4, 3, 3, 3, 2, 2, 1, 1};
+ Int_t N_obs[10] = {5, 3, 3, 2, 2, 2, 1, 1, 0, 0};
 
  // array of LQ masses for calculation of upXS
  Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
@@ -221,10 +221,10 @@ void makePlots()
  string fileName = "xs95CL_vs_m_enujj.eps";
 
  // axes labels for the final plot
- string title = ";m [GeV];2#beta(1-#beta)#times#sigma [pb]";
+ string title = ";M_{LQ} [GeV];2#beta(1-#beta)#times#sigma [pb]";
 
  // integrated luminosity
- string lint = "#intLdt=33.2 pb^{-1}";
+ string lint = "#intLdt=36 pb^{-1}";
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {200,264,264,200,200};
@@ -259,7 +259,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[10] = {1.47583, 0.771973, 0.759521, 0.609375, 0.597656, 0.570312, 0.431641, 0.411865, 0.289551, 0.273193};
+ Double_t xsUp_observed[10] = {1.0957, 0.569824, 0.54541, 0.428223, 0.419434, 0.399902, 0.291504, 0.276367, 0.184131, 0.171875};
 
 //  Double_t xsUp_expected[size];
 //  for(Int_t i = 0; i < size; i++){
@@ -273,7 +273,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[10] = {1.43795, 0.754524, 0.572235, 0.491, 0.424065, 0.382861, 0.33331, 0.295434, 0.255355, 0.230884};
+ Double_t xsUp_expected[10] = {1.37776, 0.742139, 0.566987, 0.484491, 0.418554, 0.373954, 0.327351, 0.289678, 0.249829, 0.22816};
 
  // set ROOT style
 //  myStyle();
@@ -298,7 +298,7 @@ void makePlots()
  pl->Draw();
 
  TGraph *grshade = new TGraph(20,x_pdf,y_pdf);
- grshade->SetFillColor(kYellow);
+ grshade->SetFillColor(kGreen);
  grshade->Draw("f");
 
  gPad->RedrawAxis();
@@ -312,7 +312,7 @@ void makePlots()
  TGraph *xsTh_vs_m = new TGraph(10, mTh, xsTh);
  xsTh_vs_m->SetLineWidth(2);
  xsTh_vs_m->SetLineColor(kRed);
- xsTh_vs_m->SetFillColor(kYellow);
+ xsTh_vs_m->SetFillColor(kGreen);
  xsTh_vs_m->SetMarkerSize(1.);
  xsTh_vs_m->SetMarkerStyle(22);
  xsTh_vs_m->SetMarkerColor(kRed);
@@ -342,7 +342,7 @@ void makePlots()
  //legend->SetFillStyle(0);
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow e#nuqq");
+ legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq");
  legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}, #beta=0.5)","f");
  legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{theory} with theory uncertainty, #beta=0.5","lf");
  legend->AddEntry(xsData_vs_m_expected, "Expected 95% C.L. upper limit","lp");
@@ -351,10 +351,11 @@ void makePlots()
 
  TLatex l1;
  l1.SetTextAlign(12);
- l1.SetTextSize(0.04);
  l1.SetTextFont(42);
  l1.SetNDC();
+ l1.SetTextSize(0.05);
  l1.DrawLatex(0.65,0.6,"CMS 2010");
+ l1.SetTextSize(0.05);
  l1.DrawLatex(0.65,0.5,lint.c_str());
 
  c->SetGridx();

@@ -241,8 +241,8 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
  // arrays of upper limits on the cross section
- Double_t xsUp_observed[10] = {1.47583, 0.771973, 0.759521, 0.609375, 0.597656, 0.570312, 0.431641, 0.411865, 0.289551, 0.273193};
- Double_t xsUp_expected[10] = {1.43795, 0.754524, 0.572235, 0.491, 0.424065, 0.382861, 0.33331, 0.295434, 0.255355, 0.230884};
+ Double_t xsUp_observed[10] = {1.0957, 0.569824, 0.54541, 0.428223, 0.419434, 0.399902, 0.291504, 0.276367, 0.184131, 0.171875};
+ Double_t xsUp_expected[10] = {1.37776, 0.742139, 0.566987, 0.484491, 0.418554, 0.373954, 0.327351, 0.289678, 0.249829, 0.22816};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
@@ -256,15 +256,15 @@ void makePlots()
  string fileName = "beta_vs_m_excl_enujj.eps";
 
  // axes labels for the final plot
- string title = ";m [GeV];#beta";
+ string title = ";M_{LQ} [GeV];#beta";
 
  // integrated luminosity
- string lint = "#intLdt=33.2 pb^{-1}";
+ string lint = "#intLdt=36 pb^{-1}";
 
  // number of points used for beta vs m line
  Int_t nPts = 50;
  // range of LQ masses in which beta vs m line is derived
- Double_t mass_range[2] = {200, 340};
+ Double_t mass_range[2] = {200, 360};
 
  // region excluded by Tevatron limits (1 fb-1)
  Double_t x_excl[13] = {200,214.39,235.13,254.08,268.12,275.92,283.95,289.08,293.09,295.99,297.10,298.89,200};
@@ -278,7 +278,7 @@ void makePlots()
 //  gStyle->SetPadLeftMargin(0.14);
  gROOT->ForceStyle();
 
- TH2F *bg = new TH2F("bg",title.c_str(), 20, 200., 340., 100, 0., 1.);
+ TH2F *bg = new TH2F("bg",title.c_str(), 20, 200., 360., 100, 0., 1.);
  bg->SetStats(kFALSE);
  bg->SetTitleOffset(1.,"X");
  bg->SetTitleOffset(1.05,"Y");
@@ -491,7 +491,7 @@ void makePlots()
    beta_observed_vs_m_band->SetPoint(2*nPts+i,m_observed_upper[2*nPts-i-1],beta_observed_upper[2*nPts-i-1]);
  }
  beta_observed_vs_m_band->SetLineColor(0);
- beta_observed_vs_m_band->SetFillColor(kYellow);
+ beta_observed_vs_m_band->SetFillColor(kGreen);
  beta_observed_vs_m_band->Draw("f");
 
  TGraph *beta_expected_vs_m = new TGraph(2*nPts, m_expected, beta_expected);
@@ -503,7 +503,7 @@ void makePlots()
  TGraph *beta_observed_vs_m = new TGraph(2*nPts, m_observed, beta_observed);
  beta_observed_vs_m->SetLineWidth(2);
  beta_observed_vs_m->SetLineColor(kBlack);
- beta_observed_vs_m->SetFillColor(kYellow);
+ beta_observed_vs_m->SetFillColor(kGreen);
  beta_observed_vs_m->Draw();
 
  gPad->RedrawAxis();
@@ -514,7 +514,7 @@ void makePlots()
  //legend->SetFillStyle(0);
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow e#nuqq");
+ legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq");
  legend->AddEntry(gr_excl,"D#oslash exclusion (1 fb^{-1})","f");
  legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. limit","l");
  legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. limit","lf");
@@ -522,11 +522,12 @@ void makePlots()
 
  TLatex l1;
  l1.SetTextAlign(12);
- l1.SetTextSize(0.04);
  l1.SetTextFont(42);
  l1.SetNDC();
- l1.DrawLatex(0.68,0.3,"CMS 2010");
- l1.DrawLatex(0.68,0.2,lint.c_str());
+ l1.SetTextSize(0.05);
+ l1.DrawLatex(0.68,0.29,"CMS 2010");
+ l1.SetTextSize(0.05);
+ l1.DrawLatex(0.68,0.19,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();

@@ -347,7 +347,7 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.06);
- l1.DrawLatex(0.55,0.30,"CMS");
+ l1.DrawLatex(0.47,0.30,"CMS");
  l1.SetTextSize(0.05);
  l1.DrawLatex(0.47,0.20,lint.c_str());
 
