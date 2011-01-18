@@ -46,7 +46,7 @@
 #include "TSpline.h"
 using namespace std;
 
-static Double_t A0, sA, B0, B1, B2, sB, beta, eff1, eff2, epsilon, MaxSig = 100.;
+static Double_t A0, A1, A2, sA, B0, B1, B2, sB, beta, eff1, eff2, epsilon, MaxSig = 100.;
 static Double_t MinLike = 1.e-6, Precision = 1.e-5;
 static Int_t N1, N2, MaxIterations = 1000;
 static bool plot = kTRUE;
@@ -57,8 +57,8 @@ Double_t Likelihood(Double_t *x, Double_t *p);
 Double_t Inner(Double_t *x, Double_t *par);
 Double_t Outer(Double_t *x, Double_t *p);
 Double_t Poisson(Double_t Mu, Int_t n);
-Double_t CL95(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t n1, Int_t n2, Int_t nuisanceModel = 0);
-Double_t CLA(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t nuisanceModel = 0);
+Double_t CL95(Double_t ilum1, Double_t ilum2, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t n1, Int_t n2, Int_t nuisanceModel = 0);
+Double_t CLA(Double_t ilum1, Double_t ilum2, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t nuisanceModel = 0);
 
 
 Double_t get_intersection(const Double_t fX_data[], const Double_t fY_data[], const Int_t fSize, const Double_t fX_th[], const Double_t fY_th[], const Int_t fSize_th, const Bool_t fDebug, const Double_t fBeta)
@@ -174,41 +174,38 @@ void LQcomb()
  // Eff for the dilepton channel
  Double_t e1[10] = {0.297, 0.380, 0.403, 0.430, 0.451, 0.469, 0.496, 0.522, 0.539, 0.565};
  // Eff for the lepton+MET channel
- Double_t e2[10] = {0.157, 0.254, 0.289, 0.314, 0.337, 0.361, 0.393, 0.423, 0.464, 0.498};
+ Double_t e2[10] = {0.161, 0.255, 0.291, 0.317, 0.339, 0.364, 0.396, 0.426, 0.467, 0.500};
  // Background in the dilepton channel
  Double_t b1[10] = {4.5, 2.5, 1.5, 1.3, 1.1, 0.89, 0.75, 0.62, 0.41, 0.32};
  // Background in the lepton+MET channel
- Double_t b2[10] = {5.6, 3.7, 2.4, 1.9, 1.44, 1.26, 1.0, 0.8, 0.6, 0.5};
+ Double_t b2[10] = {6.52, 4.45, 3.06, 2.46, 1.89, 1.63, 1.35, 1.10, 0.85, 0.76};
  // Relative error on bck in dileptons
  Double_t db1[10] = {0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25};
  // Relative error on bck in lepton+MET
- Double_t db2[10] = {0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32};
+ Double_t db2[10] = {0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31};
  // Nevents in the dilepton channel
  Int_t n1[10] = {2, 1, 1, 1, 1, 1, 1, 1, 0, 0};
  // Nevents in the lepton+MET channel
- Int_t n2[10] = {6, 4, 4, 3, 3, 3, 2, 2, 1, 1};
+ Int_t n2[10] = {5, 3, 3, 2, 2, 2, 1, 1, 0, 0};
 
  // Total integrated luminosity (in pb-1)
- Double_t Lumi = 33.2, epsLumi = 0.15;
+ Double_t Lumi1 = 33.2, Lumi2 = 36, epsLumi = 0.15;
  // Cross-section upper limits
- Double_t xsUp_observed[10], xsUp_expected[10], xsUp_eejj_observed[10];
+ Double_t xsUp_observed[10], xsUp_expected[10];
  // Mass points for theoretical cross-section
  Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
  // Theoretical cross-section
  Double_t xsTh[10] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949, 0.0463, 0.0236};
 
- // Range of beta values considered
- Double_t beta_range[2] = {0.07, 1.0};
+ // beta values considered
+ Double_t beta[21] = {0.06, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
  // Number of points used for beta vs m line
- Int_t nPts = 20;
+ Int_t nPts = sizeof(beta)/sizeof(*beta);;
 
- Double_t beta[nPts], m_observed[nPts], m_expected[nPts],
+ Double_t m_observed[nPts], m_expected[nPts];
 
  Int_t size = sizeof(m)/sizeof(*m);
  Int_t size_th = sizeof(mTh)/sizeof(*mTh);
-
- Double_t step_beta = (beta_range[1]-beta_range[0])/(nPts-1);
- for(Int_t i=0; i<nPts; i++) beta[i] = beta_range[0] + step_beta*i;
 
  // turn on/off batch mode
  gROOT->SetBatch(kTRUE);
@@ -220,8 +217,8 @@ void LQcomb()
    cout << "Cross section limits at the 95% C.L. for beta = " <<Form("%.2f", beta[j]) << endl;
    for (Int_t i=0; i<size; i++)
    {
-       xsUp_observed[i]  = CL95(Lumi, epsLumi, e1[i], e2[i], b1[i], b2[i], db2[i], TMath::Max(beta[j],0.01), n1[i], n2[i], 1);
-  //      xsUp_expected[i] = CLA(Lumi, epsLumi, e1[i], e2[i], b1[i], b2[i], db2[i], TMath::Max(beta[j],0.01), 1);
+       xsUp_observed[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db2[i], TMath::Max(beta[j],0.01), n1[i], n2[i], 1);
+  //      xsUp_expected[i] = CLA(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db2[i], TMath::Max(beta[j],0.01), 1);
        cout << "Mass = " << m[i] << "; sigma95 (expected) = " << xsUp_observed[i] << " (" << xsUp_expected[i] << ") pb" << endl;
    }
 
@@ -229,13 +226,12 @@ void LQcomb()
 //    m_expected[j] = get_intersection(m, xsUp_expected, size, mTh, xsTh, size_th, debug, beta[j]);
 
    cout << "Observed 95% C.L. lower limit on LQ mass = " << m_observed[j] << " GeV"<< endl;
-//    cout << "Observed 95% C.L. lower limit on LQ mass in eejj channel = " << m_eejj_observed[j] << " GeV"<< endl;
 //    cout << "Expected 95% C.L. lower limit on LQ mass = " << m_expected[j] << " GeV"<< endl;
  }
 
  // #################################################
  // ## Special treatment for the lowest mass point ##
- Double_t beta_range_lowest[2] = {0.02, 0.10};
+ Double_t beta_range_lowest[2] = {0.02, 0.08};
  Int_t nPts_lowest = 6;
 
  Double_t beta_lowest[nPts_lowest], xsUp_observed_lowest[nPts_lowest], xsUp_expected_lowest[nPts_lowest], xsTh_lowest[nPts_lowest];
@@ -249,8 +245,8 @@ void LQcomb()
  cout << "Cross section limits at the 95% C.L. for the lowest LQ mass = " <<Form("%.0f GeV", m[0]) << endl;
  for (Int_t i=0; i<nPts_lowest; i++)
  {
-     xsUp_observed_lowest[i]  = CL95(Lumi, epsLumi, e1[0], e2[0], b1[0], b2[0], db2[0], TMath::Max(beta_lowest[i],0.01), n1[0], n2[0], 1);
-  //    xsUp_expected_lowest[i] = CLA(Lumi, epsLumi, e1[0], e2[0], b1[0], b2[0], db2[0], TMath::Max(beta_lowest[i],0.01), 1);
+     xsUp_observed_lowest[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db2[0], TMath::Max(beta_lowest[i],0.01), n1[0], n2[0], 1);
+  //    xsUp_expected_lowest[i] = CLA(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db2[0], TMath::Max(beta_lowest[i],0.01), 1);
      cout << "beta = " << beta_lowest[i] << "; sigma95 (expected) = " << xsUp_observed_lowest[i] << " (" << xsUp_expected_lowest[i] << ") pb" << endl;
  }
 
@@ -290,14 +286,16 @@ void LQcomb()
 
 }
 
-Double_t CL95(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t n1, Int_t n2, Int_t nuisanceModel)
+Double_t CL95(Double_t ilum1, Double_t ilum2, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t n1, Int_t n2, Int_t nuisanceModel)
 {
         Double_t xmax = MaxSig;
         Double_t x[1], p[1];
 
 // Get the nominal values of input (nuisance) parameters and their uncertainties.
-        A0 = ilum;
-        sA = ilum * epslum;
+        A1 = ilum1;
+        A2 = ilum2;
+        A0 = A1+A2;
+        sA = A0 * epslum;
         B1 = bck1;
         B2 = bck2;
         B0 = B1 + B2;
@@ -308,7 +306,7 @@ Double_t CL95(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Doub
         N1 = n1;
         N2 = n2;
 //
-        epsilon = TMath::Max(Precision/ilum,1.e-5);
+        epsilon = TMath::Max(Precision/TMath::Max(ilum1,ilum2),1.e-5);
         //
 
         // If using logNormal or gamma functions for nuisance parameters, must express these parameters in the way expected
@@ -494,10 +492,10 @@ Double_t Inner(Double_t *x, Double_t *par)
 // When calculating Poisson probabilities, allow for uncertainty in A0 (lumi*effi) by summing over all possible
 // values of this parameter, weighted by the apriori probability that it is correct.
 {
-    Double_t L;
-        //
-        L = Poisson(par[0]*B1/B0 + par[1]*beta*beta*eff1*x[0],N1) * Poisson(par[0]*B2/B0 + 2.*par[1]*beta*(1.-beta)*eff2*x[0],N2);
-    if (I == 0) return TMath::Gaus(x[0],A0,sA,kTRUE)*L;
+        Double_t L;
+            //
+        L = Poisson(par[0]*B1/B0 + par[1]*beta*beta*eff1*x[0]*A1/A0,N1) * Poisson(par[0]*B2/B0 + 2.*par[1]*beta*(1.-beta)*eff2*x[0]*A2/A0,N2);
+        if (I == 0) return TMath::Gaus(x[0],A0,sA,kTRUE)*L;
         else if (I == 1) return TMath::LogNormal(x[0], sigma_a, 0., A0)*L;
         else if (I == 2) return TMath::GammaDist(x[0], sigma_a, 0., 1./tau_a)*L;
         else return 0;
@@ -630,7 +628,7 @@ Double_t Poisson(Double_t Mu, Int_t n)
         return exp(logP);
 }//
 
-Double_t CLA(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t bckint)
+Double_t CLA(Double_t ilum1, Double_t ilum2, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t bckint)
 {
 
         plot = kFALSE;
@@ -643,7 +641,7 @@ Double_t CLA(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Doubl
                 Int_t contrib = 0;
                 for (j = bck2; j >= 0; j--)
                 {
-                        Double_t s95 = CL95(ilum, epslum, eps1, eps2, bck1, bck2, epsbck, bcharged, i, j, bckint);
+                        Double_t s95 = CL95(ilum1, ilum2, epslum, eps1, eps2, bck1, bck2, epsbck, bcharged, i, j, bckint);
                         Double_t s95w =s95*factor*Poisson(bck2,j);
                         CL95A += s95w;
 //                      cout << "n1, n2 = " << i << ", " << j << "; 95% C.L. = " << s95 << " pb; weighted 95% C.L. = " << s95w << " pb; running <s95> = " << CL95A << " pb" << endl;
@@ -653,7 +651,7 @@ Double_t CLA(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Doubl
                 }
                 for (j = bck2+1; ; j++)
                 {
-                        Double_t s95 = CL95(ilum, epslum, eps1, eps2, bck1, bck2, epsbck, bcharged, i, j, bckint);
+                        Double_t s95 = CL95(ilum1, ilum2, epslum, eps1, eps2, bck1, bck2, epsbck, bcharged, i, j, bckint);
                         Double_t s95w =s95*factor*Poisson(bck2,j);
                         CL95A += s95w;
 //                      cout << "n1, n2 = " << i << ", " << j << "; 95% C.L. = " << s95 << " pb; weighted 95% C.L. = " << s95w << " pb; running <s95> = " << CL95A << " pb" << endl;
@@ -671,7 +669,7 @@ Double_t CLA(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Doubl
                 Int_t contrib = 0;
                 for (j = bck2; j >= 0; j--)
                 {
-                        Double_t s95 = CL95(ilum, epslum, eps1, eps2, bck1, bck2, epsbck, bcharged, i, j, bckint);
+                        Double_t s95 = CL95(ilum1, ilum2, epslum, eps1, eps2, bck1, bck2, epsbck, bcharged, i, j, bckint);
                         Double_t s95w =s95*factor*Poisson(bck2,j);
                         CL95A += s95w;
 //                      cout << "n1, n2 = " << i << ", " << j << "; 95% C.L. = " << s95 << " pb; weighted 95% C.L. = " << s95w << " pb; running <s95> = " << CL95A << " pb" << endl;
@@ -681,7 +679,7 @@ Double_t CLA(Double_t ilum, Double_t epslum, Double_t eps1, Double_t eps2, Doubl
                 }
                 for (j = bck2+1; ; j++)
                 {
-                        Double_t s95 = CL95(ilum, epslum, eps1, eps2, bck1, bck2, epsbck, bcharged, i, j, bckint);
+                        Double_t s95 = CL95(ilum1, ilum2, epslum, eps1, eps2, bck1, bck2, epsbck, bcharged, i, j, bckint);
                         Double_t s95w =s95*factor*Poisson(bck2,j);
                         CL95A += s95w;
 //                      cout << "n1, n2 = " << i << ", " << j << "; 95% C.L. = " << s95 << " pb; weighted 95% C.L. = " << s95w << " pb; running <s95> = " << CL95A << " pb" << endl;
