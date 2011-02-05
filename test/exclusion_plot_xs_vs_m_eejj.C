@@ -199,9 +199,11 @@ void makePlots()
  Double_t Sigma_S_eff[10] = {0.105, 0.105, 0.105, 0.105, 0.105, 0.105, 0.105, 0.105, 0.105, 0.105};
 
  // array of N_background for L_int
- Double_t N_bkg[10] = {4.5, 2.5, 1.5, 1.3, 1.1, 0.89, 0.75, 0.62, 0.41, 0.32};
+ Double_t N_bkg[10] = {4.9, 2.7, 1.7, 1.4, 1.2, 0.96, 0.80, 0.67, 0.42, 0.33};
+ // to PRL in Dec 2010 Double_t N_bkg[10] = {4.5, 2.5, 1.5, 1.3, 1.1, 0.89, 0.75, 0.62, 0.41, 0.32};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[10] = {0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25};
+ Double_t Sigma_N_bkg[10] = {0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28};
+ // to PRL in Dec 2010 Double_t Sigma_N_bkg[10] = {0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25};
 
  // array of N_observed for L_int
  Int_t N_obs[10] = {2, 1, 1, 1, 1, 1, 1, 1, 0, 0};
@@ -241,7 +243,7 @@ void makePlots()
 
 //  Double_t xsUp_observed[size];
 //  for(Int_t i = 0; i < size; i++){
-//
+
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i], kFALSE, 1);
 //  }
 //  cout<<endl<<Form("Double_t xsUp_observed[%i] = {", size);
@@ -251,7 +253,8 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[10] = {0.444824, 0.310547, 0.309082, 0.293945, 0.284668, 0.279297, 0.268066, 0.258789, 0.174243, 0.166113};
+ Double_t xsUp_observed[10] = {0.440918, 0.308594, 0.30542,  0.291992, 0.282715, 0.277588, 0.266846, 0.257324, 0.174243, 0.166113};
+ //to PRL in Dec. 2010 Double_t xsUp_observed[10] = {0.444824, 0.310547, 0.309082, 0.293945, 0.284668, 0.279297, 0.268066, 0.258789, 0.174243, 0.166113};
 
 //  Double_t xsUp_expected[size];
 //  for(Int_t i = 0; i < size; i++){
@@ -265,7 +268,8 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[10] = {0.692479, 0.442443, 0.360792, 0.326146, 0.298866, 0.274453, 0.250794, 0.230144, 0.208843, 0.192884};
+ Double_t xsUp_expected[10] = {0.719781, 0.454356, 0.373334, 0.332432, 0.30521, 0.278996, 0.254081, 0.233398, 0.209577, 0.193584};
+ //to PRL in Dec. 2010 Double_t xsUp_expected[10] = {0.692479, 0.442443, 0.360792, 0.326146, 0.298866, 0.274453, 0.250794, 0.230144, 0.208843, 0.192884};
 
  // set ROOT style
 //  myStyle();
@@ -347,9 +351,13 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.06);
+<<<<<<< exclusion_plot_xs_vs_m_eejj.C
+ l1.DrawLatex(0.42,0.31,"CMS");
+=======
  l1.DrawLatex(0.47,0.30,"CMS");
+>>>>>>> 1.3
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.47,0.20,lint.c_str());
+ l1.DrawLatex(0.42,0.20,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();
