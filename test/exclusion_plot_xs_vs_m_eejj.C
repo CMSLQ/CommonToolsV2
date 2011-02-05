@@ -351,11 +351,7 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.06);
-<<<<<<< exclusion_plot_xs_vs_m_eejj.C
  l1.DrawLatex(0.42,0.31,"CMS");
-=======
- l1.DrawLatex(0.47,0.30,"CMS");
->>>>>>> 1.3
  l1.SetTextSize(0.05);
  l1.DrawLatex(0.42,0.20,lint.c_str());
 
