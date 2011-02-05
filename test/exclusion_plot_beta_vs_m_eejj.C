@@ -190,8 +190,10 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
  // arrays of upper limits on the cross section
- Double_t xsUp_observed[10] = {0.444824, 0.310547, 0.309082, 0.293945, 0.284668, 0.279297, 0.268066, 0.258789, 0.174243, 0.166113};
- Double_t xsUp_expected[10] = {0.692479, 0.442443, 0.360792, 0.326146, 0.298866, 0.274453, 0.250794, 0.230144, 0.208843, 0.192884};
+ Double_t xsUp_observed[10] = {0.440918, 0.308594, 0.30542,  0.291992, 0.282715, 0.277588, 0.266846, 0.257324, 0.174243, 0.166113};
+ // to PRL in Dec 2010 Double_t xsUp_observed[10] = {0.444824, 0.310547, 0.309082, 0.293945, 0.284668, 0.279297, 0.268066, 0.258789, 0.174243, 0.166113};
+ Double_t xsUp_expected[10] = {0.719781, 0.454356, 0.373334, 0.332432, 0.30521, 0.278996, 0.254081, 0.233398, 0.209577, 0.193584};
+ // to PRL in Dec 2010 Double_t xsUp_expected[10] = {0.692479, 0.442443, 0.360792, 0.326146, 0.298866, 0.274453, 0.250794, 0.230144, 0.208843, 0.192884};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
@@ -476,9 +478,9 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.06);
- l1.DrawLatex(0.56,0.32,"CMS");
+ l1.DrawLatex(0.55,0.32,"CMS");
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.56,0.22,lint.c_str());
+ l1.DrawLatex(0.55,0.22,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();
