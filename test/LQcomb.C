@@ -182,7 +182,7 @@ void LQcomb()
  // Relative error on bck in dileptons
  Double_t db1[10] = {0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28};
  // Relative error on bck in lepton+MET
- Double_t db2[10] = {0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31};
+ Double_t db2[10] = {0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20};
  // Nevents in the dilepton channel
  Int_t n1[10] = {2, 1, 1, 1, 1, 1, 1, 1, 0, 0};
  // Nevents in the lepton+MET channel
@@ -217,8 +217,8 @@ void LQcomb()
    cout << "Cross section limits at the 95% C.L. for beta = " <<Form("%.2f", beta[j]) << endl;
    for (Int_t i=0; i<size; i++)
    {
-       xsUp_observed[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db2[i], TMath::Max(beta[j],0.01), n1[i], n2[i], 1);
-  //      xsUp_expected[i] = CLA(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db2[i], TMath::Max(beta[j],0.01), 1);
+       xsUp_observed[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db1[i], TMath::Max(beta[j],0.01), n1[i], n2[i], 1);
+  //      xsUp_expected[i] = CLA(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db1[i], TMath::Max(beta[j],0.01), 1);
        cout << "Mass = " << m[i] << "; sigma95 (expected) = " << xsUp_observed[i] << " (" << xsUp_expected[i] << ") pb" << endl;
    }
 

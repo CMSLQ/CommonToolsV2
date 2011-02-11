@@ -204,7 +204,7 @@ void makePlots()
  // array of N_background for L_int
  Double_t N_bkg[10] = {6.5, 4.4, 3.1, 2.5, 1.9, 1.6, 1.3, 1.1, 0.9, 0.8};
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[10] = {0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31};
+ Double_t Sigma_N_bkg[10] = {0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20};
 
  // array of N_observed for L_int
  Int_t N_obs[10] = {5, 3, 3, 2, 2, 2, 1, 1, 0, 0};
@@ -259,7 +259,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[10] = {1.09668, 0.571289, 0.543945, 0.427246, 0.418945, 0.401367, 0.29248, 0.276367, 0.184131, 0.171875};
+ Double_t xsUp_observed[10] = {1.05469, 0.558105, 0.536133, 0.422852, 0.416016, 0.399414, 0.291504, 0.275635, 0.184131, 0.171875};
 
 //  Double_t xsUp_expected[size];
 //  for(Int_t i = 0; i < size; i++){
@@ -273,7 +273,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[10] = {1.37583, 0.738813, 0.569615, 0.487016, 0.419192, 0.372175, 0.324272, 0.289678, 0.252817, 0.23048};
+ Double_t xsUp_expected[10] = {1.33304, 0.725103, 0.563455, 0.483334, 0.417248, 0.371024, 0.323659, 0.289239, 0.252706, 0.230404};
 
  // set ROOT style
 //  myStyle();
