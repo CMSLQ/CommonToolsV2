@@ -176,11 +176,11 @@ void LQcomb()
  // Eff for the lepton+MET channel
  Double_t e2[10] = {0.161, 0.255, 0.291, 0.317, 0.339, 0.364, 0.396, 0.426, 0.467, 0.500};
  // Background in the dilepton channel
- Double_t b1[10] = {4.5, 2.5, 1.5, 1.3, 1.1, 0.89, 0.75, 0.62, 0.41, 0.32};
+ Double_t b1[10] = {4.9, 2.7, 1.7, 1.4, 1.2, 0.96, 0.80, 0.67, 0.42, 0.33};
  // Background in the lepton+MET channel
- Double_t b2[10] = {6.52, 4.45, 3.06, 2.46, 1.89, 1.63, 1.35, 1.10, 0.85, 0.76};
+ Double_t b2[10] = {6.5, 4.4, 3.1, 2.5, 1.9, 1.6, 1.3, 1.1, 0.9, 0.8};
  // Relative error on bck in dileptons
- Double_t db1[10] = {0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25};
+ Double_t db1[10] = {0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28};
  // Relative error on bck in lepton+MET
  Double_t db2[10] = {0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31};
  // Nevents in the dilepton channel

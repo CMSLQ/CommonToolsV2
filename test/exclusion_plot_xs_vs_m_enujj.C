@@ -202,7 +202,7 @@ void makePlots()
  Double_t Br = 0.5;
 
  // array of N_background for L_int
- Double_t N_bkg[10] = {6.52, 4.45, 3.06, 2.46, 1.89, 1.63, 1.35, 1.10, 0.85, 0.76};
+ Double_t N_bkg[10] = {6.5, 4.4, 3.1, 2.5, 1.9, 1.6, 1.3, 1.1, 0.9, 0.8};
  // array of relative uncertainties on N_background (0.1 = 10%)
  Double_t Sigma_N_bkg[10] = {0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31, 0.31};
 
@@ -244,7 +244,7 @@ void makePlots()
 
  size = sizeof(S_eff)/sizeof(*S_eff);
 
- // Upper limits can be entered manually when the calls to CL95(...) and CLA(...) are commented below.
+ // Upper limits can be entered manually when the calls to CL95(...) and CLA(...) are commented out
  // However, CL95(...) and CLA(...) have to be called at least once to get the upper limits
 
 //  Double_t xsUp_observed[size];
@@ -259,7 +259,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[10] = {1.0957, 0.569824, 0.54541, 0.428223, 0.419434, 0.399902, 0.291504, 0.276367, 0.184131, 0.171875};
+ Double_t xsUp_observed[10] = {1.09668, 0.571289, 0.543945, 0.427246, 0.418945, 0.401367, 0.29248, 0.276367, 0.184131, 0.171875};
 
 //  Double_t xsUp_expected[size];
 //  for(Int_t i = 0; i < size; i++){
@@ -273,7 +273,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[10] = {1.37776, 0.742139, 0.566987, 0.484491, 0.418554, 0.373954, 0.327351, 0.289678, 0.249829, 0.22816};
+ Double_t xsUp_expected[10] = {1.37583, 0.738813, 0.569615, 0.487016, 0.419192, 0.372175, 0.324272, 0.289678, 0.252817, 0.23048};
 
  // set ROOT style
 //  myStyle();
