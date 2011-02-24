@@ -174,11 +174,11 @@ void LQ2comb()
  // Eff for the dilepton channel
  Double_t e1[9] = {0.388, 0.437, 0.467, 0.518, 0.509, 0.508, 0.578, 0.600, 0.602};
  // Eff for the lepton+MET channel
- Double_t e2[9] = {0.218, 0.288, 0.264, 0.262, 0.296, 0.300, 0.294, 0.340, 0.358};
+ Double_t e2[9] = {0.187, 0.244, 0.285, 0.318, 0.340, 0.380, 0.427, 0.439, 0.493};
  // Background in the dilepton channel
  Double_t b1[9] = {8.8, 3.9, 2.72, 2.72, 1.78, 1.20, 0.99, 0.69, 0.37};
  // Background in the lepton+MET channel
- Double_t b2[9] = {14.0, 8.1, 3.0, 2.1, 1.9, 1.6, 0.75, 0.46, 0.34};
+ Double_t b2[9] = {10.0, 4.5, 3.2, 2.9, 2.4, 2.4, 1.5, 0.88, 0.77};
  // Relative error on bck in dileptons
  Double_t db1[9] = {0.26, 0.26, 0.26, 0.26, 0.26, 0.26, 0.26, 0.26, 0.26};
  // Relative error on bck in lepton+MET
@@ -186,10 +186,10 @@ void LQ2comb()
  // Nevents in the dilepton channel
  Int_t n1[9] = {5, 3, 3, 3, 2, 1, 1, 0, 0};
  // Nevents in the lepton+MET channel
- Int_t n2[9] = {18, 11, 5, 3, 3, 3, 2, 0, 0};
+ Int_t n2[9] = {16, 8, 8, 7, 4, 4, 3, 3, 3};
 
  // Total integrated luminosity (in pb-1)
- Double_t Lumi1 = 34, Lumi2 = 36, epsLumi = 0.15;
+ Double_t Lumi1 = 34, Lumi2 = 36.1, epsLumi = 0.15;
  // Cross-section upper limits
  Double_t xsUp_observed[9], xsUp_expected[9];
  // Mass points for theoretical cross-section
@@ -198,7 +198,7 @@ void LQ2comb()
  Double_t xsTh[10] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949, 0.0463, 0.0236};
 
  // beta values considered
- Double_t beta[19] = {0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
+ Double_t beta[19] = {0.12, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
  // Number of points used for beta vs m line
  Int_t nPts = sizeof(beta)/sizeof(*beta);;
 

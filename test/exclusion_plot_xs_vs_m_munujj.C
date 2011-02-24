@@ -190,24 +190,24 @@ void makePlots()
  bool systematics = true; // does nothing at the moment
 
  // total integrated luminosity (in pb-1)
- Double_t L_int = 36;
+ Double_t L_int = 36.1;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
  Double_t Sigma_L_int = 0.11;
 
  // array of signal efficiencies
- Double_t S_eff[9] = {0.218, 0.288, 0.264, 0.262, 0.296, 0.300, 0.294, 0.340, 0.358};
+ Double_t S_eff[9] = {0.187, 0.244, 0.285, 0.318, 0.340, 0.380, 0.427, 0.439, 0.493};
  // array of relative uncertainties on the signal efficiencies
  Double_t Sigma_S_eff[9] = {0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10};
  // branching ratio for enujj channel 2*beta(1-beta)
  Double_t Br = 0.5;
 
  // array of N_background for L_int
- Double_t N_bkg[9] = {14.0, 8.1, 3.0, 2.1, 1.9, 1.6, 0.75, 0.46, 0.34};
+ Double_t N_bkg[9] = {10.0, 4.5, 3.2, 2.9, 2.4, 2.4, 1.5, 0.88, 0.77};
  // array of relative uncertainties on N_background (0.1 = 10%)
  Double_t Sigma_N_bkg[9] = {0.22, 0.22, 0.22, 0.22, 0.22, 0.22, 0.22, 0.22, 0.22};
 
  // array of N_observed for L_int
- Int_t N_obs[9] = {18, 11, 5, 3, 3, 3, 2, 0, 0};
+ Int_t N_obs[9] = {16, 8, 8, 7, 4, 4, 3, 3, 3};
 
  // array of LQ masses for calculation of upXS
  Double_t mData[9] = {200, 250, 280, 300, 320, 340, 400, 450, 500};
@@ -259,7 +259,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[9] = {1.88965, 1.09766, 0.854004, 0.660645, 0.597656, 0.610474, 0.554199, 0.254395, 0.241455};
+ Double_t xsUp_observed[9] = {2.33105, 1.21289, 1.16016, 0.947754, 0.594238, 0.531738, 0.433105, 0.456787, 0.413086};
 
 //  Double_t xsUp_expected[size];
 //  for(Int_t i = 0; i < size; i++){
@@ -273,7 +273,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[9] = {1.41972, 0.828607, 0.619802, 0.559593, 0.481481, 0.453324, 0.389439, 0.309933, 0.282405};
+ Double_t xsUp_expected[9] = {1.39958, 0.769854, 0.584915, 0.507393, 0.447504, 0.400288, 0.312418, 0.26846, 0.2328};
 
  // set ROOT style
 //  myStyle();
