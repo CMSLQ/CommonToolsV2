@@ -243,6 +243,12 @@ void makePlots()
  // arrays of upper limits on the cross section
  Double_t xsUp_observed[10] = {1.07324, 0.563965, 0.539551, 0.424805, 0.41748, 0.400391, 0.291992, 0.275879, 0.184131, 0.171875};
  Double_t xsUp_expected[10] = {1.35162, 0.731148, 0.566084, 0.484977, 0.418029, 0.371607, 0.323964, 0.289444, 0.25274, 0.230395};
+ // Zero systematics case
+//  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
+//  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
+ // Doubled systematics case
+//  Double_t xsUp_observed[10] = {1.21094, 0.615234, 0.577881, 0.450195, 0.438965, 0.419434, 0.304199, 0.286865, 0.189697, 0.1771};
+//  Double_t xsUp_expected[10] = {1.50694, 0.792841, 0.602788, 0.512162, 0.437966, 0.387823, 0.336865, 0.300479, 0.261752, 0.238493};
 
  // arrays of LQ masses for theoretical cross section
  Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
@@ -254,6 +260,10 @@ void makePlots()
 
  // filename for the final plot (NB: changing the name extension changes the file format)
  string fileName = "beta_vs_m_excl_enujj.eps";
+ // Zero systematics case
+//  string fileName = "beta_vs_m_excl_enujj_zeroSyst.eps";
+ // Doubled systematics case
+//  string fileName = "beta_vs_m_excl_enujj_doubledSyst.eps";
 
  // axes labels for the final plot
  string title = ";M_{LQ} [GeV];#beta";

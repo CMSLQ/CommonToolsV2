@@ -193,18 +193,31 @@ void makePlots()
  Double_t L_int = 36;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
  Double_t Sigma_L_int = 0.11;
+ // Zero systematics case
+//  Double_t Sigma_L_int = 0.0;
 
  // array of signal efficiencies
  Double_t S_eff[10] = {0.161, 0.255, 0.291, 0.317, 0.339, 0.364, 0.396, 0.426, 0.467, 0.500};
+
  // array of relative uncertainties on the signal efficiencies
  Double_t Sigma_S_eff[10] = {0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08};
+ // Zero systematics case
+//  Double_t Sigma_S_eff[10] = {0.0};
+ // Doubled systematics case
+//  Double_t Sigma_S_eff[10] = {0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16};
+
  // branching ratio for enujj channel 2*beta(1-beta)
  Double_t Br = 0.5;
 
  // array of N_background for L_int
  Double_t N_bkg[10] = {6.5, 4.4, 3.1, 2.5, 1.9, 1.6, 1.3, 1.1, 0.9, 0.8};
+
  // array of relative uncertainties on N_background (0.1 = 10%)
  Double_t Sigma_N_bkg[10] = {0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25};
+ // Zero systematics case
+//  Double_t Sigma_N_bkg[10] = {0.0};
+ // Doubled systematics case
+//  Double_t Sigma_N_bkg[10] = {0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50};
 
  // array of N_observed for L_int
  Int_t N_obs[10] = {5, 3, 3, 2, 2, 2, 1, 1, 0, 0};
@@ -219,6 +232,10 @@ void makePlots()
 
  // filename for the final plot (NB: changing the name extension changes the file format)
  string fileName = "xs95CL_vs_m_enujj.eps";
+ // Zero systematics case
+//  string fileName = "xs95CL_vs_m_enujj_zeroSyst.eps";
+ // Doubled systematics case
+//  string fileName = "xs95CL_vs_m_enujj_doubledSyst.eps";
 
  // axes labels for the final plot
  string title = ";M_{LQ} [GeV];2#beta(1-#beta)#times#sigma [pb]";
@@ -260,6 +277,10 @@ void makePlots()
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
  Double_t xsUp_observed[10] = {1.07324, 0.563965, 0.539551, 0.424805, 0.41748, 0.400391, 0.291992, 0.275879, 0.184131, 0.171875};
+ // Zero systematics case
+//  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
+ // Doubled systematics case
+// Double_t xsUp_observed[10] = {1.21094, 0.615234, 0.577881, 0.450195, 0.438965, 0.419434, 0.304199, 0.286865, 0.189697, 0.1771};
 
 //  Double_t xsUp_expected[size];
 //  for(Int_t i = 0; i < size; i++){
@@ -274,6 +295,10 @@ void makePlots()
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
  Double_t xsUp_expected[10] = {1.35162, 0.731148, 0.566084, 0.484977, 0.418029, 0.371607, 0.323964, 0.289444, 0.25274, 0.230395};
+ // Zero systematics case
+//  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
+ // Doubled systematics case
+//  Double_t xsUp_expected[10] = {1.50694, 0.792841, 0.602788, 0.512162, 0.437966, 0.387823, 0.336865, 0.300479, 0.261752, 0.238493};
 
  // set ROOT style
 //  myStyle();
