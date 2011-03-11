@@ -239,11 +239,13 @@ void makePlots()
 
  TGraph *beta_vs_m_eejj_observed = new TGraph(50, m_eejj, beta_eejj_observed);
  beta_vs_m_eejj_observed->SetLineWidth(2);
+ beta_vs_m_eejj_observed->SetLineColor(kGreen+2);
  beta_vs_m_eejj_observed->SetLineStyle(2);
  beta_vs_m_eejj_observed->Draw("C");
 
  TPolyLine *beta_vs_m_enujj_observed = new TPolyLine(100, m_enujj_observed, beta_enujj_observed);
  beta_vs_m_enujj_observed->SetLineWidth(2);
+ beta_vs_m_enujj_observed->SetLineColor(kBlue);
  beta_vs_m_enujj_observed->SetLineStyle(4);
  beta_vs_m_enujj_observed->Draw("C");
 
@@ -271,10 +273,10 @@ void makePlots()
  l1.SetTextAlign(12);
  l1.SetTextFont(42);
  l1.SetNDC();
+ l1.SetTextSize(0.045);
+ l1.DrawLatex(0.52,0.53,"CMS Preliminary 2010");
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.54,0.53,"CMS 2010");
- l1.SetTextSize(0.05);
- l1.DrawLatex(0.54,0.43,lint.c_str());
+ l1.DrawLatex(0.52,0.43,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();

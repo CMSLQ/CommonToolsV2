@@ -518,7 +518,7 @@ void makePlots()
 
  gPad->RedrawAxis();
 
- TLegend *legend = new TLegend(.18,.46,.56,.63);
+ TLegend *legend = new TLegend(.17,.53,.55,.72);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);
@@ -535,9 +535,9 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.68,0.29,"CMS 2010");
+ l1.DrawLatex(0.17,0.47,"CMS Preliminary 2010");
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.68,0.19,lint.c_str());
+ l1.DrawLatex(0.17,0.37,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();

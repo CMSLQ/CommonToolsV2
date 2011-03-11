@@ -379,9 +379,9 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.65,0.6,"CMS 2010");
+ l1.DrawLatex(0.45,0.6,"CMS Preliminary 2010");
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.65,0.5,lint.c_str());
+ l1.DrawLatex(0.45,0.5,lint.c_str());
 
  c->SetGridx();
  c->SetGridy();
