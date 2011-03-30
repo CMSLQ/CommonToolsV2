@@ -241,8 +241,8 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
  // arrays of upper limits on the cross section
- Double_t xsUp_observed[10] = {1.07324, 0.563965, 0.539551, 0.424805, 0.41748, 0.400391, 0.291992, 0.275879, 0.184131, 0.171875};
- Double_t xsUp_expected[10] = {1.35162, 0.731148, 0.566084, 0.484977, 0.418029, 0.371607, 0.323964, 0.289444, 0.25274, 0.230395};
+ Double_t xsUp_observed[10] = {1.05273, 0.553223, 0.528809, 0.416504, 0.40918, 0.39209, 0.286621, 0.270752, 0.180835, 0.168945};
+ Double_t xsUp_expected[10] = {1.32332, 0.715747, 0.554459, 0.475042, 0.409632, 0.364027, 0.317582, 0.283788, 0.247752, 0.225968};
  // Zero systematics case
 //  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
 //  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
@@ -269,7 +269,7 @@ void makePlots()
  string title = ";M_{LQ} [GeV];#beta";
 
  // integrated luminosity
- string lint = "#intLdt=36 pb^{-1}";
+ string sqrts = "#sqrt{s}=7 TeV";
 
  // number of points used for beta vs m line
  Int_t nPts = 50;
@@ -505,20 +505,20 @@ void makePlots()
  beta_observed_vs_m_band->Draw("f");
 
  TGraph *beta_expected_vs_m = new TGraph(2*nPts, m_expected, beta_expected);
- beta_expected_vs_m->SetLineWidth(2);
+ beta_expected_vs_m->SetLineWidth(3);
  beta_expected_vs_m->SetLineStyle(2);
  beta_expected_vs_m->SetLineColor(kBlue);
  beta_expected_vs_m->Draw();
 
  TGraph *beta_observed_vs_m = new TGraph(2*nPts, m_observed, beta_observed);
- beta_observed_vs_m->SetLineWidth(2);
+ beta_observed_vs_m->SetLineWidth(3);
  beta_observed_vs_m->SetLineColor(kBlack);
  beta_observed_vs_m->SetFillColor(kGreen);
  beta_observed_vs_m->Draw();
 
  gPad->RedrawAxis();
 
- TLegend *legend = new TLegend(.17,.53,.55,.72);
+ TLegend *legend = new TLegend(.17,.46,.60,.65);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);
@@ -526,8 +526,8 @@ void makePlots()
  legend->SetMargin(0.15);
  legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq");
  legend->AddEntry(gr_excl,"D#oslash exclusion (1 fb^{-1})","f");
- legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. limit","l");
- legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. limit","lf");
+ legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. limit (36 pb^{-1})","l");
+ legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. limit (36 pb^{-1})","lf");
  legend->Draw();
 
  TLatex l1;
@@ -535,9 +535,9 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.17,0.47,"CMS Preliminary 2010");
+ l1.DrawLatex(0.17,0.40,"CMS");
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.17,0.37,lint.c_str());
+ l1.DrawLatex(0.17,0.33,sqrts.c_str());
 
  c->SetGridx();
  c->SetGridy();

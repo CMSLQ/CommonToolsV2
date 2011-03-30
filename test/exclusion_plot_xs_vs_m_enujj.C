@@ -192,7 +192,7 @@ void makePlots()
  // total integrated luminosity (in pb-1)
  Double_t L_int = 36;
  // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
- Double_t Sigma_L_int = 0.11;
+ Double_t Sigma_L_int = 0.04;
  // Zero systematics case
 //  Double_t Sigma_L_int = 0.0;
 
@@ -241,7 +241,7 @@ void makePlots()
  string title = ";M_{LQ} [GeV];2#beta(1-#beta)#times#sigma [pb]";
 
  // integrated luminosity
- string lint = "#intLdt=36 pb^{-1}";
+ string sqrts = "#sqrt{s}=7 TeV";
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {200,264,264,200,200};
@@ -266,7 +266,7 @@ void makePlots()
 
 //  Double_t xsUp_observed[size];
 //  for(Int_t i = 0; i < size; i++){
-//
+// 
 //    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i], kFALSE, 1);
 //  }
 //  cout<<endl<<Form("Double_t xsUp_observed[%i] = {", size);
@@ -276,7 +276,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[10] = {1.07324, 0.563965, 0.539551, 0.424805, 0.41748, 0.400391, 0.291992, 0.275879, 0.184131, 0.171875};
+ Double_t xsUp_observed[10] = {1.05273, 0.553223, 0.528809, 0.416504, 0.40918, 0.39209, 0.286621, 0.270752, 0.180835, 0.168945};
  // Zero systematics case
 //  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
  // Doubled systematics case
@@ -284,7 +284,7 @@ void makePlots()
 
 //  Double_t xsUp_expected[size];
 //  for(Int_t i = 0; i < size; i++){
-//
+// 
 //    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], kFALSE, 1);
 //  }
 //  cout<<endl<<Form("Double_t xsUp_expected[%i] = {", size);
@@ -294,7 +294,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[10] = {1.35162, 0.731148, 0.566084, 0.484977, 0.418029, 0.371607, 0.323964, 0.289444, 0.25274, 0.230395};
+ Double_t xsUp_expected[10] = {1.32332, 0.715747, 0.554459, 0.475042, 0.409632, 0.364027, 0.317582, 0.283788, 0.247752, 0.225968};
  // Zero systematics case
 //  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
  // Doubled systematics case
@@ -335,7 +335,7 @@ void makePlots()
  gROOT->ForceStyle();
 
  TGraph *xsTh_vs_m = new TGraph(10, mTh, xsTh);
- xsTh_vs_m->SetLineWidth(2);
+ xsTh_vs_m->SetLineWidth(3);
  xsTh_vs_m->SetLineColor(kRed);
  xsTh_vs_m->SetFillColor(kGreen);
  xsTh_vs_m->SetMarkerSize(1.);
@@ -347,7 +347,7 @@ void makePlots()
  xsData_vs_m_expected->SetMarkerStyle(23);
  xsData_vs_m_expected->SetMarkerColor(kBlue);
  xsData_vs_m_expected->SetLineColor(kBlue);
- xsData_vs_m_expected->SetLineWidth(2);
+ xsData_vs_m_expected->SetLineWidth(3);
  xsData_vs_m_expected->SetLineStyle(2);
  xsData_vs_m_expected->SetMarkerSize(1.5);
  xsData_vs_m_expected->Draw("CP");
@@ -356,7 +356,7 @@ void makePlots()
  xsData_vs_m_observed->SetMarkerStyle(22);
  xsData_vs_m_observed->SetMarkerColor(kBlack);
  xsData_vs_m_observed->SetLineColor(kBlack);
- xsData_vs_m_observed->SetLineWidth(2);
+ xsData_vs_m_observed->SetLineWidth(3);
  xsData_vs_m_observed->SetLineStyle(1);
  xsData_vs_m_observed->SetMarkerSize(1.5);
  xsData_vs_m_observed->Draw("CP");
@@ -367,11 +367,11 @@ void makePlots()
  //legend->SetFillStyle(0);
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq");
- legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}, #beta=0.5)","f");
- legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{theory} with theory uncertainty, #beta=0.5","lf");
- legend->AddEntry(xsData_vs_m_expected, "Expected 95% C.L. upper limit","lp");
- legend->AddEntry(xsData_vs_m_observed, "Observed 95% C.L. upper limit","lp");
+ legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq, #beta=0.5");
+ legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1})","f");
+ legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{theory} with theory uncertainty","lf");
+ legend->AddEntry(xsData_vs_m_expected, "Expected 95% C.L. upper limit (36 pb^{-1})","lp");
+ legend->AddEntry(xsData_vs_m_observed, "Observed 95% C.L. upper limit (36 pb^{-1})","lp");
  legend->Draw();
 
  TLatex l1;
@@ -379,9 +379,9 @@ void makePlots()
  l1.SetTextFont(42);
  l1.SetNDC();
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.45,0.6,"CMS Preliminary 2010");
+ l1.DrawLatex(0.7,0.6,"CMS");
  l1.SetTextSize(0.05);
- l1.DrawLatex(0.45,0.5,lint.c_str());
+ l1.DrawLatex(0.7,0.53,sqrts.c_str());
 
  c->SetGridx();
  c->SetGridy();
