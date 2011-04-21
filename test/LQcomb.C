@@ -198,11 +198,13 @@ void LQcomb()
  Double_t xsTh[10] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949, 0.0463, 0.0236};
 
  // beta values considered
- Double_t beta[21] = {0.06, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
+ Double_t beta_observed[21] = {0.06, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
+ Double_t beta_expected[20] = {0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
  // Number of points used for beta vs m line
- Int_t nPts = sizeof(beta)/sizeof(*beta);;
-
- Double_t m_observed[nPts], m_expected[nPts];
+ Int_t nPts_observed = sizeof(beta_observed)/sizeof(*beta_observed);
+ Int_t nPts_expected = sizeof(beta_expected)/sizeof(*beta_expected);
+ 
+ Double_t m_observed[nPts_observed], m_expected[nPts_expected];
 
  Int_t size = sizeof(m)/sizeof(*m);
  Int_t size_th = sizeof(mTh)/sizeof(*mTh);
@@ -212,76 +214,90 @@ void LQcomb()
 
  plot = kFALSE;
 
- for(Int_t j=0; j<nPts; j++) {
+ for(Int_t j=0; j<nPts_observed; j++) {
 
-   cout << "Cross section limits at the 95% C.L. for beta = " <<Form("%.2f", beta[j]) << endl;
+   cout << "Observed cross section limits at 95% C.L. for beta = " <<Form("%.2f", beta_observed[j]) << endl;
    for (Int_t i=0; i<size; i++)
    {
-       xsUp_observed[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db1[i], TMath::Max(beta[j],0.01), n1[i], n2[i], 1);
-  //      xsUp_expected[i] = CLA(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db1[i], TMath::Max(beta[j],0.01), 1);
-       cout << "Mass = " << m[i] << "; sigma95 (expected) = " << xsUp_observed[i] << " (" << xsUp_expected[i] << ") pb" << endl;
+       xsUp_observed[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db1[i], TMath::Max(beta_observed[j],0.01), n1[i], n2[i], 1);
+       cout << "Mass = " << m[i] << "; sigma95 (observed) = " << xsUp_observed[i] << " pb" << endl;
    }
 
-   m_observed[j] = get_intersection(m, xsUp_observed, size, mTh, xsTh, size_th, debug, beta[j]);
-//    m_expected[j] = get_intersection(m, xsUp_expected, size, mTh, xsTh, size_th, debug, beta[j]);
+   m_observed[j] = get_intersection(m, xsUp_observed, size, mTh, xsTh, size_th, debug, beta_observed[j]);
+   cout << "Observed 95% C.L. lower limit on the LQ mass = " << m_observed[j] << " GeV"<< endl;
+ }
 
-   cout << "Observed 95% C.L. lower limit on LQ mass = " << m_observed[j] << " GeV"<< endl;
-//    cout << "Expected 95% C.L. lower limit on LQ mass = " << m_expected[j] << " GeV"<< endl;
+ for(Int_t j=0; j<nPts_expected; j++) {
+
+   cout << "Expected cross section limits at 95% C.L. for beta = " <<Form("%.2f", beta_expected[j]) << endl;
+   for (Int_t i=0; i<size; i++)
+   {
+       xsUp_expected[i] = CLA(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db1[i], TMath::Max(beta_expected[j],0.01), 1);
+       cout << "Mass = " << m[i] << "; sigma95 (expected) = " << xsUp_expected[i] << " pb" << endl;
+   }
+
+   m_expected[j] = get_intersection(m, xsUp_expected, size, mTh, xsTh, size_th, debug, beta_expected[j]);
+   cout << "Expected 95% C.L. lower limit on the LQ mass = " << m_expected[j] << " GeV"<< endl;
  }
 
  // #################################################
  // ## Special treatment for the lowest mass point ##
- Double_t beta_range_lowest[2] = {0.02, 0.08};
+ Double_t beta_observed_range_lowest[2] = {0.02, 0.08};
+ Double_t beta_expected_range_lowest[2] = {0.04, 0.1};
  Int_t nPts_lowest = 6;
 
- Double_t beta_lowest[nPts_lowest], xsUp_observed_lowest[nPts_lowest], xsUp_expected_lowest[nPts_lowest], xsTh_lowest[nPts_lowest];
+ Double_t beta_observed_lowest[nPts_lowest], beta_expected_lowest[nPts_lowest], xsUp_observed_lowest[nPts_lowest], xsUp_expected_lowest[nPts_lowest], xsTh_lowest[nPts_lowest];
 
- Double_t step_beta_lowest = (beta_range_lowest[1]-beta_range_lowest[0])/(nPts_lowest-1);
+ Double_t step_beta_observed_lowest = (beta_observed_range_lowest[1]-beta_observed_range_lowest[0])/(nPts_lowest-1);
+ Double_t step_beta_expected_lowest = (beta_expected_range_lowest[1]-beta_expected_range_lowest[0])/(nPts_lowest-1);
  for(Int_t i=0; i<nPts_lowest; i++) {
-   beta_lowest[i] = beta_range_lowest[0] + step_beta_lowest*i;
+   beta_observed_lowest[i] = beta_observed_range_lowest[0] + step_beta_observed_lowest*i;
+   beta_expected_lowest[i] = beta_expected_range_lowest[0] + step_beta_expected_lowest*i;
    xsTh_lowest[i] = 11.9;
  }
 
- cout << "Cross section limits at the 95% C.L. for the lowest LQ mass = " <<Form("%.0f GeV", m[0]) << endl;
+ cout << "Cross section limits at 95% C.L. for the lowest LQ mass of " <<Form("%.0f GeV", m[0]) << endl;
  for (Int_t i=0; i<nPts_lowest; i++)
  {
-     xsUp_observed_lowest[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db2[0], TMath::Max(beta_lowest[i],0.01), n1[0], n2[0], 1);
-  //    xsUp_expected_lowest[i] = CLA(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db2[0], TMath::Max(beta_lowest[i],0.01), 1);
-     cout << "beta = " << beta_lowest[i] << "; sigma95 (expected) = " << xsUp_observed_lowest[i] << " (" << xsUp_expected_lowest[i] << ") pb" << endl;
+     xsUp_observed_lowest[i] = CL95(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db1[0], TMath::Max(beta_observed_lowest[i],0.01), n1[0], n2[0], 1);
+     cout << "beta (observed) = " << beta_observed_lowest[i] << "; sigma95 (observed) = " << xsUp_observed_lowest[i] << " pb" << endl;
+
+     xsUp_expected_lowest[i] = CLA(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db1[0], TMath::Max(beta_expected_lowest[i],0.01), 1);
+     cout << "beta (expected) = " << beta_expected_lowest[i] << "; sigma95 (expected) = " << xsUp_expected_lowest[i] << " pb" << endl;
  }
 
- Double_t beta_observed_lowest = get_intersection(beta_lowest, xsTh_lowest, nPts_lowest, beta_lowest, xsUp_observed_lowest, nPts_lowest, debug, (beta[0]-0.01));
-// Double_t beta_expected_lowest = get_intersection(beta_lowest, xsTh_lowest, nPts_lowest, beta_lowest, xsUp_observed_lowest, nPts_lowest, debug, (beta[0]-0.01));
-
- cout << "beta (observed) for the lowest LQ mass = " << beta_observed_lowest << endl;
-//  cout << "beta (expected) for the lowest LQ mass = " << beta_expected_lowest << endl;
+ Double_t beta_observed_lowest_final = get_intersection(beta_observed_lowest, xsTh_lowest, nPts_lowest, beta_observed_lowest, xsUp_observed_lowest, nPts_lowest, debug, (beta_observed[0]-0.01));
+ cout << "beta (observed) for the lowest LQ mass = " << beta_observed_lowest_final << endl;
+ 
+ Double_t beta_expected_lowest_final = get_intersection(beta_expected_lowest, xsTh_lowest, nPts_lowest, beta_expected_lowest, xsUp_expected_lowest, nPts_lowest, debug, (beta_expected[0]-0.01));
+ cout << "beta (expected) for the lowest LQ mass = " << beta_expected_lowest_final << endl;
 
  // ## End of the special treatment for the lowest mass point ##
  // ############################################################
 
- cout<<endl<<Form("Double_t beta_comb_observed[%i] = {%f, ", (nPts+1), beta_observed_lowest);
- for(Int_t i = 0; i<nPts; i++) {
-   cout<<beta[i];
-   if(i<(nPts-1)) cout<<", ";
+ cout<<endl<<Form("Double_t beta_comb_observed[%i] = {%f, ", (nPts_observed+1), beta_observed_lowest_final);
+ for(Int_t i = 0; i<nPts_observed; i++) {
+   cout<<beta_observed[i];
+   if(i<(nPts_observed-1)) cout<<", ";
  }
  cout<<"};"<<endl;
- cout<<Form("Double_t m_comb_observed[%i] = {%.3f, ", (nPts+1), m[0]);
- for(Int_t i = 0; i<nPts; i++) {
+ cout<<Form("Double_t m_comb_observed[%i] = {%.3f, ", (nPts_observed+1), m[0]);
+ for(Int_t i = 0; i<nPts_observed; i++) {
    cout<<m_observed[i];
-   if(i<(nPts-1)) cout<<", ";
+   if(i<(nPts_observed-1)) cout<<", ";
  }
-//  cout<<"};"<<endl;
-//  cout<<Form("Double_t beta_comb_expected[%i] = {%f, ", (nPts+1), beta_expected_lowest);
-//  for(Int_t i = 0; i<nPts; i++) {
-//    cout<<beta[i];
-//    if(i<(nPts-1)) cout<<", ";
-//  }
-//  cout<<"};"<<endl;
-//  cout<<Form("Double_t m_comb_expected[%i] = {%.3f, ", (nPts+1), m[0]);
-//  for(Int_t i = 0; i<nPts; i++) {
-//    cout<<m_expected[i];
-//    if(i<(nPts-1)) cout<<", ";
-//  }
+ cout<<"};"<<endl;
+ cout<<Form("Double_t beta_comb_expected[%i] = {%f, ", (nPts_expected+1), beta_expected_lowest_final);
+ for(Int_t i = 0; i<nPts_expected; i++) {
+   cout<<beta_expected[i];
+   if(i<(nPts_expected-1)) cout<<", ";
+ }
+ cout<<"};"<<endl;
+ cout<<Form("Double_t m_comb_expected[%i] = {%.3f, ", (nPts_expected+1), m[0]);
+ for(Int_t i = 0; i<nPts_expected; i++) {
+   cout<<m_expected[i];
+   if(i<(nPts_expected-1)) cout<<", ";
+ }
  cout<<"};"<<endl<<endl;
 
 }

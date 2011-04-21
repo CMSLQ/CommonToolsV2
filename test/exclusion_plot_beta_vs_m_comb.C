@@ -199,6 +199,8 @@ void makePlots()
  // combined limits
  Double_t beta_comb_observed[22] = {0.046875, 0.06, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
  Double_t m_comb_observed[22] = {200.000, 234.313, 246.434, 255.28, 272.574, 297.123, 309.795, 317.141, 323.079, 328.864, 334.068, 340.006, 346.22, 352.586, 358.984, 364.616, 368.534, 371.074, 374.197, 377.227, 380.165, 384.42};
+ Double_t beta_comb_expected[21] = {0.060759, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
+ Double_t m_comb_expected[21] = {200.000, 221.855, 237.741, 265.075, 284.451, 299.847, 312.335, 322.559, 331.129, 338.414, 344.567, 349.954, 354.729, 359.106, 363.147, 367.003, 370.707, 374.656, 378.88, 384.022, 390.603};
 
  // filename for the final plot (NB: changing the name extension changes the file format)
  string fileName = "beta_vs_m_excl_comb.eps";
@@ -240,19 +242,25 @@ void makePlots()
  TGraph *beta_vs_m_eejj_observed = new TGraph(50, m_eejj, beta_eejj_observed);
  beta_vs_m_eejj_observed->SetLineWidth(3);
  beta_vs_m_eejj_observed->SetLineColor(kGreen+2);
- beta_vs_m_eejj_observed->SetLineStyle(2);
+ beta_vs_m_eejj_observed->SetLineStyle(4);
  beta_vs_m_eejj_observed->Draw("C");
 
  TPolyLine *beta_vs_m_enujj_observed = new TPolyLine(100, m_enujj_observed, beta_enujj_observed);
  beta_vs_m_enujj_observed->SetLineWidth(3);
- beta_vs_m_enujj_observed->SetLineColor(kBlue);
- beta_vs_m_enujj_observed->SetLineStyle(4);
+ beta_vs_m_enujj_observed->SetLineColor(kRed);
+ beta_vs_m_enujj_observed->SetLineStyle(3);
  beta_vs_m_enujj_observed->Draw("C");
 
  TGraph *beta_vs_m_comb_observed = new TGraph(22, m_comb_observed, beta_comb_observed);
  beta_vs_m_comb_observed->SetLineWidth(3);
  beta_vs_m_comb_observed->SetLineColor(kBlack);
  beta_vs_m_comb_observed->Draw("C");
+
+ TGraph *beta_vs_m_comb_expected = new TGraph(21, m_comb_expected, beta_comb_expected);
+ beta_vs_m_comb_expected->SetLineWidth(2);
+ beta_vs_m_comb_expected->SetLineColor(kBlue);
+ beta_vs_m_comb_expected->SetLineStyle(2);
+ beta_vs_m_comb_expected->Draw("C");
 
  gPad->RedrawAxis();
 
@@ -267,6 +275,7 @@ void makePlots()
  legend->AddEntry(beta_vs_m_eejj_observed,"eejj 95% C.L. limit (obs., 33.2 pb^{-1})","l");
  legend->AddEntry(beta_vs_m_enujj_observed,"e#nujj 95% C.L. limit (obs., 36 pb^{-1})","l");
  legend->AddEntry(beta_vs_m_comb_observed,"Combined 95% C.L. limit (obs.)","l");
+ legend->AddEntry(beta_vs_m_comb_expected,"Combined 95% C.L. limit (exp.)","l");
  legend->Draw();
 
  TLatex l1;
@@ -286,7 +295,7 @@ void makePlots()
  l2.SetTextColor(kGreen+2);
  l2.SetTextAngle(59);
  l2.DrawLatex(0.49,0.72,"eejj");
- l2.SetTextColor(kBlue);
+ l2.SetTextColor(kRed);
  l2.SetTextAngle(-30);
  l2.DrawLatex(0.33,0.85,"e#nujj");
 
