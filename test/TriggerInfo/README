@@ -1,0 +1,58 @@
+Contact: Francesco (thanks to Edmund for the .py script)
+
+## How to find trigger names contributing to a given dataset for a given run range ##
+
+1) Create list of runs with trigger key info 
+
+- go to Run Summary
+https://cmswbm.web.cern.ch/cmswbm/cmsdb/servlet/RunSummary
+- select a run range 
+"Begin RunNumber" --> "EndRunNumber" --> SubmitQuery
+- save the output page as txt (option at the top)
+  --> you'll get an output similar to RunSummary_160329_163876.txt
+      (the file name has been changed manually)
+
+2) Create the list of trigger key changes
+
+- edit the script parse_run_summary.py (created by Edmund)
+  - insert the .txt input file
+- run the script : python parse_run_summary.py > Output_160329_163876.txt 
+  --> the names starting with 
+  */cdaq/physics/Run*
+  correspond to HLT keys used in the run range relative to the Run Summary file
+
+3) Find the trigger names for the path you are interested in
+
+- Go to the HLT Browser: http://j2eeps.cern.ch/cms-project-confdb-hltdev/browser/
+- Follow the path of each key in the file Output_160329_163876.txt (file created at step 2):
+  - Example for /cdaq/physics/Run2011/5e32/v6.1/HLT/V8 :
+    Go to /cdaq --> physics --> Run 2011 --> 5e32 -->  v6.1 --> HLT --> V8  
+    --> a new frame will appear on the right of the page
+- Select the stream (A, Calibration, etc..) and primary dataset (PD)
+  --> Go To "A" (physics)
+  --> Select the dataset you are interested in (i.e. SingleElectron)
+
+The list of all trigger names contributing to *that dataset*, *in that HLT menu*, will appear:
+
+HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2	1	1	1	1		L1_SingleEG15
+HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1	1	1	1	1		L1_SingleEG20
+HLT_Ele45_CaloIdVT_TrkIdT_v2			1	1	1	1		L1_SingleEG02
+HLT_Ele90_NoSpikeFilter_v2			1	1	1	1		L1_SingleEG20
+
+------------
+In case you use the code 
+http://cmssw.cvs.cern.ch/cgi-bin/cmssw.cgi/UserCode/Leptoquarks/RootTupleMakerV2/python/RootTupleMakerV2_Trigger_cfi.py?view=log
+------------
+
+4) Save trigger info in the ntuples
+
+- Edit the RootTupleMakerV2/python/RootTupleMakerV2_Trigger_cfi.py file, by *ADDING* (DO NOT REMOVE) in the list 
+  new trigger names that you found at step 3).
+   --> IMPORTANT : 
+       since you are analyzing data from a long physics run, 
+       - DO NOT CHANGE THE ORDER OF THE EXISTING TRIGGER NAMES 
+         (unless you really want to do it, and you need a good reason, contact us before), 
+         , BUT JUST ADD THE NEW TRIGGERs AT THE END OF THE LIST 
+         --> in this way one can still analyze old data if new ntuples are reproduced later.
+
+- Repeat step 3) and 4) for each trigger key in the file Output_160329_163876.txt (file created at step 2):
