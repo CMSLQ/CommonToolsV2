@@ -21,6 +21,11 @@ https://cmswbm.web.cern.ch/cmswbm/cmsdb/servlet/RunSummary
   */cdaq/physics/Run*
   correspond to HLT keys used in the run range relative to the Run Summary file
 
+You can also use this command (from lxplus, from the workspace area of this README file):
+./getHLTkey.py --firstRun 160329 --lastRun 163876 --perKey
+(consider only the */cdaq/physics/* keys)
+--> safer since it works also if WBM is down
+
 3) Find the trigger names for the path you are interested in
 
 - Go to the HLT Browser: http://j2eeps.cern.ch/cms-project-confdb-hltdev/browser/
@@ -39,6 +44,10 @@ HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1	1	1	1	1		L1_SingleEG20
 HLT_Ele45_CaloIdVT_TrkIdT_v2			1	1	1	1		L1_SingleEG02
 HLT_Ele90_NoSpikeFilter_v2			1	1	1	1		L1_SingleEG20
 
+You can also use this command (from a CMSSW workspace area):
+edmConfigFromDB --orcoff --configName /cdaq/physics/Run2011/5e32/v6.1/HLT/V1 --datasets SingleElectron | hltDumpStream
+(you need to know the dataset name)
+
 ------------
 In case you use the code 
 http://cmssw.cvs.cern.ch/cgi-bin/cmssw.cgi/UserCode/Leptoquarks/RootTupleMakerV2/python/RootTupleMakerV2_Trigger_cfi.py?view=log
@@ -56,3 +65,26 @@ http://cmssw.cvs.cern.ch/cgi-bin/cmssw.cgi/UserCode/Leptoquarks/RootTupleMakerV2
          --> in this way one can still analyze old data if new ntuples are reproduced later.
 
 - Repeat step 3) and 4) for each trigger key in the file Output_160329_163876.txt (file created at step 2):
+
+5) find the run range for each trigger.
+Use this command (from this area in lxplus):
+ ./getHLTkey.py --firstRun 160329 --lastRun 163876 --HLTpaths=HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v1,HLT_Ele90_NoSpikeFilter_v1,HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v2,HLT_Ele90_NoSpikeFilter_v2,HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v3,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele45_CaloIdVT_TrkIdT_v3,HLT_Ele90_NoSpikeFilter_v3 --perKey
+
+
+## Other useful commands:
+
+- See https://twiki.cern.ch/twiki/bin/view/CMS/HLTriggerTools
+
+- Find trigger names in a given HLT menu-->stream-->dataset : 
+edmConfigFromDB --orcoff --configName /cdaq/physics/Run2011/5e32/v4.2/HLT/V1 --format streams.list:A.SingleElectron
+edmConfigFromDB --orcoff --configName /cdaq/physics/Run2011/5e32/v4.2/HLT/V1 --datasets SingleElectron | hltDumpStream
+
+- Bryan Dahmes's script to correlate runs, trigger menus, HLT paths
+(last slide of https://indico.cern.ch/getFile.py/access?contribId=2&resId=0&materialId=slides&confId=95551)
+
+  o correlate runs and trigger menus
+  ./getHLTkey.py --firstRun 160329 --lastRun 163876 --perKey
+
+  o correlate runs and HLT paths
+  ./getHLTkey.py --firstRun 160329 --lastRun 163876 --HLTpaths=HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v1,HLT_Ele90_NoSpikeFilter_v1,HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v2,HLT_Ele90_NoSpikeFilter_v2,HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v3,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele45_CaloIdVT_TrkIdT_v3,HLT_Ele90_NoSpikeFilter_v3 --perKey
+
