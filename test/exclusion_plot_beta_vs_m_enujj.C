@@ -526,8 +526,8 @@ void makePlots()
  legend->SetMargin(0.15);
  legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq");
  legend->AddEntry(gr_excl,"D#oslash exclusion (1 fb^{-1})","f");
- legend->AddEntry(beta_expected_vs_m,"Expected 95% C.L. limit (36 pb^{-1})","l");
- legend->AddEntry(beta_observed_vs_m,"Observed 95% C.L. limit (36 pb^{-1})","lf");
+ legend->AddEntry(beta_expected_vs_m,"Expected 95% CL limit (36 pb^{-1})","l");
+ legend->AddEntry(beta_observed_vs_m,"Observed 95% CL limit (36 pb^{-1})","lf");
  legend->Draw();
 
  TLatex l1;

@@ -257,7 +257,7 @@ void makePlots()
  beta_vs_m_comb_observed->Draw("C");
 
  TGraph *beta_vs_m_comb_expected = new TGraph(21, m_comb_expected, beta_comb_expected);
- beta_vs_m_comb_expected->SetLineWidth(2);
+ beta_vs_m_comb_expected->SetLineWidth(3);
  beta_vs_m_comb_expected->SetLineColor(kBlue);
  beta_vs_m_comb_expected->SetLineStyle(2);
  beta_vs_m_comb_expected->Draw("C");
@@ -272,10 +272,10 @@ void makePlots()
  legend->SetMargin(0.15);
 //  legend->SetHeader("LQ#bar{LQ} #rightarrow e#nuqq");
  legend->AddEntry(gr_D0_excl,"D#oslash exclusion (1 fb^{-1})","f");
- legend->AddEntry(beta_vs_m_eejj_observed,"eejj 95% C.L. limit (obs., 33.2 pb^{-1})","l");
- legend->AddEntry(beta_vs_m_enujj_observed,"e#nujj 95% C.L. limit (obs., 36 pb^{-1})","l");
- legend->AddEntry(beta_vs_m_comb_observed,"Combined 95% C.L. limit (obs.)","l");
- legend->AddEntry(beta_vs_m_comb_expected,"Combined 95% C.L. limit (exp.)","l");
+ legend->AddEntry(beta_vs_m_eejj_observed,"eejj 95% CL limit (obs., 33.2 pb^{-1})","l");
+ legend->AddEntry(beta_vs_m_enujj_observed,"e#nujj 95% CL limit (obs., 36 pb^{-1})","l");
+ legend->AddEntry(beta_vs_m_comb_observed,"Combined 95% CL limit (obs.)","l");
+ legend->AddEntry(beta_vs_m_comb_expected,"Combined 95% CL limit (exp.)","l");
  legend->Draw();
 
  TLatex l1;
