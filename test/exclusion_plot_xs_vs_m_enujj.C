@@ -241,7 +241,7 @@ void makePlots()
  string title = ";M_{LQ} [GeV];2#beta(1-#beta)#times#sigma [pb]";
 
  // integrated luminosity
- string sqrts = "#sqrt{s}=7 TeV";
+ string sqrts = "#sqrt{s} = 7 TeV";
 
  // region excluded by Tevatron limits
  Double_t x_shaded[5] = {200,264,264,200,200};
@@ -361,13 +361,13 @@ void makePlots()
  xsData_vs_m_observed->SetMarkerSize(1.5);
  xsData_vs_m_observed->Draw("CP");
 
- TLegend *legend = new TLegend(.34,.65,.91,.92);
+ TLegend *legend = new TLegend(.34,.65,.92,.92);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq, #beta=0.5");
+ legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq, #beta = 0.5");
  legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1})","f");
  legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{theory} with theory uncertainty","lf");
  legend->AddEntry(xsData_vs_m_expected, "Expected 95% CL upper limit (36 pb^{-1})","lp");

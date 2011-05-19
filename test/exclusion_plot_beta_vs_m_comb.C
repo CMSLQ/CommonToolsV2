@@ -209,7 +209,7 @@ void makePlots()
  string title = ";M_{LQ} [GeV];#beta";
 
  // integrated luminosity
- string sqrts = "#sqrt{s}=7 TeV";
+ string sqrts = "#sqrt{s} = 7 TeV";
 
  // region excluded by Tevatron limits (1 fb-1)
  Double_t x_excl[13] = {200,214.39,235.13,254.08,268.12,275.92,283.95,289.08,293.09,295.99,297.10,298.89,200};
@@ -264,7 +264,7 @@ void makePlots()
 
  gPad->RedrawAxis();
 
- TLegend *legend = new TLegend(.46,.15,.91,.37);
+ TLegend *legend = new TLegend(.46,.15,.92,.37);
  legend->SetBorderSize(1);
  legend->SetFillColor(0);
  //legend->SetFillStyle(0);

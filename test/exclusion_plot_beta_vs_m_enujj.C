@@ -269,7 +269,7 @@ void makePlots()
  string title = ";M_{LQ} [GeV];#beta";
 
  // integrated luminosity
- string sqrts = "#sqrt{s}=7 TeV";
+ string sqrts = "#sqrt{s} = 7 TeV";
 
  // number of points used for beta vs m line
  Int_t nPts = 50;
