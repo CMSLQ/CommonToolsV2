@@ -1,90 +1,250 @@
-Contact: Francesco (thanks to Edmund for the .py script)
+****************************
+Monitoring Trigger Evolution 
+   Duringa Data Taking
+****************************
 
-## How to find trigger names contributing to a given dataset for a given run range ##
+-----------------------------------------------
 
-1) Create list of runs with trigger key info 
+Contact: francesco.santanastasio@cern.ch
 
-- go to Run Summary
-https://cmswbm.web.cern.ch/cmswbm/cmsdb/servlet/RunSummary
-- select a run range 
-"Begin RunNumber" --> "EndRunNumber" --> SubmitQuery
-- save the output page as txt (option at the top)
-  --> you'll get an output similar to RunSummary_160329_163876.txt
-      (the file name has been changed manually)
+Author of the script getHLTkey.py: Bryan Dahmes
 
-2) Create the list of trigger key changes
+Tutorial slides at: 
+https://indico.cern.ch/getFile.py/access?contribId=5&resId=0&materialId=slides&confId=138183
 
-- edit the script parse_run_summary.py (created by Edmund)
-  - insert the .txt input file
-- run the script : python parse_run_summary.py > Output_160329_163876.txt 
-  --> the names starting with 
-  */cdaq/physics/Run*
-  correspond to HLT keys used in the run range relative to the Run Summary file
+Other useful tools at: 
+https://twiki.cern.ch/twiki/bin/view/CMS/HLTriggerTools
 
-You can also use this command (from lxplus, from the workspace area of this README file):
+-----------------------------------------------
+
+0) Setup work area
+
+ssh to lxplus.cern.ch
+scramv1 p CMSSW CMSSW_4_2_2  (most of the releases should work)
+cd CMSSW_4_2_2/src
+cvs co -r V02-01-03 RecoLuminosity/LumiDB (see latest tag from https://twiki.cern.ch/twiki/bin/viewauth/CMS/LumiCalc)
+cd RecoLuminosity/LumiDB
+scramv1 b
+cmsenv
+cd $CMSSW_BASE/
+cvs co -d Leptoquarks/CommonToolsV2 UserCode/Leptoquarks/CommonToolsV2
+cd Leptoquarks/CommonToolsV2/test/TriggerInfo
+
+-------------------------------------------------
+1) Find history of HLT menus in a given run range
+-------------------------------------------------
+
+define a run range: i.e. from 160329 to 163876
+
+
 ./getHLTkey.py --firstRun 160329 --lastRun 163876 --perKey
-(consider only the */cdaq/physics/* keys)
---> safer since it works also if WBM is down
 
-3) Find the trigger names for the path you are interested in
 
-- Go to the HLT Browser: http://j2eeps.cern.ch/cms-project-confdb-hltdev/browser/
-- Follow the path of each key in the file Output_160329_163876.txt (file created at step 2):
-  - Example for /cdaq/physics/Run2011/5e32/v6.1/HLT/V8 :
-    Go to /cdaq --> physics --> Run 2011 --> 5e32 -->  v6.1 --> HLT --> V8  
-    --> a new frame will appear on the right of the page
-- Select the stream (A, Calibration, etc..) and primary dataset (PD)
-  --> Go To "A" (physics)
-  --> Select the dataset you are interested in (i.e. SingleElectron)
+output:
 
-The list of all trigger names contributing to *that dataset*, *in that HLT menu*, will appear:
+Querying run registry for range [160329, 163876], group name like Collisions% ...
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V2           160404,160405,160406 
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V5           160410,160413 
+ ...
+ ...
+ ...
+ /cdaq/physics/Run2011/5e32/v8.3/HLT/V2           163738,163753 
+ /cdaq/physics/Run2011/5e32/v8.3/HLT/V3           163754 
+ /cdaq/physics/Run2011/5e32/v8.3/HLT/V4           163757,163758,163759,163760,163761,163763,163765,163795,163796,163817,163869
 
-HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2	1	1	1	1		L1_SingleEG15
-HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1	1	1	1	1		L1_SingleEG20
-HLT_Ele45_CaloIdVT_TrkIdT_v2			1	1	1	1		L1_SingleEG02
-HLT_Ele90_NoSpikeFilter_v2			1	1	1	1		L1_SingleEG20
+For physics run consider only */cdaq/physics/Run201*
 
-You can also use this command (from a CMSSW workspace area):
-edmConfigFromDB --orcoff --configName /cdaq/physics/Run2011/5e32/v6.1/HLT/V1 --datasets SingleElectron | hltDumpStream
-(you need to know the dataset name)
 
-------------
-In case you use the code 
-http://cmssw.cvs.cern.ch/cgi-bin/cmssw.cgi/UserCode/Leptoquarks/RootTupleMakerV2/python/RootTupleMakerV2_Trigger_cfi.py?view=log
-------------
+---------------------------------
+2) Find triggers in each HLT menu
+---------------------------------
 
+   a) go to http://j2eeps.cern.ch/cms-project-confdb-hltdev/browser/  (check manually from the web browser)
+
+OR
+
+   b) edmConfigFromDB --orcoff --configName /cdaq/physics/Run2011/5e32/v4.2/HLT/V2 --datasets SingleElectron | hltDumpStream
+   NOTE: if you remove --datasets SingleElectron it will printout all the datasets.
+   output:
+
+   ...
+   ...
+   dataset PhotonHad
+        *** not found ***
+   dataset SingleElectron
+      ~ HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1          1       1       1       1       1    L1_SingleEG15
+      ~ HLT_Ele45_CaloIdVT_TrkIdT_v1                           1       1       1       1       1    L1_SingleEG20
+      ~ HLT_Ele90_NoSpikeFilter_v1                             1       1       1       1       1    L1_SingleEG20
+   dataset SingleMu
+        *** not found ***
+   dataset Tau
+   ...
+   ...
+
+   The output format is:  | HLT path | prescales for 5 different luminosity scenarios (decreasing lumi from left to right) | L1 trigger path |
+
+   Take note of the trigger path(s) you want, i.e. HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1 and HLT_Ele45_CaloIdVT_TrkIdT_v1
+
+
+-------------------------------------------------------------------
+3) Find the evolution of chosen trigger path(s) vs run and HLT menu
+-------------------------------------------------------------------   
+
+./getHLTkey.py --firstRun 160329 --lastRun 163876 --HLTpaths=HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v1 --perKey >& log.txt
+
+NOTE 1: useful to dump the printout on a text file (log.txt)
+NOTE 2: this process takes several minutes (be patient)
+
+output:
+
+Querying run registry for range [160329, 163876], group name like Collisions% ...
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V2        (G)HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1(L1_SingleEG15,1)  160404,160405,160406 
+                                               (G)HLT_Ele45_CaloIdVT_TrkIdT_v1(L1_SingleEG20,1)    
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V5           160410,160413 
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V6           160431,160432,160433,160442,160443,160444,160445,160446,160447,160449,160450,160454,160455,160456,160462,160463,160466,160467
+ 
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V7           160497,160498,160499,160577,160578,160579 
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V8           160808,160815 
+ /cdaq/physics/Run2011/5e32/v4.3/HLT/V3           160819 
+ /cdaq/physics/Run2011/5e32/v4.3/HLT/V4           160827,160835 
+ /cdaq/physics/Run2011/5e32/v5.1/HLT/V3           160853,160871,160872,160873,160874,160875,160876,160877 
+ /cdaq/physics/Run2011/5e32/v5.2/HLT/V2           160888 
+ /cdaq/physics/Run2011/5e32/v5.2/HLT/V5           160890 
+ /cdaq/physics/Run2011/5e32/v5.2/HLT/V6           160894,160898 
+ /cdaq/physics/Run2011/5e32/v5.2/HLT/V7           160907,160911,160913,160914,160915,160916,160935,160936,160937,160938,160939,160940,160942,160943 
+ /cdaq/physics/Run2011/5e32/v5.3/HLT/V1           160954,160955,160956,160957,160994,160998,161008,161016,161020 
+ /cdaq/physics/Run2011/5e32/v5.3/HLT/V2           161103,161106,161107,161113,161116,161117,161119,161156,161165,161176 
+ /cdaq/physics/Run2011/5e32/v6.1/HLT/V1        (X)HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1  161216 
+                                               (X)HLT_Ele45_CaloIdVT_TrkIdT_v1    
+ /cdaq/physics/Run2011/5e32/v6.1/HLT/V3           161217 
+ /cdaq/physics/Run2011/5e32/v6.1/HLT/V5           161222,161223,161224,161233 
+ /cdaq/physics/Run2011/5e32/v6.1/HLT/V6           161310,161311,161312 
+ /cdaq/physics/Run2011HI/2760GeV/v1.1/HLT/V1      161354,161366
+ ...
+ ...
+
+
+What does it mean?
+
+It means that: 
+
+- both HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1 and HLT_Ele45_CaloIdVT_TrkIdT_v1
+  are available from 
+  run 160404 (and menu /cdaq/physics/Run2011/5e32/v4.2/HLT/V2) 
+  to 
+  run 161176 (and menu /cdaq/physics/Run2011/5e32/v5.3/HLT/V2)
+
+- Instead, starting to run 161216 (and menu /cdaq/physics/Run2011/5e32/v6.1/HLT/V1)
+  other single electron triggers are present. 
+  This means that these triggers probably changed name. 
+  So you have to restart from step 2), but with the new menu:
+  edmConfigFromDB --orcoff --configName /cdaq/physics/Run2011/5e32/v6.1/HLT/V1 --datasets SingleElectron | hltDumpStream
+  and so on until the end of the run range considered.
+
+
+NOTE: triggers might disappear within a given run range and then appear again, 
+just because of different running modes in that period (such as "special" runs or "cosmics" runs). 
+An example is given below:
+
+./getHLTkey.py --firstRun 160329 --lastRun 163876 --HLTpaths=HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1 --perKey >& log.txt
+
+
+output:
+
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V2        (X)HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2  160404,160405,160406 
+                                               (X)HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1    
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V5           160410,160413 
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V6           160431,160432,160433,160442,160443,160444,160445,160446,160447,160449,160450,160454,160455,160456,160462,160463,160466,160467 
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V7           160497,160498,160499,160577,160578,160579 
+ /cdaq/physics/Run2011/5e32/v4.2/HLT/V8           160808,160815 
+ /cdaq/physics/Run2011/5e32/v4.3/HLT/V3           160819 
+ /cdaq/physics/Run2011/5e32/v4.3/HLT/V4           160827,160835 
+ /cdaq/physics/Run2011/5e32/v5.1/HLT/V3           160853,160871,160872,160873,160874,160875,160876,160877 
+ /cdaq/physics/Run2011/5e32/v5.2/HLT/V2           160888 
+ /cdaq/physics/Run2011/5e32/v5.2/HLT/V5           160890 
+ /cdaq/physics/Run2011/5e32/v5.2/HLT/V6           160894,160898 
+ /cdaq/physics/Run2011/5e32/v5.2/HLT/V7           160907,160911,160913,160914,160915,160916,160935,160936,160937,160938,160939,160940,160942,160943 
+ /cdaq/physics/Run2011/5e32/v5.3/HLT/V1           160954,160955,160956,160957,160994,160998,161008,161016,161020 
+ /cdaq/physics/Run2011/5e32/v5.3/HLT/V2           161103,161106,161107,161113,161116,161117,161119,161156,161165,161176 
+ /cdaq/physics/Run2011/5e32/v6.1/HLT/V1        (U)HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2(L1_SingleEG15,1)  161216 
+                                               (U)HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1(L1_SingleEG20,1)    
+ /cdaq/physics/Run2011/5e32/v6.1/HLT/V3           161217 
+ /cdaq/physics/Run2011/5e32/v6.1/HLT/V5           161222,161223,161224,161233 
+ /cdaq/physics/Run2011/5e32/v6.1/HLT/V6           161310,161311,161312 
+ /cdaq/physics/Run2011HI/2760GeV/v1.1/HLT/V1   (X)HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2  161354,161366 
+                                               (X)HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1    
+ /cdaq/physics/Run2011HI/2760GeV/v1.1/HLT/V3      161396,161398,161401,161403,161404,161439,161445 
+ /cdaq/special/VdMScan/HLT_ZeroBiasOnly/V1        161444,161447,161453 
+ /cdaq/physics/Run2011HI/2760GeV/v1.1/HLT/V4      161450,161454,161473,161474 
+ /cdaq/special/Interfill/v5.2/HLT/V1              162518 
+ /cdaq/special/2Tesla/HLT/V3                      162713 
+ /cdaq/physics/Run2011/5e32/v6.2/HLT/V2        (U)HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2  162718,162733,162739,162742,162760,162762,162765 
+                                               (U)HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1    
+ /cdaq/physics/Run2011/5e32/v6.2/HLT/V3           162803,162808,162810,162811,162822,162825,162826,162827,162828,162909,162917,162924,162925,162926 
+ /cdaq/physics/Run2011/5e32/v6.2/HLT/V4           162929,163045,163046,163069,163071,163072,163078,163232,163233,163234,163235,163237,163238,163252,163255,163261 
+ /cdaq/physics/Run2011/5e32/v8.1/HLT/V5        (X)HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2  163269,163270 
+                                               (X)HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1    
+ /cdaq/physics/Run2011/5e32/v8.1/HLT/V6           163286,163289 
+ /cdaq/physics/Run2011/5e32/v8.1/HLT/V8           163296,163297,163300,163301,163302,163308,163332,163333,163334
+
+
+It means that: 
+
+- both HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2 and HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1
+  are available for these run (and HLT menu) ranges:
+
+  from
+  run 161216 (and menu /cdaq/physics/Run2011/5e32/v6.1/HLT/V1) 
+  to 
+  run 161312 (and menu /cdaq/physics/Run2011/5e32/v6.1/HLT/V6)
+
+
+  from
+  run 162718 (and menu /cdaq/physics/Run2011/5e32/v6.2/HLT/V2) 
+  to 
+  run 163261 (and menu /cdaq/physics/Run2011/5e32/v6.2/HLT/V4)
+
+
+  The triggers are missing in the range 161354 to 162713
+  because non-standard run types were used:
+  i.e. /cdaq/physics/Run2011HI/2760GeV/v1.1/HLT/V1   
+       /cdaq/special/VdMScan/HLT_ZeroBiasOnly/V1       
+       /cdaq/special/Interfill/v5.2/HLT/V1         
+       /cdaq/special/2Tesla/HLT/V3
+       etc..
+
+
+******************************
+In case you use this code
+
+http://cmssw.cvs.cern.ch/cgi-bin/cmssw.cgi/UserCode/Leptoquarks/RootTupleMakerV2/
+
+continue to read below
+******************************
+
+
+
+-----------------------------------
 4) Save trigger info in the ntuples
+-----------------------------------
 
-- Edit the RootTupleMakerV2/python/RootTupleMakerV2_Trigger_cfi.py file, by *ADDING* (DO NOT REMOVE) in the list 
-  new trigger names that you found at step 3).
+
+- Edit the RootTupleMakerV2/python/RootTupleMakerV2_Trigger_cfi.py file, 
+  by *ADDING* (DO NOT REMOVE) in the list 
+  new trigger names that you found at the steps 2) and 3), 
+  for the entire run range of interest.
    --> IMPORTANT : 
-       since you are analyzing data from a long physics run, 
+       since you are analyzing data during a long physics run, 
+
        - DO NOT CHANGE THE ORDER OF THE EXISTING TRIGGER NAMES 
-         (unless you really want to do it, and you need a good reason, contact us before), 
-         , BUT JUST ADD THE NEW TRIGGERs AT THE END OF THE LIST 
-         --> in this way one can still analyze old data if new ntuples are reproduced later.
+         --> unless you really want to do it, and you need a good reason --> contact us before 
+       
+       - ADD THE NEW TRIGGERs AT THE END OF THE LIST 
 
-- Repeat step 3) and 4) for each trigger key in the file Output_160329_163876.txt (file created at step 2):
-
-5) find the run range for each trigger.
-Use this command (from this area in lxplus):
- ./getHLTkey.py --firstRun 160329 --lastRun 163876 --HLTpaths=HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v1,HLT_Ele90_NoSpikeFilter_v1,HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v2,HLT_Ele90_NoSpikeFilter_v2,HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v3,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele45_CaloIdVT_TrkIdT_v3,HLT_Ele90_NoSpikeFilter_v3 --perKey
+       In this way one can still analyze old data if new ntuples are reproduced later.
 
 
-## Other useful commands:
 
-- See https://twiki.cern.ch/twiki/bin/view/CMS/HLTriggerTools
+-------- END ----------
 
-- Find trigger names in a given HLT menu-->stream-->dataset : 
-edmConfigFromDB --orcoff --configName /cdaq/physics/Run2011/5e32/v4.2/HLT/V1 --format streams.list:A.SingleElectron
-edmConfigFromDB --orcoff --configName /cdaq/physics/Run2011/5e32/v4.2/HLT/V1 --datasets SingleElectron | hltDumpStream
-
-- Bryan Dahmes's script to correlate runs, trigger menus, HLT paths
-(last slide of https://indico.cern.ch/getFile.py/access?contribId=2&resId=0&materialId=slides&confId=95551)
-
-  o correlate runs and trigger menus
-  ./getHLTkey.py --firstRun 160329 --lastRun 163876 --perKey
-
-  o correlate runs and HLT paths
-  ./getHLTkey.py --firstRun 160329 --lastRun 163876 --HLTpaths=HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v1,HLT_Ele90_NoSpikeFilter_v1,HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1,HLT_Ele45_CaloIdVT_TrkIdT_v2,HLT_Ele90_NoSpikeFilter_v2,HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v3,HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2,HLT_Ele45_CaloIdVT_TrkIdT_v3,HLT_Ele90_NoSpikeFilter_v3 --perKey
 
