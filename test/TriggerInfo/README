@@ -17,7 +17,10 @@ https://twiki.cern.ch/twiki/bin/view/CMS/HLTriggerTools
 
 -----------------------------------------------
 
+
+------------------
 0) Setup work area
+------------------
 
 ssh to lxplus.cern.ch
 scramv1 p CMSSW CMSSW_4_2_2  (most of the releases should work)
@@ -29,6 +32,7 @@ cmsenv
 cd $CMSSW_BASE/
 cvs co -d Leptoquarks/CommonToolsV2 UserCode/Leptoquarks/CommonToolsV2
 cd Leptoquarks/CommonToolsV2/test/TriggerInfo
+
 
 -------------------------------------------------
 1) Find history of HLT menus in a given run range
@@ -124,7 +128,7 @@ Querying run registry for range [160329, 163876], group name like Collisions% ..
  ...
 
 
-What does it mean?
+==> What does it mean? <==
 
 It means that: 
 
@@ -188,30 +192,34 @@ output:
  /cdaq/physics/Run2011/5e32/v8.1/HLT/V8           163296,163297,163300,163301,163302,163308,163332,163333,163334
 
 
+==> What does it mean? <==
+
 It means that: 
 
 - both HLT_Ele27_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v2 and HLT_Ele32_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_v1
   are available for these run (and HLT menu) ranges:
 
+  a)
   from
   run 161216 (and menu /cdaq/physics/Run2011/5e32/v6.1/HLT/V1) 
   to 
   run 161312 (and menu /cdaq/physics/Run2011/5e32/v6.1/HLT/V6)
 
-
+  b)
   from
   run 162718 (and menu /cdaq/physics/Run2011/5e32/v6.2/HLT/V2) 
   to 
   run 163261 (and menu /cdaq/physics/Run2011/5e32/v6.2/HLT/V4)
 
 
-  The triggers are missing in the range 161354 to 162713
-  because non-standard run types were used:
+  These trigger paths are missing in the range 161354 to 162713
+  because non-standard run types (and HLT menus) were used:
   i.e. /cdaq/physics/Run2011HI/2760GeV/v1.1/HLT/V1   
        /cdaq/special/VdMScan/HLT_ZeroBiasOnly/V1       
        /cdaq/special/Interfill/v5.2/HLT/V1         
        /cdaq/special/2Tesla/HLT/V3
        etc..
+
 
 
 ******************************
