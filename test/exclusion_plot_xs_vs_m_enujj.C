@@ -367,9 +367,9 @@ void makePlots()
  //legend->SetFillStyle(0);
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq, #beta = 0.5");
- legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1})","f");
- legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{theory} with theory uncertainty","lf");
+ legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq");
+ legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}), #beta = 0.5","f");
+ legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{NLO} with theory uncert., #beta = 0.5","lf");
  legend->AddEntry(xsData_vs_m_expected, "Expected 95% CL upper limit (36 pb^{-1})","lp");
  legend->AddEntry(xsData_vs_m_observed, "Observed 95% CL upper limit (36 pb^{-1})","lp");
  legend->Draw();
