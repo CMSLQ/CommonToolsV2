@@ -12,6 +12,231 @@
 
 using namespace std;
 
+void myStyle();
+void setTDRStyle();
+
+
+void makePlots()
+{
+ // **********************************************
+ // *            Input parameters                *
+ // **********************************************
+
+ // switch to include/exclude sytematics uncertainties
+ bool systematics = true; // does nothing at the moment
+
+ // total integrated luminosity (in pb-1)
+ Double_t L_int = 36;
+ // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
+ Double_t Sigma_L_int = 0.04;
+ // Zero systematics case
+//  Double_t Sigma_L_int = 0.0;
+
+ // array of signal efficiencies
+ Double_t S_eff[10] = {0.161, 0.255, 0.291, 0.317, 0.339, 0.364, 0.396, 0.426, 0.467, 0.500};
+
+ // array of relative uncertainties on the signal efficiencies
+ Double_t Sigma_S_eff[10] = {0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08};
+ // Zero systematics case
+//  Double_t Sigma_S_eff[10] = {0.0};
+ // Doubled systematics case
+//  Double_t Sigma_S_eff[10] = {0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16};
+
+ // branching ratio for enujj channel 2*beta(1-beta)
+ Double_t Br = 0.5;
+
+ // array of N_background for L_int
+ Double_t N_bkg[10] = {6.5, 4.4, 3.1, 2.5, 1.9, 1.6, 1.3, 1.1, 0.9, 0.8};
+
+ // array of relative uncertainties on N_background (0.1 = 10%)
+ Double_t Sigma_N_bkg[10] = {0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36};
+ // Zero systematics case
+//  Double_t Sigma_N_bkg[10] = {0.0};
+ // Doubled systematics case
+//  Double_t Sigma_N_bkg[10] = {0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50};
+
+ // array of N_observed for L_int
+ Int_t N_obs[10] = {5, 3, 3, 2, 2, 2, 1, 1, 0, 0};
+
+ // array of LQ masses for calculation of upXS
+ Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
+
+ // arrays of LQ masses for theoretical cross section
+ Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
+ // array of theoretical cross-sections for different leptoquark masses
+ Double_t xsTh[10] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949, 0.0463, 0.0236};
+
+ // filename for the final plot (NB: changing the name extension changes the file format)
+ string fileName = "xs95CL_vs_m_enujj.eps";
+ // Zero systematics case
+//  string fileName = "xs95CL_vs_m_enujj_zeroSyst.eps";
+ // Doubled systematics case
+//  string fileName = "xs95CL_vs_m_enujj_doubledSyst.eps";
+
+ // axes labels for the final plot
+ string title = ";M_{LQ} [GeV];2#beta(1-#beta)#times#sigma [pb]";
+
+ // integrated luminosity
+ string sqrts = "#sqrt{s} = 7 TeV";
+
+ // region excluded by Tevatron limits
+ Double_t x_shaded[5] = {200,264,264,200,200};
+ Double_t y_shaded[5] = {0.05,0.05,40,40,0.05};
+
+ // PDF uncertainty band
+ Double_t x_pdf[20] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100};
+ Double_t y_pdf[20] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.572, 0.249, 0.1167, 0.0581, 0.0300, 0.0169, 0.0340, 0.0719, 0.160, 0.379, 0.98, 2.9, 10.0, 45.2, 330.3};
+
+ // turn on/off batch mode
+ gROOT->SetBatch(kTRUE);
+
+ Int_t size = sizeof(xsTh)/sizeof(*xsTh);
+ for(Int_t i=0; i<size; i++) xsTh[i]=Br*xsTh[i];
+ size = sizeof(y_pdf)/sizeof(*y_pdf);
+ for(Int_t i=0; i<size; i++) y_pdf[i]=Br*y_pdf[i];
+
+ size = sizeof(S_eff)/sizeof(*S_eff);
+
+ // Upper limits can be entered manually when the calls to CL95(...) and CLA(...) are commented out
+ // However, CL95(...) and CLA(...) have to be called at least once to get the upper limits
+
+//  Double_t xsUp_observed[size];
+//  for(Int_t i = 0; i < size; i++){
+// 
+//    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i], kFALSE, 1);
+//  }
+//  cout<<endl<<Form("Double_t xsUp_observed[%i] = {", size);
+//  for(Int_t i = 0; i < size; i++) {
+//    cout<<xsUp_observed[i];
+//    if(i<(size-1)) cout<<", ";
+//  }
+//  cout<<"};"<<endl<<endl;
+ // Array of the observed 95% CL upper limits on the cross section
+ Double_t xsUp_observed[10] = {1.0957, 0.566895, 0.537109, 0.420898, 0.412109, 0.394043, 0.287598, 0.271484, 0.180835, 0.168945};
+ // Zero systematics case
+//  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
+ // Doubled systematics case
+// Double_t xsUp_observed[10] = {1.21094, 0.615234, 0.577881, 0.450195, 0.438965, 0.419434, 0.304199, 0.286865, 0.189697, 0.1771};
+
+//  Double_t xsUp_expected[size];
+//  for(Int_t i = 0; i < size; i++){
+// 
+//    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], kFALSE, 1);
+//  }
+//  cout<<endl<<Form("Double_t xsUp_expected[%i] = {", size);
+//  for(Int_t i = 0; i < size; i++) {
+//    cout<<xsUp_expected[i];
+//    if(i<(size-1)) cout<<", ";
+//  }
+//  cout<<"};"<<endl<<endl;
+ // Array of the expected 95% CL upper limits on the cross section
+ Double_t xsUp_expected[10] = {1.36645, 0.730012, 0.56098, 0.478897, 0.411686, 0.365259, 0.318199, 0.284191, 0.248004, 0.226132};
+ // Zero systematics case
+//  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
+ // Doubled systematics case
+//  Double_t xsUp_expected[10] = {1.50694, 0.792841, 0.602788, 0.512162, 0.437966, 0.387823, 0.336865, 0.300479, 0.261752, 0.238493};
+
+ // set ROOT style
+//  myStyle();
+ setTDRStyle();
+ gStyle->SetPadLeftMargin(0.14);
+ gROOT->ForceStyle();
+
+ TCanvas *c = new TCanvas("c","",800,800);
+ c->cd();
+
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0.05, 40.);
+ bg->SetStats(kFALSE);
+ bg->SetTitleOffset(1.,"X");
+ bg->SetTitleOffset(1.13,"Y");
+
+ bg->Draw();
+
+ TPolyLine *pl = new TPolyLine(5,x_shaded,y_shaded,"F");
+//  pl->SetFillStyle(3001);
+ pl->SetLineColor(0);
+ pl->SetFillColor(kGray);
+ pl->Draw();
+
+ TGraph *grshade = new TGraph(20,x_pdf,y_pdf);
+ grshade->SetFillColor(kGreen);
+ grshade->Draw("f");
+
+ gPad->RedrawAxis();
+
+ // set ROOT style
+//  myStyle();
+ setTDRStyle();
+ gStyle->SetPadLeftMargin(0.14);
+ gROOT->ForceStyle();
+
+ TGraph *xsTh_vs_m = new TGraph(10, mTh, xsTh);
+ xsTh_vs_m->SetLineWidth(3);
+ xsTh_vs_m->SetLineColor(kRed);
+ xsTh_vs_m->SetFillColor(kGreen);
+ xsTh_vs_m->SetMarkerSize(1.);
+ xsTh_vs_m->SetMarkerStyle(22);
+ xsTh_vs_m->SetMarkerColor(kRed);
+ xsTh_vs_m->Draw("C");
+
+ TGraph *xsData_vs_m_expected = new TGraph(size, mData, xsUp_expected);
+ xsData_vs_m_expected->SetMarkerStyle(23);
+ xsData_vs_m_expected->SetMarkerColor(kBlue);
+ xsData_vs_m_expected->SetLineColor(kBlue);
+ xsData_vs_m_expected->SetLineWidth(3);
+ xsData_vs_m_expected->SetLineStyle(2);
+ xsData_vs_m_expected->SetMarkerSize(1.5);
+ xsData_vs_m_expected->Draw("CP");
+
+ TGraph *xsData_vs_m_observed = new TGraph(size, mData, xsUp_observed);
+ xsData_vs_m_observed->SetMarkerStyle(22);
+ xsData_vs_m_observed->SetMarkerColor(kBlack);
+ xsData_vs_m_observed->SetLineColor(kBlack);
+ xsData_vs_m_observed->SetLineWidth(3);
+ xsData_vs_m_observed->SetLineStyle(1);
+ xsData_vs_m_observed->SetMarkerSize(1.5);
+ xsData_vs_m_observed->Draw("CP");
+
+ TLegend *legend = new TLegend(.34,.65,.92,.92);
+ legend->SetBorderSize(1);
+ legend->SetFillColor(0);
+ //legend->SetFillStyle(0);
+ legend->SetTextFont(42);
+ legend->SetMargin(0.15);
+ legend->SetHeader("LQ#bar{LQ} #rightarrow e#nujj");
+ legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}), #beta = 0.5","f");
+ legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{NLO} with theory uncert., #beta = 0.5","lf");
+ legend->AddEntry(xsData_vs_m_expected, "Expected 95% CL upper limit (36 pb^{-1})","lp");
+ legend->AddEntry(xsData_vs_m_observed, "Observed 95% CL upper limit (36 pb^{-1})","lp");
+ legend->Draw();
+
+ TLatex l1;
+ l1.SetTextAlign(12);
+ l1.SetTextFont(42);
+ l1.SetNDC();
+ l1.SetTextSize(0.05);
+ l1.DrawLatex(0.7,0.6,"CMS");
+ l1.SetTextSize(0.05);
+ l1.DrawLatex(0.7,0.53,sqrts.c_str());
+
+ c->SetGridx();
+ c->SetGridy();
+
+ string name, extension;
+ size_t pos = fileName.find(".");
+
+ name = fileName.substr(0,pos);
+ extension = fileName.substr(pos);
+
+ c->SetLogy();
+ c->SaveAs((name + "_log" + extension).c_str());
+
+ delete pl;
+ delete xsTh_vs_m;
+ delete bg;
+ delete c;
+}
+
 void myStyle()
 {
  gStyle->Reset("Default");
@@ -178,225 +403,4 @@ void setTDRStyle() {
   // tdrStyle->SetHistMinimumZero(kTRUE);
 
   tdrStyle->cd();
-}
-
-void makePlots()
-{
- // **********************************************
- // *            Input parameters                *
- // **********************************************
-
- // switch to include/exclude sytematics uncertainties
- bool systematics = true; // does nothing at the moment
-
- // total integrated luminosity (in pb-1)
- Double_t L_int = 36;
- // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
- Double_t Sigma_L_int = 0.04;
- // Zero systematics case
-//  Double_t Sigma_L_int = 0.0;
-
- // array of signal efficiencies
- Double_t S_eff[10] = {0.161, 0.255, 0.291, 0.317, 0.339, 0.364, 0.396, 0.426, 0.467, 0.500};
-
- // array of relative uncertainties on the signal efficiencies
- Double_t Sigma_S_eff[10] = {0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08};
- // Zero systematics case
-//  Double_t Sigma_S_eff[10] = {0.0};
- // Doubled systematics case
-//  Double_t Sigma_S_eff[10] = {0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16};
-
- // branching ratio for enujj channel 2*beta(1-beta)
- Double_t Br = 0.5;
-
- // array of N_background for L_int
- Double_t N_bkg[10] = {6.5, 4.4, 3.1, 2.5, 1.9, 1.6, 1.3, 1.1, 0.9, 0.8};
-
- // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[10] = {0.23, 0.23, 0.23, 0.23, 0.23, 0.23, 0.23, 0.23, 0.23, 0.23};
- // Zero systematics case
-//  Double_t Sigma_N_bkg[10] = {0.0};
- // Doubled systematics case
-//  Double_t Sigma_N_bkg[10] = {0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50};
-
- // array of N_observed for L_int
- Int_t N_obs[10] = {5, 3, 3, 2, 2, 2, 1, 1, 0, 0};
-
- // array of LQ masses for calculation of upXS
- Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
-
- // arrays of LQ masses for theoretical cross section
- Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
- // array of theoretical cross-sections for different leptoquark masses
- Double_t xsTh[10] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949, 0.0463, 0.0236};
-
- // filename for the final plot (NB: changing the name extension changes the file format)
- string fileName = "xs95CL_vs_m_enujj.eps";
- // Zero systematics case
-//  string fileName = "xs95CL_vs_m_enujj_zeroSyst.eps";
- // Doubled systematics case
-//  string fileName = "xs95CL_vs_m_enujj_doubledSyst.eps";
-
- // axes labels for the final plot
- string title = ";M_{LQ} [GeV];2#beta(1-#beta)#times#sigma [pb]";
-
- // integrated luminosity
- string sqrts = "#sqrt{s} = 7 TeV";
-
- // region excluded by Tevatron limits
- Double_t x_shaded[5] = {200,264,264,200,200};
- Double_t y_shaded[5] = {0.05,0.05,40,40,0.05};
-
- // PDF uncertainty band
- Double_t x_pdf[20] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100};
- Double_t y_pdf[20] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.572, 0.249, 0.1167, 0.0581, 0.0300, 0.0169, 0.0340, 0.0719, 0.160, 0.379, 0.98, 2.9, 10.0, 45.2, 330.3};
-
- // turn on/off batch mode
- gROOT->SetBatch(kTRUE);
-
- Int_t size = sizeof(xsTh)/sizeof(*xsTh);
- for(Int_t i=0; i<size; i++) xsTh[i]=Br*xsTh[i];
- size = sizeof(y_pdf)/sizeof(*y_pdf);
- for(Int_t i=0; i<size; i++) y_pdf[i]=Br*y_pdf[i];
-
- size = sizeof(S_eff)/sizeof(*S_eff);
-
- // Upper limits can be entered manually when the calls to CL95(...) and CLA(...) are commented out
- // However, CL95(...) and CLA(...) have to be called at least once to get the upper limits
-
-//  Double_t xsUp_observed[size];
-//  for(Int_t i = 0; i < size; i++){
-// 
-//    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i], kFALSE, 1);
-//  }
-//  cout<<endl<<Form("Double_t xsUp_observed[%i] = {", size);
-//  for(Int_t i = 0; i < size; i++) {
-//    cout<<xsUp_observed[i];
-//    if(i<(size-1)) cout<<", ";
-//  }
-//  cout<<"};"<<endl<<endl;
- // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[10] = {1.04492, 0.550781, 0.527832, 0.415771, 0.408691, 0.39209, 0.286133, 0.270508, 0.180835, 0.168945};
- // Zero systematics case
-//  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
- // Doubled systematics case
-// Double_t xsUp_observed[10] = {1.21094, 0.615234, 0.577881, 0.450195, 0.438965, 0.419434, 0.304199, 0.286865, 0.189697, 0.1771};
-
-//  Double_t xsUp_expected[size];
-//  for(Int_t i = 0; i < size; i++){
-// 
-//    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], kFALSE, 1);
-//  }
-//  cout<<endl<<Form("Double_t xsUp_expected[%i] = {", size);
-//  for(Int_t i = 0; i < size; i++) {
-//    cout<<xsUp_expected[i];
-//    if(i<(size-1)) cout<<", ";
-//  }
-//  cout<<"};"<<endl<<endl;
- // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[10] = {1.31573, 0.713387, 0.553481, 0.474409, 0.409308, 0.363951, 0.317413, 0.2837, 0.247752, 0.22597};
- // Zero systematics case
-//  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
- // Doubled systematics case
-//  Double_t xsUp_expected[10] = {1.50694, 0.792841, 0.602788, 0.512162, 0.437966, 0.387823, 0.336865, 0.300479, 0.261752, 0.238493};
-
- // set ROOT style
-//  myStyle();
- setTDRStyle();
- gStyle->SetPadLeftMargin(0.14);
- gROOT->ForceStyle();
-
- TCanvas *c = new TCanvas("c","",800,800);
- c->cd();
-
- TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0.05, 40.);
- bg->SetStats(kFALSE);
- bg->SetTitleOffset(1.,"X");
- bg->SetTitleOffset(1.13,"Y");
-
- bg->Draw();
-
- TPolyLine *pl = new TPolyLine(5,x_shaded,y_shaded,"F");
-//  pl->SetFillStyle(3001);
- pl->SetLineColor(0);
- pl->SetFillColor(kGray);
- pl->Draw();
-
- TGraph *grshade = new TGraph(20,x_pdf,y_pdf);
- grshade->SetFillColor(kGreen);
- grshade->Draw("f");
-
- gPad->RedrawAxis();
-
- // set ROOT style
-//  myStyle();
- setTDRStyle();
- gStyle->SetPadLeftMargin(0.14);
- gROOT->ForceStyle();
-
- TGraph *xsTh_vs_m = new TGraph(10, mTh, xsTh);
- xsTh_vs_m->SetLineWidth(3);
- xsTh_vs_m->SetLineColor(kRed);
- xsTh_vs_m->SetFillColor(kGreen);
- xsTh_vs_m->SetMarkerSize(1.);
- xsTh_vs_m->SetMarkerStyle(22);
- xsTh_vs_m->SetMarkerColor(kRed);
- xsTh_vs_m->Draw("C");
-
- TGraph *xsData_vs_m_expected = new TGraph(size, mData, xsUp_expected);
- xsData_vs_m_expected->SetMarkerStyle(23);
- xsData_vs_m_expected->SetMarkerColor(kBlue);
- xsData_vs_m_expected->SetLineColor(kBlue);
- xsData_vs_m_expected->SetLineWidth(3);
- xsData_vs_m_expected->SetLineStyle(2);
- xsData_vs_m_expected->SetMarkerSize(1.5);
- xsData_vs_m_expected->Draw("CP");
-
- TGraph *xsData_vs_m_observed = new TGraph(size, mData, xsUp_observed);
- xsData_vs_m_observed->SetMarkerStyle(22);
- xsData_vs_m_observed->SetMarkerColor(kBlack);
- xsData_vs_m_observed->SetLineColor(kBlack);
- xsData_vs_m_observed->SetLineWidth(3);
- xsData_vs_m_observed->SetLineStyle(1);
- xsData_vs_m_observed->SetMarkerSize(1.5);
- xsData_vs_m_observed->Draw("CP");
-
- TLegend *legend = new TLegend(.34,.65,.92,.92);
- legend->SetBorderSize(1);
- legend->SetFillColor(0);
- //legend->SetFillStyle(0);
- legend->SetTextFont(42);
- legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow e#nujj");
- legend->AddEntry(pl,"D#oslash exclusion (1 fb^{-1}), #beta = 0.5","f");
- legend->AddEntry(xsTh_vs_m,"2#beta(1-#beta)#times#sigma_{NLO} with theory uncert., #beta = 0.5","lf");
- legend->AddEntry(xsData_vs_m_expected, "Expected 95% CL upper limit (36 pb^{-1})","lp");
- legend->AddEntry(xsData_vs_m_observed, "Observed 95% CL upper limit (36 pb^{-1})","lp");
- legend->Draw();
-
- TLatex l1;
- l1.SetTextAlign(12);
- l1.SetTextFont(42);
- l1.SetNDC();
- l1.SetTextSize(0.05);
- l1.DrawLatex(0.7,0.6,"CMS");
- l1.SetTextSize(0.05);
- l1.DrawLatex(0.7,0.53,sqrts.c_str());
-
- c->SetGridx();
- c->SetGridy();
-
- string name, extension;
- size_t pos = fileName.find(".");
-
- name = fileName.substr(0,pos);
- extension = fileName.substr(pos);
-
- c->SetLogy();
- c->SaveAs((name + "_log" + extension).c_str());
-
- delete pl;
- delete xsTh_vs_m;
- delete bg;
- delete c;
 }

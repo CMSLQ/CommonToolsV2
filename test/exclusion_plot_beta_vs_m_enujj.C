@@ -11,223 +11,9 @@
 
 using namespace std;
 
-void myStyle()
-{
- gStyle->Reset("Default");
- gStyle->SetCanvasColor(0);
- gStyle->SetPadColor(0);
- gStyle->SetTitleFillColor(10);
- gStyle->SetCanvasBorderMode(0);
- gStyle->SetStatColor(0);
- gStyle->SetPadBorderMode(0);
- gStyle->SetPadTickX(1);  // To get tick marks on the opposite side of the frame
- gStyle->SetPadTickY(1);
- gStyle->SetFrameBorderMode(0);
- gStyle->SetPalette(1);
-
-   //gStyle->SetOptStat(kFALSE);
- gStyle->SetOptStat(111110);
- gStyle->SetOptFit(0);
- gStyle->SetStatFont(42);
- gStyle->SetPadLeftMargin(0.13);
- gStyle->SetPadRightMargin(0.07);
-//    gStyle->SetTitleFont(42);
-//    gStyle->SetTitleFont(42, "XYZ");
-//    gStyle->SetLabelFont(42, "XYZ");
- gStyle->SetStatY(.9);
-}
-
-void setTDRStyle() {
-  TStyle *tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
-
-  // For the canvas:
-  tdrStyle->SetCanvasBorderMode(0);
-  tdrStyle->SetCanvasColor(kWhite);
-  tdrStyle->SetCanvasDefH(600); //Height of canvas
-  tdrStyle->SetCanvasDefW(600); //Width of canvas
-  tdrStyle->SetCanvasDefX(0);   //POsition on screen
-  tdrStyle->SetCanvasDefY(0);
-
-  // For the Pad:
-  tdrStyle->SetPadBorderMode(0);
-  // tdrStyle->SetPadBorderSize(Width_t size = 1);
-  tdrStyle->SetPadColor(kWhite);
-  tdrStyle->SetPadGridX(false);
-  tdrStyle->SetPadGridY(false);
-  tdrStyle->SetGridColor(0);
-  tdrStyle->SetGridStyle(3);
-  tdrStyle->SetGridWidth(1);
-
-  // For the frame:
-  tdrStyle->SetFrameBorderMode(0);
-  tdrStyle->SetFrameBorderSize(1);
-  tdrStyle->SetFrameFillColor(0);
-  tdrStyle->SetFrameFillStyle(0);
-  tdrStyle->SetFrameLineColor(1);
-  tdrStyle->SetFrameLineStyle(1);
-  tdrStyle->SetFrameLineWidth(1);
-
-  // For the histo:
-  tdrStyle->SetHistFillColor(63);
-  // tdrStyle->SetHistFillStyle(0);
-  tdrStyle->SetHistLineColor(1);
-  tdrStyle->SetHistLineStyle(0);
-  tdrStyle->SetHistLineWidth(1);
-  // tdrStyle->SetLegoInnerR(Float_t rad = 0.5);
-  // tdrStyle->SetNumberContours(Int_t number = 20);
-
-//  tdrStyle->SetEndErrorSize(0);
-//   tdrStyle->SetErrorX(0.);
-//  tdrStyle->SetErrorMarker(20);
-
-  tdrStyle->SetMarkerStyle(20);
-
-  //For the fit/function:
-  tdrStyle->SetOptFit(1);
-  tdrStyle->SetFitFormat("5.4g");
-  tdrStyle->SetFuncColor(2);
-  tdrStyle->SetFuncStyle(1);
-  tdrStyle->SetFuncWidth(1);
-
-  //For the date:
-  tdrStyle->SetOptDate(0);
-  // tdrStyle->SetDateX(Float_t x = 0.01);
-  // tdrStyle->SetDateY(Float_t y = 0.01);
-
-  // For the statistics box:
-  tdrStyle->SetOptFile(0);
-  tdrStyle->SetOptStat(0); // To display the mean and RMS:   SetOptStat("mr");
-  tdrStyle->SetStatColor(kWhite);
-  tdrStyle->SetStatFont(42);
-  tdrStyle->SetStatFontSize(0.025);
-  tdrStyle->SetStatTextColor(1);
-  tdrStyle->SetStatFormat("6.4g");
-  tdrStyle->SetStatBorderSize(1);
-  tdrStyle->SetStatH(0.1);
-  tdrStyle->SetStatW(0.15);
-  // tdrStyle->SetStatStyle(Style_t style = 1001);
-  // tdrStyle->SetStatX(Float_t x = 0);
-  // tdrStyle->SetStatY(Float_t y = 0);
-
-  // Margins:
-  tdrStyle->SetPadTopMargin(0.05);
-  tdrStyle->SetPadBottomMargin(0.13);
-  tdrStyle->SetPadLeftMargin(0.13);
-  tdrStyle->SetPadRightMargin(0.05);
-
-  // For the Global title:
-
-  //  tdrStyle->SetOptTitle(0);
-  tdrStyle->SetTitleFont(42);
-  tdrStyle->SetTitleColor(1);
-  tdrStyle->SetTitleTextColor(1);
-  tdrStyle->SetTitleFillColor(10);
-  tdrStyle->SetTitleFontSize(0.05);
-  // tdrStyle->SetTitleH(0); // Set the height of the title box
-  // tdrStyle->SetTitleW(0); // Set the width of the title box
-  // tdrStyle->SetTitleX(0); // Set the position of the title box
-  // tdrStyle->SetTitleY(0.985); // Set the position of the title box
-  // tdrStyle->SetTitleStyle(Style_t style = 1001);
-  // tdrStyle->SetTitleBorderSize(2);
-
-  // For the axis titles:
-
-  tdrStyle->SetTitleColor(1, "XYZ");
-  tdrStyle->SetTitleFont(42, "XYZ");
-  tdrStyle->SetTitleSize(0.06, "XYZ");
-  // tdrStyle->SetTitleXSize(Float_t size = 0.02); // Another way to set the size?
-  // tdrStyle->SetTitleYSize(Float_t size = 0.02);
-  tdrStyle->SetTitleXOffset(0.9);
-  tdrStyle->SetTitleYOffset(1.05);
-  // tdrStyle->SetTitleOffset(1.1, "Y"); // Another way to set the Offset
-
-  // For the axis labels:
-
-  tdrStyle->SetLabelColor(1, "XYZ");
-  tdrStyle->SetLabelFont(42, "XYZ");
-  tdrStyle->SetLabelOffset(0.007, "XYZ");
-  tdrStyle->SetLabelSize(0.05, "XYZ");
-
-  // For the axis:
-
-  tdrStyle->SetAxisColor(1, "XYZ");
-  tdrStyle->SetStripDecimals(kTRUE);
-  tdrStyle->SetTickLength(0.03, "XYZ");
-  tdrStyle->SetNdivisions(510, "XYZ");
-  tdrStyle->SetPadTickX(1);  // To get tick marks on the opposite side of the frame
-  tdrStyle->SetPadTickY(1);
-
-  // Change for log plots:
-  tdrStyle->SetOptLogx(0);
-  tdrStyle->SetOptLogy(0);
-  tdrStyle->SetOptLogz(0);
-
-  // Postscript options:
-  // tdrStyle->SetPaperSize(15.,15.);
-  // tdrStyle->SetLineScalePS(Float_t scale = 3);
-  // tdrStyle->SetLineStyleString(Int_t i, const char* text);
-  // tdrStyle->SetHeaderPS(const char* header);
-  // tdrStyle->SetTitlePS(const char* pstitle);
-
-  // tdrStyle->SetBarOffset(Float_t baroff = 0.5);
-  // tdrStyle->SetBarWidth(Float_t barwidth = 0.5);
-  // tdrStyle->SetPaintTextFormat(const char* format = "g");
-  // tdrStyle->SetPalette(Int_t ncolors = 0, Int_t* colors = 0);
-  // tdrStyle->SetTimeOffset(Double_t toffset);
-  // tdrStyle->SetHistMinimumZero(kTRUE);
-
-  tdrStyle->cd();
-}
-
-void fill_arrays(const Double_t fMass_min, const Double_t fMass_max, const Int_t fNPts, const TSpline3& fGS_xsUp_vs_m, const TSpline3& fGS_xsTh_vs_m, Double_t* x, Double_t* y)
-{
- Double_t mass_max = fMass_min;
-
- if( (exp(fGS_xsUp_vs_m.Eval(fMass_min))/exp(fGS_xsTh_vs_m.Eval(fMass_min)))<0.5 ) {
-   Int_t iteration = 0;
-   for(Int_t i=0; i<100; i++) {
-     Double_t delta_1 = (fMass_max-fMass_min)/(100-1);
-     Double_t mass = fMass_min+delta_1*i;
-     if( (exp(fGS_xsUp_vs_m.Eval(mass))/exp(fGS_xsTh_vs_m.Eval(mass)))>0.5 ) {
-       iteration = i;
-//        cout<<"iteration: "<<iteration<<endl;
-       Double_t delta_2 = ((fMass_min+delta_1*i)-(fMass_min+delta_1*(i-1)))/(100-1);
-       for(Int_t j=0; j<100; j++) {
-         mass = (fMass_min+delta_1*(i-1))+delta_2*j;
-         if( (exp(fGS_xsUp_vs_m.Eval(mass))/exp(fGS_xsTh_vs_m.Eval(mass)))>0.5 ) {
-           mass_max = (fMass_min+delta_1*(i-1))+delta_2*j;
-//            cout<<"mass_max: "<<mass_max<<endl;
-           break;
-         }
-       }
-       break;
-     }
-   }
-   if( iteration==0 ) {
-     mass_max = fMass_max;
-//      cout<<"iteration: "<<99<<endl;
-//      cout<<"mass_max: "<<mass_max<<endl;
-   }
- }
-
- Double_t step = (mass_max-fMass_min)/(fNPts-1);
-
- Double_t A = (mass_max-fMass_min)/(1-1/fNPts)+fMass_min;
- Double_t B = (mass_max-fMass_min)/(1-1/fNPts);
-
- for(Int_t i=0; i<fNPts; i++) {
-   x[i] = fMass_min+step*i;
-   x[2*fNPts-i-1] = x[i];
-   Double_t r = exp(fGS_xsUp_vs_m.Eval(x[i]))/exp(fGS_xsTh_vs_m.Eval(x[i]));
-   if(r<0.5) {
-     y[i] = 0.5*(1-sqrt(1-2*r));
-     y[2*fNPts-i-1] = 0.5*(1+sqrt(1-2*r));
-   } else {
-     y[i] = 0.5;
-     y[2*fNPts-i-1] = 0.5;
-   }
- }
-}
+void myStyle();
+void setTDRStyle();
+void fill_arrays(const Double_t fMass_min, const Double_t fMass_max, const Int_t fNPts, const TSpline3& fGS_xsUp_vs_m, const TSpline3& fGS_xsTh_vs_m, Double_t* x, Double_t* y);
 
 
 void makePlots()
@@ -241,8 +27,8 @@ void makePlots()
  // array of LQ masses for calculation of upXS
  Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
  // arrays of upper limits on the cross section
- Double_t xsUp_observed[10] = {1.04492, 0.550781, 0.527832, 0.415771, 0.408691, 0.39209, 0.286133, 0.270508, 0.180835, 0.168945};
- Double_t xsUp_expected[10] = {1.31573, 0.713387, 0.553481, 0.474409, 0.409308, 0.363951, 0.317413, 0.2837, 0.247752, 0.22597};
+ Double_t xsUp_observed[10] = {1.0957, 0.566895, 0.537109, 0.420898, 0.412109, 0.394043, 0.287598, 0.271484, 0.180835, 0.168945};
+ Double_t xsUp_expected[10] = {1.36645, 0.730012, 0.56098, 0.478897, 0.411686, 0.365259, 0.318199, 0.284191, 0.248004, 0.226132};
  // Zero systematics case
 //  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
 //  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
@@ -524,7 +310,7 @@ void makePlots()
  //legend->SetFillStyle(0);
  legend->SetTextFont(42);
  legend->SetMargin(0.15);
- legend->SetHeader("LQ#bar{LQ} #rightarrow eq#nuq");
+ legend->SetHeader("LQ#bar{LQ} #rightarrow e#nujj");
  legend->AddEntry(gr_excl,"D#oslash exclusion (1 fb^{-1})","f");
  legend->AddEntry(beta_expected_vs_m,"Expected 95% CL limit (36 pb^{-1})","l");
  legend->AddEntry(beta_observed_vs_m,"Observed 95% CL limit (36 pb^{-1})","lf");
@@ -556,4 +342,222 @@ void makePlots()
  delete xsUp_observed_vs_m_log;
  delete bg;
  delete c;
+}
+
+void fill_arrays(const Double_t fMass_min, const Double_t fMass_max, const Int_t fNPts, const TSpline3& fGS_xsUp_vs_m, const TSpline3& fGS_xsTh_vs_m, Double_t* x, Double_t* y)
+{
+ Double_t mass_max = fMass_min;
+
+ if( (exp(fGS_xsUp_vs_m.Eval(fMass_min))/exp(fGS_xsTh_vs_m.Eval(fMass_min)))<0.5 ) {
+   Int_t iteration = 0;
+   for(Int_t i=0; i<100; i++) {
+     Double_t delta_1 = (fMass_max-fMass_min)/(100-1);
+     Double_t mass = fMass_min+delta_1*i;
+     if( (exp(fGS_xsUp_vs_m.Eval(mass))/exp(fGS_xsTh_vs_m.Eval(mass)))>0.5 ) {
+       iteration = i;
+//        cout<<"iteration: "<<iteration<<endl;
+       Double_t delta_2 = ((fMass_min+delta_1*i)-(fMass_min+delta_1*(i-1)))/(100-1);
+       for(Int_t j=0; j<100; j++) {
+         mass = (fMass_min+delta_1*(i-1))+delta_2*j;
+         if( (exp(fGS_xsUp_vs_m.Eval(mass))/exp(fGS_xsTh_vs_m.Eval(mass)))>0.5 ) {
+           mass_max = (fMass_min+delta_1*(i-1))+delta_2*j;
+//            cout<<"mass_max: "<<mass_max<<endl;
+           break;
+         }
+       }
+       break;
+     }
+   }
+   if( iteration==0 ) {
+     mass_max = fMass_max;
+//      cout<<"iteration: "<<99<<endl;
+//      cout<<"mass_max: "<<mass_max<<endl;
+   }
+ }
+
+ Double_t step = (mass_max-fMass_min)/(fNPts-1);
+
+ Double_t A = (mass_max-fMass_min)/(1-1/fNPts)+fMass_min;
+ Double_t B = (mass_max-fMass_min)/(1-1/fNPts);
+
+ for(Int_t i=0; i<fNPts; i++) {
+   x[i] = fMass_min+step*i;
+   x[2*fNPts-i-1] = x[i];
+   Double_t r = exp(fGS_xsUp_vs_m.Eval(x[i]))/exp(fGS_xsTh_vs_m.Eval(x[i]));
+   if(r<0.5) {
+     y[i] = 0.5*(1-sqrt(1-2*r));
+     y[2*fNPts-i-1] = 0.5*(1+sqrt(1-2*r));
+   } else {
+     y[i] = 0.5;
+     y[2*fNPts-i-1] = 0.5;
+   }
+ }
+}
+
+void myStyle()
+{
+ gStyle->Reset("Default");
+ gStyle->SetCanvasColor(0);
+ gStyle->SetPadColor(0);
+ gStyle->SetTitleFillColor(10);
+ gStyle->SetCanvasBorderMode(0);
+ gStyle->SetStatColor(0);
+ gStyle->SetPadBorderMode(0);
+ gStyle->SetPadTickX(1);  // To get tick marks on the opposite side of the frame
+ gStyle->SetPadTickY(1);
+ gStyle->SetFrameBorderMode(0);
+ gStyle->SetPalette(1);
+
+   //gStyle->SetOptStat(kFALSE);
+ gStyle->SetOptStat(111110);
+ gStyle->SetOptFit(0);
+ gStyle->SetStatFont(42);
+ gStyle->SetPadLeftMargin(0.13);
+ gStyle->SetPadRightMargin(0.07);
+//    gStyle->SetTitleFont(42);
+//    gStyle->SetTitleFont(42, "XYZ");
+//    gStyle->SetLabelFont(42, "XYZ");
+ gStyle->SetStatY(.9);
+}
+
+void setTDRStyle() {
+  TStyle *tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
+
+  // For the canvas:
+  tdrStyle->SetCanvasBorderMode(0);
+  tdrStyle->SetCanvasColor(kWhite);
+  tdrStyle->SetCanvasDefH(600); //Height of canvas
+  tdrStyle->SetCanvasDefW(600); //Width of canvas
+  tdrStyle->SetCanvasDefX(0);   //POsition on screen
+  tdrStyle->SetCanvasDefY(0);
+
+  // For the Pad:
+  tdrStyle->SetPadBorderMode(0);
+  // tdrStyle->SetPadBorderSize(Width_t size = 1);
+  tdrStyle->SetPadColor(kWhite);
+  tdrStyle->SetPadGridX(false);
+  tdrStyle->SetPadGridY(false);
+  tdrStyle->SetGridColor(0);
+  tdrStyle->SetGridStyle(3);
+  tdrStyle->SetGridWidth(1);
+
+  // For the frame:
+  tdrStyle->SetFrameBorderMode(0);
+  tdrStyle->SetFrameBorderSize(1);
+  tdrStyle->SetFrameFillColor(0);
+  tdrStyle->SetFrameFillStyle(0);
+  tdrStyle->SetFrameLineColor(1);
+  tdrStyle->SetFrameLineStyle(1);
+  tdrStyle->SetFrameLineWidth(1);
+
+  // For the histo:
+  tdrStyle->SetHistFillColor(63);
+  // tdrStyle->SetHistFillStyle(0);
+  tdrStyle->SetHistLineColor(1);
+  tdrStyle->SetHistLineStyle(0);
+  tdrStyle->SetHistLineWidth(1);
+  // tdrStyle->SetLegoInnerR(Float_t rad = 0.5);
+  // tdrStyle->SetNumberContours(Int_t number = 20);
+
+//  tdrStyle->SetEndErrorSize(0);
+//   tdrStyle->SetErrorX(0.);
+//  tdrStyle->SetErrorMarker(20);
+
+  tdrStyle->SetMarkerStyle(20);
+
+  //For the fit/function:
+  tdrStyle->SetOptFit(1);
+  tdrStyle->SetFitFormat("5.4g");
+  tdrStyle->SetFuncColor(2);
+  tdrStyle->SetFuncStyle(1);
+  tdrStyle->SetFuncWidth(1);
+
+  //For the date:
+  tdrStyle->SetOptDate(0);
+  // tdrStyle->SetDateX(Float_t x = 0.01);
+  // tdrStyle->SetDateY(Float_t y = 0.01);
+
+  // For the statistics box:
+  tdrStyle->SetOptFile(0);
+  tdrStyle->SetOptStat(0); // To display the mean and RMS:   SetOptStat("mr");
+  tdrStyle->SetStatColor(kWhite);
+  tdrStyle->SetStatFont(42);
+  tdrStyle->SetStatFontSize(0.025);
+  tdrStyle->SetStatTextColor(1);
+  tdrStyle->SetStatFormat("6.4g");
+  tdrStyle->SetStatBorderSize(1);
+  tdrStyle->SetStatH(0.1);
+  tdrStyle->SetStatW(0.15);
+  // tdrStyle->SetStatStyle(Style_t style = 1001);
+  // tdrStyle->SetStatX(Float_t x = 0);
+  // tdrStyle->SetStatY(Float_t y = 0);
+
+  // Margins:
+  tdrStyle->SetPadTopMargin(0.05);
+  tdrStyle->SetPadBottomMargin(0.13);
+  tdrStyle->SetPadLeftMargin(0.13);
+  tdrStyle->SetPadRightMargin(0.05);
+
+  // For the Global title:
+
+  //  tdrStyle->SetOptTitle(0);
+  tdrStyle->SetTitleFont(42);
+  tdrStyle->SetTitleColor(1);
+  tdrStyle->SetTitleTextColor(1);
+  tdrStyle->SetTitleFillColor(10);
+  tdrStyle->SetTitleFontSize(0.05);
+  // tdrStyle->SetTitleH(0); // Set the height of the title box
+  // tdrStyle->SetTitleW(0); // Set the width of the title box
+  // tdrStyle->SetTitleX(0); // Set the position of the title box
+  // tdrStyle->SetTitleY(0.985); // Set the position of the title box
+  // tdrStyle->SetTitleStyle(Style_t style = 1001);
+  // tdrStyle->SetTitleBorderSize(2);
+
+  // For the axis titles:
+
+  tdrStyle->SetTitleColor(1, "XYZ");
+  tdrStyle->SetTitleFont(42, "XYZ");
+  tdrStyle->SetTitleSize(0.06, "XYZ");
+  // tdrStyle->SetTitleXSize(Float_t size = 0.02); // Another way to set the size?
+  // tdrStyle->SetTitleYSize(Float_t size = 0.02);
+  tdrStyle->SetTitleXOffset(0.9);
+  tdrStyle->SetTitleYOffset(1.05);
+  // tdrStyle->SetTitleOffset(1.1, "Y"); // Another way to set the Offset
+
+  // For the axis labels:
+
+  tdrStyle->SetLabelColor(1, "XYZ");
+  tdrStyle->SetLabelFont(42, "XYZ");
+  tdrStyle->SetLabelOffset(0.007, "XYZ");
+  tdrStyle->SetLabelSize(0.05, "XYZ");
+
+  // For the axis:
+
+  tdrStyle->SetAxisColor(1, "XYZ");
+  tdrStyle->SetStripDecimals(kTRUE);
+  tdrStyle->SetTickLength(0.03, "XYZ");
+  tdrStyle->SetNdivisions(510, "XYZ");
+  tdrStyle->SetPadTickX(1);  // To get tick marks on the opposite side of the frame
+  tdrStyle->SetPadTickY(1);
+
+  // Change for log plots:
+  tdrStyle->SetOptLogx(0);
+  tdrStyle->SetOptLogy(0);
+  tdrStyle->SetOptLogz(0);
+
+  // Postscript options:
+  // tdrStyle->SetPaperSize(15.,15.);
+  // tdrStyle->SetLineScalePS(Float_t scale = 3);
+  // tdrStyle->SetLineStyleString(Int_t i, const char* text);
+  // tdrStyle->SetHeaderPS(const char* header);
+  // tdrStyle->SetTitlePS(const char* pstitle);
+
+  // tdrStyle->SetBarOffset(Float_t baroff = 0.5);
+  // tdrStyle->SetBarWidth(Float_t barwidth = 0.5);
+  // tdrStyle->SetPaintTextFormat(const char* format = "g");
+  // tdrStyle->SetPalette(Int_t ncolors = 0, Int_t* colors = 0);
+  // tdrStyle->SetTimeOffset(Double_t toffset);
+  // tdrStyle->SetHistMinimumZero(kTRUE);
+
+  tdrStyle->cd();
 }

@@ -60,109 +60,8 @@ Double_t Poisson(Double_t Mu, Int_t n);
 Double_t CL95(Double_t ilum1, Double_t ilum2, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t n1, Int_t n2, Int_t nuisanceModel = 0);
 Double_t CLA(Double_t ilum1, Double_t ilum2, Double_t epslum, Double_t eps1, Double_t eps2, Double_t bck1, Double_t bck2, Double_t epsbck, Double_t bcharged, Int_t nuisanceModel = 0);
 
+Double_t get_intersection(const Double_t fX_data[], const Double_t fY_data[], const Int_t fSize, const Double_t fX_th[], const Double_t fY_th[], const Int_t fSize_th, const Bool_t fDebug, const Double_t fBeta);
 
-Double_t get_intersection(const Double_t fX_data[], const Double_t fY_data[], const Int_t fSize, const Double_t fX_th[], const Double_t fY_th[], const Int_t fSize_th, const Bool_t fDebug, const Double_t fBeta)
-{
- Double_t fY_data_log[fSize], fY_th_log[fSize_th];
-
- for(Int_t i=0; i<fSize; i++) fY_data_log[i] = log(fY_data[i]);
- for(Int_t i=0; i<fSize_th; i++) fY_th_log[i] = log(fY_th[i]);
-
- TGraph *gr_data_log = new TGraph(fSize, fX_data, fY_data_log);
- TGraph *gr_th_log = new TGraph(fSize_th, fX_th, fY_th_log);
-
- TSpline3 gs_data_log("gs_data_log", gr_data_log);
- TSpline3 gs_th_log("gs_th_log", gr_th_log);
-
- Double_t xmin = fX_data[0], xmax = fX_data[fSize-1];
-
- Double_t intersection = xmin;
-
- if( (exp(gs_data_log.Eval(xmin)) < exp(gs_th_log.Eval(xmin))) ) {
-   Int_t iteration = 0;
-   for(Int_t i=0; i<100; i++) {
-     Double_t delta_1 = (xmax-xmin)/(100-1);
-     Double_t x = xmin+delta_1*i;
-     if( exp(gs_data_log.Eval(x)) > exp(gs_th_log.Eval(x)) ) {
-       iteration = i;
-       Double_t delta_2 = ((xmin+delta_1*i)-(xmin+delta_1*(i-1)))/(100-1);
-       for(Int_t j=0; j<100; j++) {
-         x = (xmin+delta_1*(i-1))+delta_2*j;
-         if( exp(gs_data_log.Eval(x)) > exp(gs_th_log.Eval(x)) ) {
-           intersection = (xmin+delta_1*(i-1))+delta_2*j;
-           break;
-         }
-       }
-       break;
-     }
-   }
-   if( iteration==0 ) {
-     intersection = xmax;
-   }
- }
-
- if(fDebug) {
-   Double_t x_int[20];
-   Double_t x_th_int[20];
-   Double_t y_int[20];
-   Double_t y_th_int[20];
-
-   Double_t step = (fX_data[fSize-1]-fX_data[0])/19;
-   Double_t step_th = (fX_th[fSize_th-1]-fX_th[0])/19;
-
-   for(Int_t i=0; i<20; i++) {
-     x_int[i] = fX_data[0]+step*i;
-     x_th_int[i] = fX_th[0]+step_th*i;
-     y_int[i] = exp(gs_data_log.Eval(x_int[i]));
-     y_th_int[i] = exp(gs_th_log.Eval(x_th_int[i]));
-   }
-
-   TCanvas *c = new TCanvas("c","",800,800);
-   c->cd();
-
-   TGraph *gr_data = new TGraph(fSize, fX_data, fY_data);
-   gr_data->SetMarkerSize(1.);
-   gr_data->SetMarkerStyle(24);
-   gr_data->SetLineWidth(2);
-   gr_data->SetLineColor(kRed);
-   gr_data->Draw("ACP");
-
-   TGraph *gr_data_int = new TGraph(20, x_int, y_int);
-   gr_data_int->SetMarkerSize(1.);
-   gr_data_int->SetMarkerStyle(24);
-   gr_data_int->SetMarkerColor(kBlue);
-   gr_data_int->Draw("P");
-
-   TGraph *gr_th = new TGraph(fSize_th, fX_th, fY_th);
-   gr_th->SetMarkerSize(1.);
-   gr_th->SetMarkerStyle(24);
-   gr_th->SetLineWidth(2);
-   gr_th->SetLineColor(kGreen+2);
-   gr_th->Draw("CP");
-
-   TGraph *gr_th_int = new TGraph(20, x_th_int, y_th_int);
-   gr_th_int->SetMarkerSize(1.);
-   gr_th_int->SetMarkerStyle(24);
-   gr_th_int->SetMarkerColor(kViolet);
-   gr_th_int->Draw("P");
-
-   c->SetGridx();
-   c->SetGridy();
-   c->SetLogy();
-   c->SaveAs(Form("intersection_beta%.2f.png", fBeta));
-
-   delete gr_data;
-   delete gr_data_int;
-   delete gr_th;
-   delete gr_th_int;
-   delete c;
- }
-
- delete gr_data_log;
- delete gr_th_log;
-
- return intersection;
-}
 
 void LQcomb()
 {
@@ -182,7 +81,7 @@ void LQcomb()
  // Relative error on bck in dileptons
  Double_t db1[10] = {0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28};
  // Relative error on bck in lepton+MET
- Double_t db2[10] = {0.23, 0.23, 0.23, 0.23, 0.23, 0.23, 0.23, 0.23, 0.23, 0.23};
+ Double_t db2[10] = {0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36};
  // Nevents in the dilepton channel
  Int_t n1[10] = {2, 1, 1, 1, 1, 1, 1, 1, 0, 0};
  // Nevents in the lepton+MET channel
@@ -219,7 +118,7 @@ void LQcomb()
    cout << "Observed cross section limits at 95% C.L. for beta = " <<Form("%.2f", beta_observed[j]) << endl;
    for (Int_t i=0; i<size; i++)
    {
-       xsUp_observed[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db1[i], TMath::Max(beta_observed[j],0.01), n1[i], n2[i], 1);
+       xsUp_observed[i]  = CL95(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db2[i], TMath::Max(beta_observed[j],0.01), n1[i], n2[i], 1);
        cout << "Mass = " << m[i] << "; sigma95 (observed) = " << xsUp_observed[i] << " pb" << endl;
    }
 
@@ -232,7 +131,7 @@ void LQcomb()
    cout << "Expected cross section limits at 95% C.L. for beta = " <<Form("%.2f", beta_expected[j]) << endl;
    for (Int_t i=0; i<size; i++)
    {
-       xsUp_expected[i] = CLA(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db1[i], TMath::Max(beta_expected[j],0.01), 1);
+       xsUp_expected[i] = CLA(Lumi1, Lumi2, epsLumi, e1[i], e2[i], b1[i], b2[i], db2[i], TMath::Max(beta_expected[j],0.01), 1);
        cout << "Mass = " << m[i] << "; sigma95 (expected) = " << xsUp_expected[i] << " pb" << endl;
    }
 
@@ -259,10 +158,10 @@ void LQcomb()
  cout << "Cross section limits at 95% C.L. for the lowest LQ mass of " <<Form("%.0f GeV", m[0]) << endl;
  for (Int_t i=0; i<nPts_lowest; i++)
  {
-     xsUp_observed_lowest[i] = CL95(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db1[0], TMath::Max(beta_observed_lowest[i],0.01), n1[0], n2[0], 1);
+     xsUp_observed_lowest[i] = CL95(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db2[0], TMath::Max(beta_observed_lowest[i],0.01), n1[0], n2[0], 1);
      cout << "beta (observed) = " << beta_observed_lowest[i] << "; sigma95 (observed) = " << xsUp_observed_lowest[i] << " pb" << endl;
 
-     xsUp_expected_lowest[i] = CLA(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db1[0], TMath::Max(beta_expected_lowest[i],0.01), 1);
+     xsUp_expected_lowest[i] = CLA(Lumi1, Lumi2, epsLumi, e1[0], e2[0], b1[0], b2[0], db2[0], TMath::Max(beta_expected_lowest[i],0.01), 1);
      cout << "beta (expected) = " << beta_expected_lowest[i] << "; sigma95 (expected) = " << xsUp_expected_lowest[i] << " pb" << endl;
  }
 
@@ -710,4 +609,107 @@ Double_t CLA(Double_t ilum1, Double_t ilum2, Double_t epslum, Double_t eps1, Dou
 //      cout << "Average upper 95% C.L. limit = " << CL95A << " pb" << endl;
 //
         return CL95A;
+}
+
+Double_t get_intersection(const Double_t fX_data[], const Double_t fY_data[], const Int_t fSize, const Double_t fX_th[], const Double_t fY_th[], const Int_t fSize_th, const Bool_t fDebug, const Double_t fBeta)
+{
+ Double_t fY_data_log[fSize], fY_th_log[fSize_th];
+
+ for(Int_t i=0; i<fSize; i++) fY_data_log[i] = log(fY_data[i]);
+ for(Int_t i=0; i<fSize_th; i++) fY_th_log[i] = log(fY_th[i]);
+
+ TGraph *gr_data_log = new TGraph(fSize, fX_data, fY_data_log);
+ TGraph *gr_th_log = new TGraph(fSize_th, fX_th, fY_th_log);
+
+ TSpline3 gs_data_log("gs_data_log", gr_data_log);
+ TSpline3 gs_th_log("gs_th_log", gr_th_log);
+
+ Double_t xmin = fX_data[0], xmax = fX_data[fSize-1];
+
+ Double_t intersection = xmin;
+
+ if( (exp(gs_data_log.Eval(xmin)) < exp(gs_th_log.Eval(xmin))) ) {
+   Int_t iteration = 0;
+   for(Int_t i=0; i<100; i++) {
+     Double_t delta_1 = (xmax-xmin)/(100-1);
+     Double_t x = xmin+delta_1*i;
+     if( exp(gs_data_log.Eval(x)) > exp(gs_th_log.Eval(x)) ) {
+       iteration = i;
+       Double_t delta_2 = ((xmin+delta_1*i)-(xmin+delta_1*(i-1)))/(100-1);
+       for(Int_t j=0; j<100; j++) {
+         x = (xmin+delta_1*(i-1))+delta_2*j;
+         if( exp(gs_data_log.Eval(x)) > exp(gs_th_log.Eval(x)) ) {
+           intersection = (xmin+delta_1*(i-1))+delta_2*j;
+           break;
+         }
+       }
+       break;
+     }
+   }
+   if( iteration==0 ) {
+     intersection = xmax;
+   }
+ }
+
+ if(fDebug) {
+   Double_t x_int[20];
+   Double_t x_th_int[20];
+   Double_t y_int[20];
+   Double_t y_th_int[20];
+
+   Double_t step = (fX_data[fSize-1]-fX_data[0])/19;
+   Double_t step_th = (fX_th[fSize_th-1]-fX_th[0])/19;
+
+   for(Int_t i=0; i<20; i++) {
+     x_int[i] = fX_data[0]+step*i;
+     x_th_int[i] = fX_th[0]+step_th*i;
+     y_int[i] = exp(gs_data_log.Eval(x_int[i]));
+     y_th_int[i] = exp(gs_th_log.Eval(x_th_int[i]));
+   }
+
+   TCanvas *c = new TCanvas("c","",800,800);
+   c->cd();
+
+   TGraph *gr_data = new TGraph(fSize, fX_data, fY_data);
+   gr_data->SetMarkerSize(1.);
+   gr_data->SetMarkerStyle(24);
+   gr_data->SetLineWidth(2);
+   gr_data->SetLineColor(kRed);
+   gr_data->Draw("ACP");
+
+   TGraph *gr_data_int = new TGraph(20, x_int, y_int);
+   gr_data_int->SetMarkerSize(1.);
+   gr_data_int->SetMarkerStyle(24);
+   gr_data_int->SetMarkerColor(kBlue);
+   gr_data_int->Draw("P");
+
+   TGraph *gr_th = new TGraph(fSize_th, fX_th, fY_th);
+   gr_th->SetMarkerSize(1.);
+   gr_th->SetMarkerStyle(24);
+   gr_th->SetLineWidth(2);
+   gr_th->SetLineColor(kGreen+2);
+   gr_th->Draw("CP");
+
+   TGraph *gr_th_int = new TGraph(20, x_th_int, y_th_int);
+   gr_th_int->SetMarkerSize(1.);
+   gr_th_int->SetMarkerStyle(24);
+   gr_th_int->SetMarkerColor(kViolet);
+   gr_th_int->Draw("P");
+
+   c->SetGridx();
+   c->SetGridy();
+   c->SetLogy();
+   c->SaveAs(Form("intersection_beta%.2f.png", fBeta));
+
+   delete gr_data;
+   delete gr_data_int;
+   delete gr_th;
+   delete gr_th_int;
+   delete c;
+ }
+
+ delete gr_data_log;
+ delete gr_th_log;
+
+ return intersection;
 }
