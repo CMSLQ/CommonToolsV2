@@ -49,7 +49,7 @@ void makePlots()
  Double_t N_bkg[10] = {6.5, 4.4, 3.1, 2.5, 1.9, 1.6, 1.3, 1.1, 0.9, 0.8};
 
  // array of relative uncertainties on N_background (0.1 = 10%)
- Double_t Sigma_N_bkg[10] = {0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36};
+ Double_t Sigma_N_bkg[10] = {0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35};
  // Zero systematics case
 //  Double_t Sigma_N_bkg[10] = {0.0};
  // Doubled systematics case
@@ -112,7 +112,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the observed 95% CL upper limits on the cross section
- Double_t xsUp_observed[10] = {1.0957, 0.566895, 0.537109, 0.420898, 0.412109, 0.394043, 0.287598, 0.271484, 0.180835, 0.168945};
+ Double_t xsUp_observed[10] = {1.0918, 0.56543, 0.536133, 0.420898, 0.411621, 0.394043, 0.287354, 0.27124, 0.180835, 0.168945};
  // Zero systematics case
 //  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
  // Doubled systematics case
@@ -130,7 +130,7 @@ void makePlots()
 //  }
 //  cout<<"};"<<endl<<endl;
  // Array of the expected 95% CL upper limits on the cross section
- Double_t xsUp_expected[10] = {1.36645, 0.730012, 0.56098, 0.478897, 0.411686, 0.365259, 0.318199, 0.284191, 0.248004, 0.226132};
+ Double_t xsUp_expected[10] = {1.3625, 0.728578, 0.560355, 0.478632, 0.411471, 0.36518, 0.318113, 0.284102, 0.248004, 0.226132};
  // Zero systematics case
 //  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
  // Doubled systematics case

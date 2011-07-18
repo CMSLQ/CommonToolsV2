@@ -81,7 +81,7 @@ void LQcomb()
  // Relative error on bck in dileptons
  Double_t db1[10] = {0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28};
  // Relative error on bck in lepton+MET
- Double_t db2[10] = {0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36, 0.36};
+ Double_t db2[10] = {0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35};
  // Nevents in the dilepton channel
  Int_t n1[10] = {2, 1, 1, 1, 1, 1, 1, 1, 0, 0};
  // Nevents in the lepton+MET channel
