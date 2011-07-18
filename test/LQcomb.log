@@ -1,0 +1,575 @@
+Sender: LSF System <lsfadmin@vmbst052906.cern.ch>
+Subject: Job 155318402: <LQcomb.csh> Done
+
+Job <LQcomb.csh> was submitted from host <lxplus250> by user <ferencek> in cluster <batch>.
+Job was executed on host(s) <vmbst052906.cern.ch>, in queue <1nd>, as user <ferencek> in cluster <batch>.
+</afs/cern.ch/user/f/ferencek> was used as the home directory.
+</afs/cern.ch/user/f/ferencek/scratch0/LQ/CMSSW_3_8_6/test/Leptoquarks/CommonToolsV2/test> was used as the working directory.
+Started at Mon Jul 18 06:41:41 2011
+Results reported at Mon Jul 18 12:07:24 2011
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+LQcomb.csh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :  19255.77 sec.
+    Max Memory :        31 MB
+    Max Swap   :       332 MB
+
+    Max Processes  :         9
+    Max Threads    :        10
+
+The output (if any) follows:
+
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+quota: Error checking device name: LABEL=/
+quota: Can't get device name for LABEL=/
+quota: Error checking device name: LABEL=/
+quota: Can't get device name for LABEL=/
+Working directory is </pool/lsf/ferencek/155318402> on <vmbst052906>
+
+
+Processing LQcomb.C+()...
+Info in <TUnixSystem::ACLiC>: creating shared library /afs/cern.ch/user/f/ferencek/scratch0/LQ/CMSSW_3_8_6/test/Leptoquarks/CommonToolsV2/test/./LQcomb_C.so
+Error in <TGClient::TGClient>: can't open display "lxplus250:12.0", switching to batch mode...
+ In case you run from a remote ssh session, reconnect with ssh -Y
+In file included from /afs/cern.ch/user/f/ferencek/scratch0/LQ/CMSSW_3_8_6/test/Leptoquarks/CommonToolsV2/test/./LQcomb_C_ACLiC_dict.h:33,
+                 from /afs/cern.ch/user/f/ferencek/scratch0/LQ/CMSSW_3_8_6/test/Leptoquarks/CommonToolsV2/test/./LQcomb_C_ACLiC_dict.cxx:16:
+/afs/cern.ch/user/f/ferencek/scratch0/LQ/CMSSW_3_8_6/test/Leptoquarks/CommonToolsV2/test/./LQcomb.C: In function 'void LQcomb()':
+/afs/cern.ch/user/f/ferencek/scratch0/LQ/CMSSW_3_8_6/test/Leptoquarks/CommonToolsV2/test/./LQcomb.C:82: warning: unused variable 'db1'
+/afs/cern.ch/user/f/ferencek/scratch0/LQ/CMSSW_3_8_6/test/Leptoquarks/CommonToolsV2/test/./LQcomb.C: At global scope:
+/afs/cern.ch/user/f/ferencek/scratch0/LQ/CMSSW_3_8_6/test/Leptoquarks/CommonToolsV2/test/./LQcomb.C:358: warning: unused parameter 'p'
+/usr/bin/ld: skipping incompatible /usr/lib64/libm.so when searching for -lm
+/usr/bin/ld: skipping incompatible /usr/lib64/libm.a when searching for -lm
+/usr/bin/ld: skipping incompatible /usr/lib64/libc.so when searching for -lc
+/usr/bin/ld: skipping incompatible /usr/lib64/libc.a when searching for -lc
+Observed cross section limits at 95% C.L. for beta = 0.06
+Mass = 200; sigma95 (observed) = 10.0781 pb
+Mass = 250; sigma95 (observed) = 5.11719 pb
+Mass = 280; sigma95 (observed) = 4.84375 pb
+Mass = 300; sigma95 (observed) = 3.78906 pb
+Mass = 320; sigma95 (observed) = 3.75 pb
+Mass = 340; sigma95 (observed) = 3.59375 pb
+Mass = 370; sigma95 (observed) = 2.61719 pb
+Mass = 400; sigma95 (observed) = 2.5 pb
+Mass = 450; sigma95 (observed) = 1.59375 pb
+Mass = 500; sigma95 (observed) = 1.47656 pb
+Observed 95% C.L. lower limit on the LQ mass = 233.027 GeV
+Observed cross section limits at 95% C.L. for beta = 0.08
+Mass = 200; sigma95 (observed) = 7.61719 pb
+Mass = 250; sigma95 (observed) = 3.86719 pb
+Mass = 280; sigma95 (observed) = 3.67188 pb
+Mass = 300; sigma95 (observed) = 2.89062 pb
+Mass = 320; sigma95 (observed) = 2.85156 pb
+Mass = 340; sigma95 (observed) = 2.73438 pb
+Mass = 370; sigma95 (observed) = 2.01562 pb
+Mass = 400; sigma95 (observed) = 1.92188 pb
+Mass = 450; sigma95 (observed) = 1.19531 pb
+Mass = 500; sigma95 (observed) = 1.125 pb
+Observed 95% C.L. lower limit on the LQ mass = 245.546 GeV
+Observed cross section limits at 95% C.L. for beta = 0.10
+Mass = 200; sigma95 (observed) = 6.17188 pb
+Mass = 250; sigma95 (observed) = 3.125 pb
+Mass = 280; sigma95 (observed) = 2.98828 pb
+Mass = 300; sigma95 (observed) = 2.35547 pb
+Mass = 320; sigma95 (observed) = 2.32031 pb
+Mass = 340; sigma95 (observed) = 2.23438 pb
+Mass = 370; sigma95 (observed) = 1.64062 pb
+Mass = 400; sigma95 (observed) = 1.57031 pb
+Mass = 450; sigma95 (observed) = 0.976562 pb
+Mass = 500; sigma95 (observed) = 0.908203 pb
+Observed 95% C.L. lower limit on the LQ mass = 254.27 GeV
+Observed cross section limits at 95% C.L. for beta = 0.15
+Mass = 200; sigma95 (observed) = 4.14062 pb
+Mass = 250; sigma95 (observed) = 2.13281 pb
+Mass = 280; sigma95 (observed) = 2.05078 pb
+Mass = 300; sigma95 (observed) = 1.62891 pb
+Mass = 320; sigma95 (observed) = 1.60547 pb
+Mass = 340; sigma95 (observed) = 1.54688 pb
+Mass = 370; sigma95 (observed) = 1.15234 pb
+Mass = 400; sigma95 (observed) = 1.10352 pb
+Mass = 450; sigma95 (observed) = 0.667969 pb
+Mass = 500; sigma95 (observed) = 0.621094 pb
+Observed 95% C.L. lower limit on the LQ mass = 271.625 GeV
+Observed cross section limits at 95% C.L. for beta = 0.20
+Mass = 200; sigma95 (observed) = 3.16406 pb
+Mass = 250; sigma95 (observed) = 1.64062 pb
+Mass = 280; sigma95 (observed) = 1.58203 pb
+Mass = 300; sigma95 (observed) = 1.26953 pb
+Mass = 320; sigma95 (observed) = 1.25 pb
+Mass = 340; sigma95 (observed) = 1.21094 pb
+Mass = 370; sigma95 (observed) = 0.90625 pb
+Mass = 400; sigma95 (observed) = 0.867188 pb
+Mass = 450; sigma95 (observed) = 0.509766 pb
+Mass = 500; sigma95 (observed) = 0.480469 pb
+Observed 95% C.L. lower limit on the LQ mass = 295.592 GeV
+Observed cross section limits at 95% C.L. for beta = 0.25
+Mass = 200; sigma95 (observed) = 2.5625 pb
+Mass = 250; sigma95 (observed) = 1.32812 pb
+Mass = 280; sigma95 (observed) = 1.29883 pb
+Mass = 300; sigma95 (observed) = 1.04688 pb
+Mass = 320; sigma95 (observed) = 1.03125 pb
+Mass = 340; sigma95 (observed) = 1 pb
+Mass = 370; sigma95 (observed) = 0.75 pb
+Mass = 400; sigma95 (observed) = 0.726562 pb
+Mass = 450; sigma95 (observed) = 0.421875 pb
+Mass = 500; sigma95 (observed) = 0.390625 pb
+Observed 95% C.L. lower limit on the LQ mass = 308.938 GeV
+Observed cross section limits at 95% C.L. for beta = 0.30
+Mass = 200; sigma95 (observed) = 2.13281 pb
+Mass = 250; sigma95 (observed) = 1.125 pb
+Mass = 280; sigma95 (observed) = 1.10938 pb
+Mass = 300; sigma95 (observed) = 0.890625 pb
+Mass = 320; sigma95 (observed) = 0.882812 pb
+Mass = 340; sigma95 (observed) = 0.867188 pb
+Mass = 370; sigma95 (observed) = 0.65625 pb
+Mass = 400; sigma95 (observed) = 0.626953 pb
+Mass = 450; sigma95 (observed) = 0.359375 pb
+Mass = 500; sigma95 (observed) = 0.335938 pb
+Observed 95% C.L. lower limit on the LQ mass = 316.743 GeV
+Observed cross section limits at 95% C.L. for beta = 0.35
+Mass = 200; sigma95 (observed) = 1.82812 pb
+Mass = 250; sigma95 (observed) = 0.984375 pb
+Mass = 280; sigma95 (observed) = 0.96875 pb
+Mass = 300; sigma95 (observed) = 0.785156 pb
+Mass = 320; sigma95 (observed) = 0.779297 pb
+Mass = 340; sigma95 (observed) = 0.761719 pb
+Mass = 370; sigma95 (observed) = 0.580078 pb
+Mass = 400; sigma95 (observed) = 0.556641 pb
+Mass = 450; sigma95 (observed) = 0.316406 pb
+Mass = 500; sigma95 (observed) = 0.296875 pb
+Observed 95% C.L. lower limit on the LQ mass = 322.712 GeV
+Observed cross section limits at 95% C.L. for beta = 0.40
+Mass = 200; sigma95 (observed) = 1.60156 pb
+Mass = 250; sigma95 (observed) = 0.867188 pb
+Mass = 280; sigma95 (observed) = 0.867188 pb
+Mass = 300; sigma95 (observed) = 0.703125 pb
+Mass = 320; sigma95 (observed) = 0.703125 pb
+Mass = 340; sigma95 (observed) = 0.685547 pb
+Mass = 370; sigma95 (observed) = 0.527344 pb
+Mass = 400; sigma95 (observed) = 0.507812 pb
+Mass = 450; sigma95 (observed) = 0.285156 pb
+Mass = 500; sigma95 (observed) = 0.267578 pb
+Observed 95% C.L. lower limit on the LQ mass = 328.038 GeV
+Observed cross section limits at 95% C.L. for beta = 0.45
+Mass = 200; sigma95 (observed) = 1.41602 pb
+Mass = 250; sigma95 (observed) = 0.785156 pb
+Mass = 280; sigma95 (observed) = 0.779297 pb
+Mass = 300; sigma95 (observed) = 0.644531 pb
+Mass = 320; sigma95 (observed) = 0.638672 pb
+Mass = 340; sigma95 (observed) = 0.626953 pb
+Mass = 370; sigma95 (observed) = 0.484375 pb
+Mass = 400; sigma95 (observed) = 0.46875 pb
+Mass = 450; sigma95 (observed) = 0.261719 pb
+Mass = 500; sigma95 (observed) = 0.246094 pb
+Observed 95% C.L. lower limit on the LQ mass = 333.486 GeV
+Observed cross section limits at 95% C.L. for beta = 0.50
+Mass = 200; sigma95 (observed) = 1.26562 pb
+Mass = 250; sigma95 (observed) = 0.708984 pb
+Mass = 280; sigma95 (observed) = 0.708984 pb
+Mass = 300; sigma95 (observed) = 0.591797 pb
+Mass = 320; sigma95 (observed) = 0.585938 pb
+Mass = 340; sigma95 (observed) = 0.578125 pb
+Mass = 370; sigma95 (observed) = 0.453125 pb
+Mass = 400; sigma95 (observed) = 0.433594 pb
+Mass = 450; sigma95 (observed) = 0.242188 pb
+Mass = 500; sigma95 (observed) = 0.226562 pb
+Observed 95% C.L. lower limit on the LQ mass = 338.996 GeV
+Observed cross section limits at 95% C.L. for beta = 0.55
+Mass = 200; sigma95 (observed) = 1.125 pb
+Mass = 250; sigma95 (observed) = 0.644531 pb
+Mass = 280; sigma95 (observed) = 0.650391 pb
+Mass = 300; sigma95 (observed) = 0.546875 pb
+Mass = 320; sigma95 (observed) = 0.546875 pb
+Mass = 340; sigma95 (observed) = 0.539062 pb
+Mass = 370; sigma95 (observed) = 0.421875 pb
+Mass = 400; sigma95 (observed) = 0.40625 pb
+Mass = 450; sigma95 (observed) = 0.226562 pb
+Mass = 500; sigma95 (observed) = 0.214844 pb
+Observed 95% C.L. lower limit on the LQ mass = 344.965 GeV
+Observed cross section limits at 95% C.L. for beta = 0.60
+Mass = 200; sigma95 (observed) = 1.01953 pb
+Mass = 250; sigma95 (observed) = 0.59375 pb
+Mass = 280; sigma95 (observed) = 0.601562 pb
+Mass = 300; sigma95 (observed) = 0.507812 pb
+Mass = 320; sigma95 (observed) = 0.507812 pb
+Mass = 340; sigma95 (observed) = 0.5 pb
+Mass = 370; sigma95 (observed) = 0.398438 pb
+Mass = 400; sigma95 (observed) = 0.386719 pb
+Mass = 450; sigma95 (observed) = 0.214844 pb
+Mass = 500; sigma95 (observed) = 0.203125 pb
+Observed 95% C.L. lower limit on the LQ mass = 352.801 GeV
+Observed cross section limits at 95% C.L. for beta = 0.65
+Mass = 200; sigma95 (observed) = 0.914062 pb
+Mass = 250; sigma95 (observed) = 0.546875 pb
+Mass = 280; sigma95 (observed) = 0.554688 pb
+Mass = 300; sigma95 (observed) = 0.476562 pb
+Mass = 320; sigma95 (observed) = 0.476562 pb
+Mass = 340; sigma95 (observed) = 0.46875 pb
+Mass = 370; sigma95 (observed) = 0.378906 pb
+Mass = 400; sigma95 (observed) = 0.367188 pb
+Mass = 450; sigma95 (observed) = 0.205078 pb
+Mass = 500; sigma95 (observed) = 0.193359 pb
+Observed 95% C.L. lower limit on the LQ mass = 359.229 GeV
+Observed cross section limits at 95% C.L. for beta = 0.70
+Mass = 200; sigma95 (observed) = 0.832031 pb
+Mass = 250; sigma95 (observed) = 0.507812 pb
+Mass = 280; sigma95 (observed) = 0.515625 pb
+Mass = 300; sigma95 (observed) = 0.449219 pb
+Mass = 320; sigma95 (observed) = 0.445312 pb
+Mass = 340; sigma95 (observed) = 0.445312 pb
+Mass = 370; sigma95 (observed) = 0.363281 pb
+Mass = 400; sigma95 (observed) = 0.351562 pb
+Mass = 450; sigma95 (observed) = 0.196875 pb
+Mass = 500; sigma95 (observed) = 0.186328 pb
+Observed 95% C.L. lower limit on the LQ mass = 363.545 GeV
+Observed cross section limits at 95% C.L. for beta = 0.75
+Mass = 200; sigma95 (observed) = 0.75 pb
+Mass = 250; sigma95 (observed) = 0.46875 pb
+Mass = 280; sigma95 (observed) = 0.480469 pb
+Mass = 300; sigma95 (observed) = 0.421875 pb
+Mass = 320; sigma95 (observed) = 0.421875 pb
+Mass = 340; sigma95 (observed) = 0.417969 pb
+Mass = 370; sigma95 (observed) = 0.347656 pb
+Mass = 400; sigma95 (observed) = 0.335938 pb
+Mass = 450; sigma95 (observed) = 0.189844 pb
+Mass = 500; sigma95 (observed) = 0.179297 pb
+Observed 95% C.L. lower limit on the LQ mass = 367.646 GeV
+Observed cross section limits at 95% C.L. for beta = 0.80
+Mass = 200; sigma95 (observed) = 0.679688 pb
+Mass = 250; sigma95 (observed) = 0.4375 pb
+Mass = 280; sigma95 (observed) = 0.445312 pb
+Mass = 300; sigma95 (observed) = 0.394531 pb
+Mass = 320; sigma95 (observed) = 0.394531 pb
+Mass = 340; sigma95 (observed) = 0.394531 pb
+Mass = 370; sigma95 (observed) = 0.332031 pb
+Mass = 400; sigma95 (observed) = 0.322266 pb
+Mass = 450; sigma95 (observed) = 0.18457 pb
+Mass = 500; sigma95 (observed) = 0.175 pb
+Observed 95% C.L. lower limit on the LQ mass = 371.074 GeV
+Observed cross section limits at 95% C.L. for beta = 0.85
+Mass = 200; sigma95 (observed) = 0.609375 pb
+Mass = 250; sigma95 (observed) = 0.402344 pb
+Mass = 280; sigma95 (observed) = 0.410156 pb
+Mass = 300; sigma95 (observed) = 0.371094 pb
+Mass = 320; sigma95 (observed) = 0.367188 pb
+Mass = 340; sigma95 (observed) = 0.367188 pb
+Mass = 370; sigma95 (observed) = 0.316406 pb
+Mass = 400; sigma95 (observed) = 0.308594 pb
+Mass = 450; sigma95 (observed) = 0.181055 pb
+Mass = 500; sigma95 (observed) = 0.171875 pb
+Observed 95% C.L. lower limit on the LQ mass = 374.197 GeV
+Observed cross section limits at 95% C.L. for beta = 0.90
+Mass = 200; sigma95 (observed) = 0.546875 pb
+Mass = 250; sigma95 (observed) = 0.371094 pb
+Mass = 280; sigma95 (observed) = 0.375 pb
+Mass = 300; sigma95 (observed) = 0.347656 pb
+Mass = 320; sigma95 (observed) = 0.34375 pb
+Mass = 340; sigma95 (observed) = 0.339844 pb
+Mass = 370; sigma95 (observed) = 0.304688 pb
+Mass = 400; sigma95 (observed) = 0.294922 pb
+Mass = 450; sigma95 (observed) = 0.178125 pb
+Mass = 500; sigma95 (observed) = 0.16875 pb
+Observed 95% C.L. lower limit on the LQ mass = 376.37 GeV
+Observed cross section limits at 95% C.L. for beta = 0.95
+Mass = 200; sigma95 (observed) = 0.496094 pb
+Mass = 250; sigma95 (observed) = 0.339844 pb
+Mass = 280; sigma95 (observed) = 0.339844 pb
+Mass = 300; sigma95 (observed) = 0.320312 pb
+Mass = 320; sigma95 (observed) = 0.3125 pb
+Mass = 340; sigma95 (observed) = 0.3125 pb
+Mass = 370; sigma95 (observed) = 0.289062 pb
+Mass = 400; sigma95 (observed) = 0.277344 pb
+Mass = 450; sigma95 (observed) = 0.175 pb
+Mass = 500; sigma95 (observed) = 0.167188 pb
+Observed 95% C.L. lower limit on the LQ mass = 379.614 GeV
+Observed cross section limits at 95% C.L. for beta = 1.00
+Mass = 200; sigma95 (observed) = 0.445312 pb
+Mass = 250; sigma95 (observed) = 0.3125 pb
+Mass = 280; sigma95 (observed) = 0.304688 pb
+Mass = 300; sigma95 (observed) = 0.292969 pb
+Mass = 320; sigma95 (observed) = 0.28125 pb
+Mass = 340; sigma95 (observed) = 0.277344 pb
+Mass = 370; sigma95 (observed) = 0.267578 pb
+Mass = 400; sigma95 (observed) = 0.257812 pb
+Mass = 450; sigma95 (observed) = 0.175 pb
+Mass = 500; sigma95 (observed) = 0.165625 pb
+Observed 95% C.L. lower limit on the LQ mass = 384.083 GeV
+Expected cross section limits at 95% C.L. for beta = 0.08
+Mass = 200; sigma95 (expected) = 9.43249 pb
+Mass = 250; sigma95 (expected) = 5.06666 pb
+Mass = 280; sigma95 (expected) = 3.89576 pb
+Mass = 300; sigma95 (expected) = 3.32251 pb
+Mass = 320; sigma95 (expected) = 2.85553 pb
+Mass = 340; sigma95 (expected) = 2.52879 pb
+Mass = 370; sigma95 (expected) = 2.2046 pb
+Mass = 400; sigma95 (expected) = 1.96789 pb
+Mass = 450; sigma95 (expected) = 1.70793 pb
+Mass = 500; sigma95 (expected) = 1.55866 pb
+Expected 95% C.L. lower limit on the LQ mass = 220.141 GeV
+Expected cross section limits at 95% C.L. for beta = 0.10
+Mass = 200; sigma95 (expected) = 7.72347 pb
+Mass = 250; sigma95 (expected) = 4.13549 pb
+Mass = 280; sigma95 (expected) = 3.18055 pb
+Mass = 300; sigma95 (expected) = 2.71017 pb
+Mass = 320; sigma95 (expected) = 2.33136 pb
+Mass = 340; sigma95 (expected) = 2.06291 pb
+Mass = 370; sigma95 (expected) = 1.79324 pb
+Mass = 400; sigma95 (expected) = 1.6022 pb
+Mass = 450; sigma95 (expected) = 1.39569 pb
+Mass = 500; sigma95 (expected) = 1.26652 pb
+Expected 95% C.L. lower limit on the LQ mass = 236.425 GeV
+Expected cross section limits at 95% C.L. for beta = 0.15
+Mass = 200; sigma95 (expected) = 5.43551 pb
+Mass = 250; sigma95 (expected) = 2.89724 pb
+Mass = 280; sigma95 (expected) = 2.21926 pb
+Mass = 300; sigma95 (expected) = 1.88865 pb
+Mass = 320; sigma95 (expected) = 1.62209 pb
+Mass = 340; sigma95 (expected) = 1.4339 pb
+Mass = 370; sigma95 (expected) = 1.24816 pb
+Mass = 400; sigma95 (expected) = 1.11229 pb
+Mass = 450; sigma95 (expected) = 0.966219 pb
+Mass = 500; sigma95 (expected) = 0.877071 pb
+Expected 95% C.L. lower limit on the LQ mass = 264.034 GeV
+Expected cross section limits at 95% C.L. for beta = 0.20
+Mass = 200; sigma95 (expected) = 4.28104 pb
+Mass = 250; sigma95 (expected) = 2.27596 pb
+Mass = 280; sigma95 (expected) = 1.73554 pb
+Mass = 300; sigma95 (expected) = 1.47478 pb
+Mass = 320; sigma95 (expected) = 1.26788 pb
+Mass = 340; sigma95 (expected) = 1.12111 pb
+Mass = 370; sigma95 (expected) = 0.972457 pb
+Mass = 400; sigma95 (expected) = 0.867182 pb
+Mass = 450; sigma95 (expected) = 0.748778 pb
+Mass = 500; sigma95 (expected) = 0.680953 pb
+Expected 95% C.L. lower limit on the LQ mass = 283.502 GeV
+Expected cross section limits at 95% C.L. for beta = 0.25
+Mass = 200; sigma95 (expected) = 3.57401 pb
+Mass = 250; sigma95 (expected) = 1.89567 pb
+Mass = 280; sigma95 (expected) = 1.44115 pb
+Mass = 300; sigma95 (expected) = 1.22488 pb
+Mass = 320; sigma95 (expected) = 1.05483 pb
+Mass = 340; sigma95 (expected) = 0.929813 pb
+Mass = 370; sigma95 (expected) = 0.807361 pb
+Mass = 400; sigma95 (expected) = 0.719491 pb
+Mass = 450; sigma95 (expected) = 0.622494 pb
+Mass = 500; sigma95 (expected) = 0.563444 pb
+Expected 95% C.L. lower limit on the LQ mass = 298.99 GeV
+Expected cross section limits at 95% C.L. for beta = 0.30
+Mass = 200; sigma95 (expected) = 3.08418 pb
+Mass = 250; sigma95 (expected) = 1.64024 pb
+Mass = 280; sigma95 (expected) = 1.24267 pb
+Mass = 300; sigma95 (expected) = 1.05467 pb
+Mass = 320; sigma95 (expected) = 0.908482 pb
+Mass = 340; sigma95 (expected) = 0.803442 pb
+Mass = 370; sigma95 (expected) = 0.697326 pb
+Mass = 400; sigma95 (expected) = 0.621014 pb
+Mass = 450; sigma95 (expected) = 0.533845 pb
+Mass = 500; sigma95 (expected) = 0.484261 pb
+Expected 95% C.L. lower limit on the LQ mass = 311.723 GeV
+Expected cross section limits at 95% C.L. for beta = 0.35
+Mass = 200; sigma95 (expected) = 2.71753 pb
+Mass = 250; sigma95 (expected) = 1.45125 pb
+Mass = 280; sigma95 (expected) = 1.09852 pb
+Mass = 300; sigma95 (expected) = 0.933714 pb
+Mass = 320; sigma95 (expected) = 0.804206 pb
+Mass = 340; sigma95 (expected) = 0.710518 pb
+Mass = 370; sigma95 (expected) = 0.617163 pb
+Mass = 400; sigma95 (expected) = 0.549601 pb
+Mass = 450; sigma95 (expected) = 0.473668 pb
+Mass = 500; sigma95 (expected) = 0.428224 pb
+Expected 95% C.L. lower limit on the LQ mass = 322.039 GeV
+Expected cross section limits at 95% C.L. for beta = 0.40
+Mass = 200; sigma95 (expected) = 2.42935 pb
+Mass = 250; sigma95 (expected) = 1.30349 pb
+Mass = 280; sigma95 (expected) = 0.987883 pb
+Mass = 300; sigma95 (expected) = 0.840405 pb
+Mass = 320; sigma95 (expected) = 0.725001 pb
+Mass = 340; sigma95 (expected) = 0.639982 pb
+Mass = 370; sigma95 (expected) = 0.557081 pb
+Mass = 400; sigma95 (expected) = 0.496517 pb
+Mass = 450; sigma95 (expected) = 0.426661 pb
+Mass = 500; sigma95 (expected) = 0.38631 pb
+Expected 95% C.L. lower limit on the LQ mass = 330.64 GeV
+Expected cross section limits at 95% C.L. for beta = 0.45
+Mass = 200; sigma95 (expected) = 2.18914 pb
+Mass = 250; sigma95 (expected) = 1.18562 pb
+Mass = 280; sigma95 (expected) = 0.899256 pb
+Mass = 300; sigma95 (expected) = 0.766194 pb
+Mass = 320; sigma95 (expected) = 0.662278 pb
+Mass = 340; sigma95 (expected) = 0.586086 pb
+Mass = 370; sigma95 (expected) = 0.51048 pb
+Mass = 400; sigma95 (expected) = 0.454559 pb
+Mass = 450; sigma95 (expected) = 0.391601 pb
+Mass = 500; sigma95 (expected) = 0.354823 pb
+Expected 95% C.L. lower limit on the LQ mass = 337.833 GeV
+Expected cross section limits at 95% C.L. for beta = 0.50
+Mass = 200; sigma95 (expected) = 1.98436 pb
+Mass = 250; sigma95 (expected) = 1.08658 pb
+Mass = 280; sigma95 (expected) = 0.82693 pb
+Mass = 300; sigma95 (expected) = 0.70555 pb
+Mass = 320; sigma95 (expected) = 0.611901 pb
+Mass = 340; sigma95 (expected) = 0.540624 pb
+Mass = 370; sigma95 (expected) = 0.472479 pb
+Mass = 400; sigma95 (expected) = 0.420723 pb
+Mass = 450; sigma95 (expected) = 0.362732 pb
+Mass = 500; sigma95 (expected) = 0.328204 pb
+Expected 95% C.L. lower limit on the LQ mass = 344.2 GeV
+Expected cross section limits at 95% C.L. for beta = 0.55
+Mass = 200; sigma95 (expected) = 1.80383 pb
+Mass = 250; sigma95 (expected) = 1.00061 pb
+Mass = 280; sigma95 (expected) = 0.764324 pb
+Mass = 300; sigma95 (expected) = 0.654056 pb
+Mass = 320; sigma95 (expected) = 0.569971 pb
+Mass = 340; sigma95 (expected) = 0.504139 pb
+Mass = 370; sigma95 (expected) = 0.440921 pb
+Mass = 400; sigma95 (expected) = 0.393263 pb
+Mass = 450; sigma95 (expected) = 0.339497 pb
+Mass = 500; sigma95 (expected) = 0.308837 pb
+Expected 95% C.L. lower limit on the LQ mass = 349.617 GeV
+Expected cross section limits at 95% C.L. for beta = 0.60
+Mass = 200; sigma95 (expected) = 1.64095 pb
+Mass = 250; sigma95 (expected) = 0.924929 pb
+Mass = 280; sigma95 (expected) = 0.710825 pb
+Mass = 300; sigma95 (expected) = 0.609482 pb
+Mass = 320; sigma95 (expected) = 0.532696 pb
+Mass = 340; sigma95 (expected) = 0.47236 pb
+Mass = 370; sigma95 (expected) = 0.414203 pb
+Mass = 400; sigma95 (expected) = 0.371202 pb
+Mass = 450; sigma95 (expected) = 0.32005 pb
+Mass = 500; sigma95 (expected) = 0.290845 pb
+Expected 95% C.L. lower limit on the LQ mass = 354.484 GeV
+Expected cross section limits at 95% C.L. for beta = 0.65
+Mass = 200; sigma95 (expected) = 1.49247 pb
+Mass = 250; sigma95 (expected) = 0.855615 pb
+Mass = 280; sigma95 (expected) = 0.662143 pb
+Mass = 300; sigma95 (expected) = 0.569747 pb
+Mass = 320; sigma95 (expected) = 0.500436 pb
+Mass = 340; sigma95 (expected) = 0.444803 pb
+Mass = 370; sigma95 (expected) = 0.391056 pb
+Mass = 400; sigma95 (expected) = 0.350887 pb
+Mass = 450; sigma95 (expected) = 0.30392 pb
+Mass = 500; sigma95 (expected) = 0.276135 pb
+Expected 95% C.L. lower limit on the LQ mass = 358.892 GeV
+Expected cross section limits at 95% C.L. for beta = 0.70
+Mass = 200; sigma95 (expected) = 1.35585 pb
+Mass = 250; sigma95 (expected) = 0.790814 pb
+Mass = 280; sigma95 (expected) = 0.616803 pb
+Mass = 300; sigma95 (expected) = 0.533079 pb
+Mass = 320; sigma95 (expected) = 0.471332 pb
+Mass = 340; sigma95 (expected) = 0.420846 pb
+Mass = 370; sigma95 (expected) = 0.371648 pb
+Mass = 400; sigma95 (expected) = 0.333198 pb
+Mass = 450; sigma95 (expected) = 0.290436 pb
+Mass = 500; sigma95 (expected) = 0.26398 pb
+Expected 95% C.L. lower limit on the LQ mass = 362.718 GeV
+Expected cross section limits at 95% C.L. for beta = 0.75
+Mass = 200; sigma95 (expected) = 1.22736 pb
+Mass = 250; sigma95 (expected) = 0.730162 pb
+Mass = 280; sigma95 (expected) = 0.575211 pb
+Mass = 300; sigma95 (expected) = 0.499834 pb
+Mass = 320; sigma95 (expected) = 0.44434 pb
+Mass = 340; sigma95 (expected) = 0.397986 pb
+Mass = 370; sigma95 (expected) = 0.352749 pb
+Mass = 400; sigma95 (expected) = 0.317772 pb
+Mass = 450; sigma95 (expected) = 0.277414 pb
+Mass = 500; sigma95 (expected) = 0.2525 pb
+Expected 95% C.L. lower limit on the LQ mass = 366.636 GeV
+Expected cross section limits at 95% C.L. for beta = 0.80
+Mass = 200; sigma95 (expected) = 1.10682 pb
+Mass = 250; sigma95 (expected) = 0.670826 pb
+Mass = 280; sigma95 (expected) = 0.533595 pb
+Mass = 300; sigma95 (expected) = 0.466883 pb
+Mass = 320; sigma95 (expected) = 0.41812 pb
+Mass = 340; sigma95 (expected) = 0.375674 pb
+Mass = 370; sigma95 (expected) = 0.33546 pb
+Mass = 400; sigma95 (expected) = 0.302478 pb
+Mass = 450; sigma95 (expected) = 0.265533 pb
+Mass = 500; sigma95 (expected) = 0.242602 pb
+Expected 95% C.L. lower limit on the LQ mass = 370.37 GeV
+Expected cross section limits at 95% C.L. for beta = 0.85
+Mass = 200; sigma95 (expected) = 0.996427 pb
+Mass = 250; sigma95 (expected) = 0.613768 pb
+Mass = 280; sigma95 (expected) = 0.493221 pb
+Mass = 300; sigma95 (expected) = 0.433854 pb
+Mass = 320; sigma95 (expected) = 0.391242 pb
+Mass = 340; sigma95 (expected) = 0.353869 pb
+Mass = 370; sigma95 (expected) = 0.316557 pb
+Mass = 400; sigma95 (expected) = 0.288132 pb
+Mass = 450; sigma95 (expected) = 0.25448 pb
+Mass = 500; sigma95 (expected) = 0.233143 pb
+Expected 95% C.L. lower limit on the LQ mass = 374.594 GeV
+Expected cross section limits at 95% C.L. for beta = 0.90
+Mass = 200; sigma95 (expected) = 0.892399 pb
+Mass = 250; sigma95 (expected) = 0.557856 pb
+Mass = 280; sigma95 (expected) = 0.452771 pb
+Mass = 300; sigma95 (expected) = 0.401222 pb
+Mass = 320; sigma95 (expected) = 0.363659 pb
+Mass = 340; sigma95 (expected) = 0.330798 pb
+Mass = 370; sigma95 (expected) = 0.298931 pb
+Mass = 400; sigma95 (expected) = 0.272089 pb
+Mass = 450; sigma95 (expected) = 0.242144 pb
+Mass = 500; sigma95 (expected) = 0.222003 pb
+Expected 95% C.L. lower limit on the LQ mass = 378.727 GeV
+Expected cross section limits at 95% C.L. for beta = 0.95
+Mass = 200; sigma95 (expected) = 0.797026 pb
+Mass = 250; sigma95 (expected) = 0.503858 pb
+Mass = 280; sigma95 (expected) = 0.412122 pb
+Mass = 300; sigma95 (expected) = 0.366631 pb
+Mass = 320; sigma95 (expected) = 0.334636 pb
+Mass = 340; sigma95 (expected) = 0.306155 pb
+Mass = 370; sigma95 (expected) = 0.27796 pb
+Mass = 400; sigma95 (expected) = 0.254455 pb
+Mass = 450; sigma95 (expected) = 0.227228 pb
+Mass = 500; sigma95 (expected) = 0.21018 pb
+Expected 95% C.L. lower limit on the LQ mass = 383.93 GeV
+Expected cross section limits at 95% C.L. for beta = 1.00
+Mass = 200; sigma95 (expected) = 0.711437 pb
+Mass = 250; sigma95 (expected) = 0.452311 pb
+Mass = 280; sigma95 (expected) = 0.371379 pb
+Mass = 300; sigma95 (expected) = 0.331847 pb
+Mass = 320; sigma95 (expected) = 0.304474 pb
+Mass = 340; sigma95 (expected) = 0.27826 pb
+Mass = 370; sigma95 (expected) = 0.2537 pb
+Mass = 400; sigma95 (expected) = 0.232691 pb
+Mass = 450; sigma95 (expected) = 0.209732 pb
+Mass = 500; sigma95 (expected) = 0.193175 pb
+Expected 95% C.L. lower limit on the LQ mass = 390.572 GeV
+Cross section limits at 95% C.L. for the lowest LQ mass of 200 GeV
+beta (observed) = 0.02; sigma95 (observed) = 29.5312 pb
+beta (expected) = 0.04; sigma95 (expected) = 17.9648 pb
+beta (observed) = 0.032; sigma95 (observed) = 18.6328 pb
+beta (expected) = 0.052; sigma95 (expected) = 14.0237 pb
+beta (observed) = 0.044; sigma95 (observed) = 13.5938 pb
+beta (expected) = 0.064; sigma95 (expected) = 11.5716 pb
+beta (observed) = 0.056; sigma95 (observed) = 10.7812 pb
+beta (expected) = 0.076; sigma95 (expected) = 9.87729 pb
+beta (observed) = 0.068; sigma95 (observed) = 8.90625 pb
+beta (expected) = 0.088; sigma95 (expected) = 8.65594 pb
+beta (observed) = 0.08; sigma95 (observed) = 7.61719 pb
+beta (expected) = 0.1; sigma95 (expected) = 7.72347 pb
+beta (observed) for the lowest LQ mass = 0.0505357
+beta (expected) for the lowest LQ mass = 0.0620875
+
+Double_t beta_comb_observed[22] = {0.050536, 0.06, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
+Double_t m_comb_observed[22] = {200.000, 233.027, 245.546, 254.27, 271.625, 295.592, 308.938, 316.743, 322.712, 328.038, 333.486, 338.996, 344.965, 352.801, 359.229, 363.545, 367.646, 371.074, 374.197, 376.37, 379.614, 384.083};
+Double_t beta_comb_expected[21] = {0.062088, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1};
+Double_t m_comb_expected[21] = {200.000, 220.141, 236.425, 264.034, 283.502, 298.99, 311.723, 322.039, 330.64, 337.833, 344.2, 349.617, 354.484, 358.892, 362.718, 366.636, 370.37, 374.594, 378.727, 383.93, 390.572};
+
+
+Job finished at Mon Jul 18 12:06:45 CEST 2011 on node 
+ under linux version Scientific Linux CERN SLC release 5.6 (Boron)
+
+
+CERN statistics: This job used 13:42:44 NCU hours (49364 NCU seconds)
+
+CERN statistics: This job used 13:42:44 KSI2K hours (49364 KSI2K seconds)
+
+KSI2K = kilo-SpecInt2000 benchmark units = 1.00 NCU
