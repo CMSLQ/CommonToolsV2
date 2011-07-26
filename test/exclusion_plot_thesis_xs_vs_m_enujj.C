@@ -1,0 +1,427 @@
+#include "cl95cms.C"
+#include "TROOT.h"
+#include "TStyle.h"
+#include "TCanvas.h"
+#include "TH2F.h"
+#include "TGraph.h"
+#include "TF1.h"
+#include "TLegend.h"
+#include "TPolyLine.h"
+#include "TPad.h"
+#include "TLatex.h"
+
+using namespace std;
+
+void myStyle();
+void setTDRStyle();
+
+
+void makePlots()
+{
+ // **********************************************
+ // *            Input parameters                *
+ // **********************************************
+
+ // turn on/off batch mode
+ gROOT->SetBatch(kTRUE);
+
+ // switch to include/exclude sytematics uncertainties
+ bool systematics = true; // does nothing at the moment
+
+ // total integrated luminosity (in pb-1)
+ Double_t L_int = 36;
+ // relative uncertainty on the integrated luminosity (0.1 = 10% uncertainty)
+ Double_t Sigma_L_int = 0.04;
+ // Zero systematics case
+//  Double_t Sigma_L_int = 0.0;
+
+ // array of signal efficiencies
+ Double_t S_eff[10] = {0.161, 0.255, 0.291, 0.317, 0.339, 0.364, 0.396, 0.426, 0.467, 0.500};
+
+ // array of relative uncertainties on the signal efficiencies
+ Double_t Sigma_S_eff[10] = {0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08};
+ // Zero systematics case
+//  Double_t Sigma_S_eff[10] = {0.0};
+ // Doubled systematics case
+//  Double_t Sigma_S_eff[10] = {0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16};
+
+ // branching ratio for enujj channel 2*beta(1-beta)
+ Double_t Br = 0.5;
+
+ // array of N_background for L_int
+ Double_t N_bkg[10] = {6.5, 4.4, 3.1, 2.5, 1.9, 1.6, 1.3, 1.1, 0.9, 0.8};
+
+ // array of relative uncertainties on N_background (0.1 = 10%)
+ Double_t Sigma_N_bkg[10] = {0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35};
+ // Zero systematics case
+//  Double_t Sigma_N_bkg[10] = {0.0};
+ // Doubled systematics case
+//  Double_t Sigma_N_bkg[10] = {0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50};
+
+ // array of N_observed for L_int
+ Int_t N_obs[10] = {5, 3, 3, 2, 2, 2, 1, 1, 0, 0};
+
+ // array of LQ masses for calculation of upXS
+ Double_t mData[10] = {200, 250, 280, 300, 320, 340, 370, 400, 450, 500};
+
+ // arrays of LQ masses for theoretical cross section
+ Double_t mTh[10] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550};
+ // array of theoretical cross-sections for different leptoquark masses
+ Double_t xsTh[10] = {386, 53.3, 11.9, 3.47, 1.21, 0.477, 0.205, 0.0949, 0.0463, 0.0236};
+
+ // filename for the final plot (NB: changing the name extension changes the file format)
+ string fileName = "xs95CL_vs_m_enujj.eps";
+ // Zero systematics case
+//  string fileName = "xs95CL_vs_m_enujj_zeroSyst.eps";
+ // Doubled systematics case
+//  string fileName = "xs95CL_vs_m_enujj_doubledSyst.eps";
+
+ // axes labels for the final plot
+ string title = ";M_{LQ} [GeV];#sigma #times 2#beta(1-#beta) [pb]";
+
+ // integrated luminosity
+ string sqrts = "#sqrt{s} = 7 TeV";
+
+ // region excluded by Tevatron limits (1 fb-1)
+ Double_t x_shaded_D0[5] = {200,264,264,200,200};
+ Double_t y_shaded_D0[5] = {0.05,0.05,40,40,0.05};
+
+ // region excluded by ATLAS limits (35 pb-1)
+ Double_t x_shaded_ATLAS[5] = {200,295,295,200,200};
+ Double_t y_shaded_ATLAS[5] = {0.05,0.05,40,40,0.05};
+ 
+ // region excluded by Tevatron limits (5.4 fb-1)
+ Double_t x_shaded_D0_new[5] = {200,326,326,200,200};
+ Double_t y_shaded_D0_new[5] = {0.05,0.05,40,40,0.05};
+
+ // PDF uncertainty band
+ Double_t x_pdf[20] = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100};
+ Double_t y_pdf[20] = {445.5, 61.4, 13.7, 4.1, 1.43, 0.572, 0.249, 0.1167, 0.0581, 0.0300, 0.0169, 0.0340, 0.0719, 0.160, 0.379, 0.98, 2.9, 10.0, 45.2, 330.3};
+
+ Int_t size = sizeof(xsTh)/sizeof(*xsTh);
+ for(Int_t i=0; i<size; i++) xsTh[i]=Br*xsTh[i];
+ size = sizeof(y_pdf)/sizeof(*y_pdf);
+ for(Int_t i=0; i<size; i++) y_pdf[i]=Br*y_pdf[i];
+
+ size = sizeof(S_eff)/sizeof(*S_eff);
+
+ // Upper limits can be entered manually when the calls to CL95(...) and CLA(...) are commented out
+ // However, CL95(...) and CLA(...) have to be called at least once to get the upper limits
+
+//  Double_t xsUp_observed[size];
+//  for(Int_t i = 0; i < size; i++){
+// 
+//    xsUp_observed[i] = CL95(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], N_obs[i], kFALSE, 1);
+//  }
+//  cout<<endl<<Form("Double_t xsUp_observed[%i] = {", size);
+//  for(Int_t i = 0; i < size; i++) {
+//    cout<<xsUp_observed[i];
+//    if(i<(size-1)) cout<<", ";
+//  }
+//  cout<<"};"<<endl<<endl;
+ // Array of the observed 95% CL upper limits on the cross section
+ Double_t xsUp_observed[10] = {1.0918, 0.56543, 0.536133, 0.420898, 0.411621, 0.394043, 0.287354, 0.27124, 0.180835, 0.168945};
+ // Zero systematics case
+//  Double_t xsUp_observed[10] = {0.975586, 0.526367, 0.510254, 0.404297, 0.39917, 0.383789, 0.280762, 0.265625, 0.178125, 0.166406};
+ // Doubled systematics case
+// Double_t xsUp_observed[10] = {1.21094, 0.615234, 0.577881, 0.450195, 0.438965, 0.419434, 0.304199, 0.286865, 0.189697, 0.1771};
+
+//  Double_t xsUp_expected[size];
+//  for(Int_t i = 0; i < size; i++){
+// 
+//    xsUp_expected[i] = CLA(L_int, L_int*Sigma_L_int, S_eff[i], S_eff[i]*Sigma_S_eff[i], N_bkg[i], N_bkg[i]*Sigma_N_bkg[i], kFALSE, 1);
+//  }
+//  cout<<endl<<Form("Double_t xsUp_expected[%i] = {", size);
+//  for(Int_t i = 0; i < size; i++) {
+//    cout<<xsUp_expected[i];
+//    if(i<(size-1)) cout<<", ";
+//  }
+//  cout<<"};"<<endl<<endl;
+ // Array of the expected 95% CL upper limits on the cross section
+ Double_t xsUp_expected[10] = {1.3625, 0.728578, 0.560355, 0.478632, 0.411471, 0.36518, 0.318113, 0.284102, 0.248004, 0.226132};
+ // Zero systematics case
+//  Double_t xsUp_expected[10] = {1.24111, 0.685307, 0.537118, 0.462398, 0.400498, 0.356725, 0.31154, 0.278739, 0.243565, 0.222276};
+ // Doubled systematics case
+//  Double_t xsUp_expected[10] = {1.50694, 0.792841, 0.602788, 0.512162, 0.437966, 0.387823, 0.336865, 0.300479, 0.261752, 0.238493};
+
+ // set ROOT style
+//  myStyle();
+ setTDRStyle();
+//  gStyle->SetPadLeftMargin(0.14);
+//  gStyle->SetPadRightMargin(0.6);
+ gROOT->ForceStyle();
+
+ TCanvas *c = new TCanvas("c","",800,800);
+ c->cd();
+
+ TH2F *bg = new TH2F("bg",title.c_str(), 100, 200., 500., 100, 0.05, 40.);
+ bg->SetStats(kFALSE);
+ bg->SetTitleOffset(1.,"X");
+ bg->SetTitleOffset(1.,"Y");
+
+ bg->Draw();
+
+ TPolyLine *pl_D0 = new TPolyLine(5,x_shaded_D0,y_shaded_D0,"F");
+//  pl_D0->SetFillStyle(3001);
+ pl_D0->SetLineColor(0);
+ pl_D0->SetFillColor(kGray);
+//  pl_D0->Draw();
+
+ TPolyLine *pl_ATLAS = new TPolyLine(5,x_shaded_ATLAS,y_shaded_ATLAS,"F");
+ pl_ATLAS->SetFillStyle(3445);
+ pl_ATLAS->SetLineColor(0);
+ pl_ATLAS->SetFillColor(kGreen+2);
+//  pl_ATLAS->Draw();
+ 
+ TPolyLine *pl_D0_new = new TPolyLine(5,x_shaded_D0_new,y_shaded_D0_new,"F");
+ pl_D0_new->SetFillStyle(3454);
+ pl_D0_new->SetLineColor(0);
+ pl_D0_new->SetFillColor(46);
+//  pl_D0_new->Draw();
+
+ TGraph *grshade = new TGraph(20,x_pdf,y_pdf);
+ grshade->SetFillColor(kYellow);
+ grshade->Draw("f");
+
+ gPad->RedrawAxis();
+
+ TGraph *xsTh_vs_m = new TGraph(10, mTh, xsTh);
+ xsTh_vs_m->SetLineWidth(3);
+ xsTh_vs_m->SetLineColor(kRed);
+ xsTh_vs_m->SetFillColor(kYellow);
+ xsTh_vs_m->SetMarkerSize(1.);
+ xsTh_vs_m->SetMarkerStyle(22);
+ xsTh_vs_m->SetMarkerColor(kRed);
+ xsTh_vs_m->Draw("C");
+
+ TGraph *xsData_vs_m_expected = new TGraph(size, mData, xsUp_expected);
+ xsData_vs_m_expected->SetMarkerStyle(23);
+ xsData_vs_m_expected->SetMarkerColor(kBlue);
+ xsData_vs_m_expected->SetLineColor(kBlue);
+ xsData_vs_m_expected->SetLineWidth(3);
+ xsData_vs_m_expected->SetLineStyle(2);
+ xsData_vs_m_expected->SetMarkerSize(1.5);
+ xsData_vs_m_expected->Draw("CP");
+
+ TGraph *xsData_vs_m_observed = new TGraph(size, mData, xsUp_observed);
+ xsData_vs_m_observed->SetMarkerStyle(22);
+ xsData_vs_m_observed->SetMarkerColor(kBlack);
+ xsData_vs_m_observed->SetLineColor(kBlack);
+ xsData_vs_m_observed->SetLineWidth(3);
+ xsData_vs_m_observed->SetLineStyle(1);
+ xsData_vs_m_observed->SetMarkerSize(1.5);
+ xsData_vs_m_observed->Draw("CP");
+
+ TLegend *legend = new TLegend(.31,.64,.93,.92);
+ legend->SetBorderSize(1);
+ legend->SetFillColor(0);
+ //legend->SetFillStyle(0);
+ legend->SetTextFont(132);
+ legend->SetMargin(0.15);
+ legend->SetHeader("LQ#bar{LQ} #rightarrow e#nujj");
+//  legend->AddEntry(pl_D0,"D#oslash (e#nujj, 1 fb^{-1}), #beta = 0.5","f");
+//  legend->AddEntry(pl_ATLAS,"ATLAS (e#nujj, 35 pb^{-1}), #beta = 0.5","f");
+//  legend->AddEntry(pl_D0_new,"D#oslash (e#nujj, 5.4 fb^{-1}), #beta = 0.5","f");
+ legend->AddEntry(xsTh_vs_m,"#sigma_{NLO} #times 2#beta(1-#beta) #oplus #delta#sigma_{#mu} #oplus #delta#sigma_{PDF}; #beta = 0.5","lf");
+ legend->AddEntry(xsData_vs_m_expected, "Expected upper limit","lp");
+ legend->AddEntry(xsData_vs_m_observed, "Observed upper limit","lp");
+ legend->Draw();
+
+ TLatex l1;
+ l1.SetTextAlign(12);
+ l1.SetTextFont(132);
+ l1.SetNDC();
+ l1.SetTextSize(0.05);
+ l1.DrawLatex(0.66,0.6,"CMS");
+ l1.SetTextSize(0.05);
+ l1.DrawLatex(0.66,0.53,sqrts.c_str());
+ l1.SetTextSize(0.05);
+ l1.DrawLatex(0.66,0.41,"#intLdt = 36 pb^{-1}");
+
+ c->SetGridx();
+ c->SetGridy();
+
+ string name, extension;
+ size_t pos = fileName.find(".");
+
+ name = fileName.substr(0,pos);
+ extension = fileName.substr(pos);
+
+ c->SetLogy();
+ c->SaveAs((name + "_log" + extension).c_str());
+
+ delete pl_D0;
+ delete pl_D0_new;
+ delete pl_ATLAS;
+ delete xsTh_vs_m;
+ delete bg;
+ delete c;
+}
+
+void myStyle()
+{
+ gStyle->Reset("Default");
+ gStyle->SetCanvasColor(0);
+ gStyle->SetPadColor(0);
+ gStyle->SetTitleFillColor(10);
+ gStyle->SetCanvasBorderMode(0);
+ gStyle->SetStatColor(0);
+ gStyle->SetPadBorderMode(0);
+ gStyle->SetPadTickX(1);  // To get tick marks on the opposite side of the frame
+ gStyle->SetPadTickY(1);
+ gStyle->SetFrameBorderMode(0);
+ gStyle->SetPalette(1);
+
+   //gStyle->SetOptStat(kFALSE);
+ gStyle->SetOptStat(111110);
+ gStyle->SetOptFit(1);
+ gStyle->SetStatFont(42);
+ gStyle->SetPadLeftMargin(0.13);
+ gStyle->SetPadRightMargin(0.07);
+//    gStyle->SetTitleFont(42);
+//    gStyle->SetTitleFont(42, "XYZ");
+//    gStyle->SetLabelFont(42, "XYZ");
+ gStyle->SetStatY(.9);
+}
+
+void setTDRStyle() {
+  TStyle *tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
+
+  // For the canvas:
+  tdrStyle->SetCanvasBorderMode(0);
+  tdrStyle->SetCanvasColor(kWhite);
+  tdrStyle->SetCanvasDefH(600); //Height of canvas
+  tdrStyle->SetCanvasDefW(600); //Width of canvas
+  tdrStyle->SetCanvasDefX(0);   //POsition on screen
+  tdrStyle->SetCanvasDefY(0);
+
+  // For the Pad:
+  tdrStyle->SetPadBorderMode(0);
+  // tdrStyle->SetPadBorderSize(Width_t size = 1);
+  tdrStyle->SetPadColor(kWhite);
+  tdrStyle->SetPadGridX(false);
+  tdrStyle->SetPadGridY(false);
+  tdrStyle->SetGridColor(0);
+  tdrStyle->SetGridStyle(3);
+  tdrStyle->SetGridWidth(1);
+
+  // For the frame:
+  tdrStyle->SetFrameBorderMode(0);
+  tdrStyle->SetFrameBorderSize(1);
+  tdrStyle->SetFrameFillColor(0);
+  tdrStyle->SetFrameFillStyle(0);
+  tdrStyle->SetFrameLineColor(1);
+  tdrStyle->SetFrameLineStyle(1);
+  tdrStyle->SetFrameLineWidth(1);
+
+  // For the histo:
+  tdrStyle->SetHistFillColor(63);
+  // tdrStyle->SetHistFillStyle(0);
+  tdrStyle->SetHistLineColor(1);
+  tdrStyle->SetHistLineStyle(0);
+  tdrStyle->SetHistLineWidth(1);
+  // tdrStyle->SetLegoInnerR(Float_t rad = 0.5);
+  // tdrStyle->SetNumberContours(Int_t number = 20);
+
+//  tdrStyle->SetEndErrorSize(0);
+//   tdrStyle->SetErrorX(0.);
+//  tdrStyle->SetErrorMarker(20);
+
+  tdrStyle->SetMarkerStyle(20);
+
+  //For the fit/function:
+  tdrStyle->SetOptFit(1);
+  tdrStyle->SetFitFormat("5.4g");
+  tdrStyle->SetFuncColor(2);
+  tdrStyle->SetFuncStyle(1);
+  tdrStyle->SetFuncWidth(1);
+
+  //For the date:
+  tdrStyle->SetOptDate(0);
+  // tdrStyle->SetDateX(Float_t x = 0.01);
+  // tdrStyle->SetDateY(Float_t y = 0.01);
+
+  // For the statistics box:
+  tdrStyle->SetOptFile(0);
+  tdrStyle->SetOptStat(0); // To display the mean and RMS:   SetOptStat("mr");
+  tdrStyle->SetStatColor(kWhite);
+  tdrStyle->SetStatFont(42);
+  tdrStyle->SetStatFontSize(0.025);
+  tdrStyle->SetStatTextColor(1);
+  tdrStyle->SetStatFormat("6.4g");
+  tdrStyle->SetStatBorderSize(1);
+  tdrStyle->SetStatH(0.1);
+  tdrStyle->SetStatW(0.15);
+  // tdrStyle->SetStatStyle(Style_t style = 1001);
+  // tdrStyle->SetStatX(Float_t x = 0);
+  // tdrStyle->SetStatY(Float_t y = 0);
+
+  // Margins:
+  tdrStyle->SetPadTopMargin(0.05);
+  tdrStyle->SetPadBottomMargin(0.13);
+  tdrStyle->SetPadLeftMargin(0.13);
+  tdrStyle->SetPadRightMargin(0.05);
+
+  // For the Global title:
+
+  //  tdrStyle->SetOptTitle(0);
+  tdrStyle->SetTitleFont(42);
+  tdrStyle->SetTitleColor(1);
+  tdrStyle->SetTitleTextColor(1);
+  tdrStyle->SetTitleFillColor(10);
+  tdrStyle->SetTitleFontSize(0.05);
+  // tdrStyle->SetTitleH(0); // Set the height of the title box
+  // tdrStyle->SetTitleW(0); // Set the width of the title box
+  // tdrStyle->SetTitleX(0); // Set the position of the title box
+  // tdrStyle->SetTitleY(0.985); // Set the position of the title box
+  // tdrStyle->SetTitleStyle(Style_t style = 1001);
+  // tdrStyle->SetTitleBorderSize(2);
+
+  // For the axis titles:
+
+  tdrStyle->SetTitleColor(1, "XYZ");
+  tdrStyle->SetTitleFont(132, "XYZ");
+  tdrStyle->SetTitleSize(0.06, "XYZ");
+  // tdrStyle->SetTitleXSize(Float_t size = 0.02); // Another way to set the size?
+  // tdrStyle->SetTitleYSize(Float_t size = 0.02);
+  tdrStyle->SetTitleXOffset(0.9);
+  tdrStyle->SetTitleYOffset(1.05);
+  // tdrStyle->SetTitleOffset(1.1, "Y"); // Another way to set the Offset
+
+  // For the axis labels:
+
+  tdrStyle->SetLabelColor(1, "XYZ");
+  tdrStyle->SetLabelFont(132, "XYZ");
+  tdrStyle->SetLabelOffset(0.007, "XYZ");
+  tdrStyle->SetLabelSize(0.05, "XYZ");
+
+  // For the axis:
+
+  tdrStyle->SetAxisColor(1, "XYZ");
+  tdrStyle->SetStripDecimals(kTRUE);
+  tdrStyle->SetTickLength(0.03, "XYZ");
+  tdrStyle->SetNdivisions(510, "XYZ");
+  tdrStyle->SetPadTickX(1);  // To get tick marks on the opposite side of the frame
+  tdrStyle->SetPadTickY(1);
+
+  // Change for log plots:
+  tdrStyle->SetOptLogx(0);
+  tdrStyle->SetOptLogy(0);
+  tdrStyle->SetOptLogz(0);
+
+  // Postscript options:
+  // tdrStyle->SetPaperSize(15.,15.);
+  // tdrStyle->SetLineScalePS(Float_t scale = 3);
+  // tdrStyle->SetLineStyleString(Int_t i, const char* text);
+  // tdrStyle->SetHeaderPS(const char* header);
+  // tdrStyle->SetTitlePS(const char* pstitle);
+
+  // tdrStyle->SetBarOffset(Float_t baroff = 0.5);
+  // tdrStyle->SetBarWidth(Float_t barwidth = 0.5);
+  // tdrStyle->SetPaintTextFormat(const char* format = "g");
+  // tdrStyle->SetPalette(Int_t ncolors = 0, Int_t* colors = 0);
+  // tdrStyle->SetTimeOffset(Double_t toffset);
+  // tdrStyle->SetHistMinimumZero(kTRUE);
+
+  tdrStyle->cd();
+}
