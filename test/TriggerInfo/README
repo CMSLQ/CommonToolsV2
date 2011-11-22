@@ -34,6 +34,8 @@ cd $CMSSW_BASE/
 cvs co -d Leptoquarks/CommonToolsV2 UserCode/Leptoquarks/CommonToolsV2
 cd Leptoquarks/CommonToolsV2/test/TriggerInfo
 
+(the latest version of the script getHLTkey.py can be found at 
+HLTrigger/Tools/python, see https://twiki.cern.ch/twiki/bin/view/CMS/HLTriggerTools)
 
 -------------------------------------------------
 1) Find history of HLT menus in a given run range
