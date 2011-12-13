@@ -1,0 +1,135 @@
+--------------------------------------------------------------
+
+Instructions to filter events based on LogErrors
+
+This code should work on both RECO & AOD
+
+Related Twikis:
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/RecoErrorsAndWarnings
+https://twiki.cern.ch/twiki/bin/view/CMS/RecoErrorsAndWarningsMeaning 
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/RecoErrorsAndWarnings#Explanation_of_the_Errors_and_Wa
+https://twiki.cern.ch/twiki/bin/view/CMS/UserCodeGPetrucc#LogErrorAnalysis_Complete  (used in this example)
+
+( francesco.santanastasio@cern.ch )
+
+--------------------------------------------------------------
+
+1) login on lxplus
+
+2) create area
+
+scram p -n CMSSW_4_2_5_LogError CMSSW CMSSW_4_2_5
+
+cd CMSSW_4_2_5_LogError/src/
+
+cmsenv
+
+3) checkout code
+
+cvs co UserCode/GPetrucc/plugins
+
+cd  UserCode/GPetrucc/plugins/
+
+4) edit BuildFile.xml
+
+change this
+<library   name="UserCodeGPetrucc_plugins" file="*.cc">
+into this
+<library   name="UserCodeGPetrucc_plugins" file="LogErrorAnalysis.cc">
+to compile only the LogErrorAnalysis.cc plugin
+
+5) compile
+
+scram b
+
+6) create config file
+
+logErrorAnalysis_cfg.py : 
+
+
+####### BEGIN ########
+
+import FWCore.ParameterSet.Config as cms
+
+process = cms.Process("Demo")
+
+process.load("FWCore.MessageService.MessageLogger_cfi")
+
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+#process.MessageLogger.cerr.default.limit = 10
+
+process.source = cms.Source("PoolSource",
+    # replace '*.root' with the source file you want to use
+    fileNames = cms.untracked.vstring(
+        'file:/tmp/santanas/HT-Run2011B-PhysicsDST-AOD-180072_1kevents.root' #AOD
+        #'/store/data/Run2011B/HT/RECO/PromptReco-v1/000/180/072/9ED8C349-B402-E111-8888-BCAEC5329724.root' #RECO
+        #'file:/data/santanas/Data/HT-Run2011B-RECO-PromptReco-v1-180072-9ED8C349-B402-E111-8888-BCAEC5329724-1102events.root' #RECO
+        #'file:/data/santanas/Data/HT__RAW-PhyscsDST-RECO__180072_1kevents/RECO/HT-Run2011B-PhysicsDST-AOD-180072_1kevents.root' #AOD
+    )
+)
+
+
+### More info at https://twiki.cern.ch/twiki/bin/view/CMS/UserCodeGPetrucc#LogErrorAnalysis_Complete
+process.logErrorAnalysis = cms.EDFilter("LogErrorAnalysis",
+                                        src = cms.InputTag("logErrorHarvester"),
+                                        maxErrorFractionInLumi = cms.double(1),
+                                        # if more than 20% of the events in this lumi have errors, the lumi will be excluded from the run summary (not relevant for skimming)
+                                        maxErrorFractionInRun  = cms.double(1),
+                                        # if more than 20% of the events in this run (excluding bad lumis)) have errors, the run will be excluded (not relevant for skimming)
+                                        maxSavedEventsPerLumiAndError = cms.uint32(999999999),
+                                        # save events with errors but each error can get no no more than 10 events per lumi 
+                                        ##################################
+                                        #categoriesToIgnore = cms.vstring("HLTConfigProvider","FastCloningDisabled"), # not concerned with some errors
+                                        categoriesToWatch = cms.vstring("TooManySeeds","TooManyClusters"), # not concerned with some errors
+                                        #you can find the error_name list at https://twiki.cern.ch/twiki/bin/view/CMS/RecoErrorsAndWarningsMeaning
+                                        ##################################
+                                        verbose = cms.untracked.bool(True), # dump summary information to stdout
+                                        veryVerbose  = cms.untracked.bool(True), # dump even more info to stdout
+                                        )
+
+
+process.p = cms.Path(
+    process.logErrorAnalysis
+    )
+
+####### END ########
+
+7) run filter
+
+cmsRun logErrorAnalysis_cfg.py >& logErrorAnalysis.log
+
+8) Look at your output (logErrorAnalysis.log)
+
+
+The output looks like this 
+(NOTE: in this example we have watching for two categories of errors: TooManySeeds or TooManyClusters):
+
+
+[....]
+ === REPORT FOR EVENT 114507178 RUN 180072 LUMI 96 === 
+Category                                 Module                                                       Level          Count
+---------------------------------------- ------------------------------------------------------------ ---------- ---------
+TooManySeeds                             CkfTrackCandidateMaker:stepOneTrackCandidateMaker            Error              1
+TooManySeeds                             CkfTrackCandidateMaker:thTrackCandidates                     Error              1
+TooManyTriplets                          SeedGeneratorFromRegionHitsEDProducer:secTriplets            Error              1
+
+ === REPORT FOR EVENT 114536852 RUN 180072 LUMI 96 === 
+Category                                 Module                                                       Level          Count
+---------------------------------------- ------------------------------------------------------------ ---------- ---------
+TooManyClusters                          SeedGeneratorFromRegionHitsEDProducer:fifthSeeds             Error              1
+TooManyClusters                          SeedGeneratorFromRegionHitsEDProducer:fourthPLSeeds          Error              1
+TooManyClusters                          SeedGeneratorFromRegionHitsEDProducer:newSeedFromPairs       Error              1
+TooManyClusters                          SeedGeneratorFromRegionHitsEDProducer:newSeedFromTriplets    Error              1
+TooManyClusters                          SeedGeneratorFromRegionHitsEDProducer:secTriplets            Error              1
+TooManyClusters                          SeedGeneratorFromRegionHitsEDProducer:thTripletsA            Error              1
+TooManyClusters                          SeedGeneratorFromRegionHitsEDProducer:thTripletsB            Error              1
+[.....]
+
+
+As you can see, to find the list of events with a given error you can parse the log 
+and search for the string "=== REPORT FOR EVENT"
+
+
+F.
